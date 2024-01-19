@@ -50,9 +50,9 @@ const Page = () => {
   };
 
   return (
-    <div className=" min-h-screen w-full  bg-[#E1E1FF] flex flex-col  items-center  pb-8 px-4 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
+    <div className=" min-h-screen w-full  bg-[#EFF8FC] flex flex-col  items-center  pb-8 px-4 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
       <Accordian
-        bg="#3E3E98"
+        bg="#000"
         header="1. Personal Details"
         error={Boolean(
           errors?.dwms?.message ||
@@ -126,7 +126,7 @@ const Page = () => {
           <FileUpload label="Photo" />
         </>
       </Accordian>
-      <Accordian header="2. Curation Activities" bg="#3E3E98">
+      <Accordian header="2. Curation Activities" bg="#26A9DF">
         <>
           <Controller
             control={control}
@@ -254,7 +254,7 @@ const Page = () => {
           {watch("c7") && <FileUpload label="" />}
         </>
       </Accordian>
-      <Accordian header="3. Industry Connect Activities" bg="#3E3E98">
+      <Accordian header="3. Industry Connect Activities" bg="#26A9DF">
         <>
           <Controller
             control={control}
@@ -310,7 +310,7 @@ const Page = () => {
           />
         </>
       </Accordian>
-      <Accordian header="4. Placement Activities" bg="#3E3E98">
+      <Accordian header="4. Placement Activities" bg="#26A9DF">
         <>
           <Controller
             control={control}

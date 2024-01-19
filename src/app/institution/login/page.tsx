@@ -6,9 +6,9 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div className="h-screen w-full bg-[#E1E1FF] flex flex-col justify-center items-center">
+    <div className="h-screen w-full bg-[#EADDFF] flex flex-col justify-center items-center">
       <div className="md:w-1/3">
-        <InputField label="DWMS ID" />
+        <InputField label="Institution ID" />
         <InputField label="Email ID" />
         <div className="flex justify-center">
           <Link href={"/student/instructions"}>

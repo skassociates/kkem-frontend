@@ -4,8 +4,12 @@ import Button from "@/components/Button";
 import FileUpload from "@/components/FileUpload";
 import InputField from "@/components/InputField";
 import Radio from "@/components/Radio";
+import Select from "@/components/Select";
 import TextArea from "@/components/TextArea";
-import { studentFormvalidationSchema } from "@/schema/validation";
+import {
+  institutionFormvalidationSchema,
+  studentFormvalidationSchema,
+} from "@/schema/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -16,33 +20,30 @@ const Page = () => {
     handleSubmit,
     control,
     formState: { errors },
-    getValues,
     watch,
   } = useForm({
     defaultValues: {
-      dwms: "",
+      cordinator: "",
       emailId: "",
       institution: "",
-      student: "",
-      c1: false,
+      strength: "",
+      c1: "",
       c2: false,
       c3: false,
       c4: false,
-      c5: false,
-      c6: false,
+      c5: "",
+      c6: "",
       c7: false,
-      i1: false,
+      c8: false,
+      i1: "",
       i2: false,
       i3: false,
-      p1: false,
-      p2: false,
-      p3: false,
+      p1: "",
+      p2: "",
+      p3: "",
       p4: false,
-      p5: false,
-      p6: false,
-      p6Text: "",
     },
-    resolver: yupResolver(studentFormvalidationSchema),
+    resolver: yupResolver(institutionFormvalidationSchema),
   });
 
   const onSubmit = (data: any) => {
@@ -50,15 +51,15 @@ const Page = () => {
   };
 
   return (
-    <div className=" min-h-screen w-full  bg-[#E1E1FF] flex flex-col  items-center  pb-8 px-4 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
+    <div className=" min-h-screen w-full  bg-[#EADDFF] flex flex-col  items-center  pb-8 px-4 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
       <Accordian
-        bg="#3E3E98"
+        bg="#613D97"
         header="1. Personal Details"
         error={Boolean(
-          errors?.dwms?.message ||
+          errors?.cordinator?.message ||
             errors?.emailId?.message ||
             errors?.institution?.message ||
-            errors?.student?.message
+            errors?.strength?.message
         )}
       >
         <>
@@ -99,13 +100,13 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputField
-                label="Name of Student "
+                label="NName of Placement Coordinator "
                 required
-                error={errors?.student?.message}
+                error={errors?.cordinator?.message}
                 onChange={onChange}
               />
             )}
-            name="student"
+            name="cordinator"
           />
           <Controller
             control={control}
@@ -114,19 +115,19 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputField
-                label="DWMS ID "
+                label="Total Strength of Final Year Students "
                 required
-                error={errors?.dwms?.message}
+                error={errors?.strength?.message}
                 onChange={onChange}
               />
             )}
-            name="dwms"
+            name="strength"
           />
 
           <FileUpload label="Photo" />
         </>
       </Accordian>
-      <Accordian header="2. Curation Activities" bg="#3E3E98">
+      <Accordian header="2. Curation Activities" bg="#613D97">
         <>
           <Controller
             control={control}
@@ -134,13 +135,11 @@ const Page = () => {
               required: true,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Radio
-                label="1. Is your profile on the DWMS platform complete? Have you taken the first step to set your career path?"
-                hint="If you have still not reached 100%, don't worry! Click here to complete your profile."
+              <Select
+                label="1. Percentage of students in your institution who have completed their DWMS proiles? "
                 required
-                name="c1"
-                onChange={onChange}
-                value={value}
+                hint="If you have still not reached 100%, don't worry! Share this link with your students and help them to complete your profile."
+                options={["sdfd"]}
               />
             )}
             name="c1"
@@ -254,7 +253,7 @@ const Page = () => {
           {watch("c7") && <FileUpload label="" />}
         </>
       </Accordian>
-      <Accordian header="3. Industry Connect Activities" bg="#3E3E98">
+      <Accordian header="3. Industry Connect Activities" bg="#613D97">
         <>
           <Controller
             control={control}
@@ -310,7 +309,7 @@ const Page = () => {
           />
         </>
       </Accordian>
-      <Accordian header="4. Placement Activities" bg="#3E3E98">
+      <Accordian header="4. Placement Activities" bg="#613D97">
         <>
           <Controller
             control={control}

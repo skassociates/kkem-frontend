@@ -6,20 +6,21 @@ interface Props {
   children: JSX.Element;
   header: string;
   error?: boolean;
+  bg?: string;
 }
 
-const Accordian: React.FC<Props> = ({ children, header, error }) => {
+const Accordian: React.FC<Props> = ({ children, header, error, bg }) => {
   const [isOpen, setIsOpen] = useState(true);
-  console.log(isOpen);
+
   return (
     <div
       className={`md:w-1/2 border rounded-xl mt-10 ${
-        error ? "border-[#ED0131]" : "border-[#3E3E98]"
+        error ? "border-[#ED0131]" : `border-[${bg}]`
       }`}
     >
       <div
         className={` px-9 py-4 text-white  justify-between  flex cursor-pointer ${
-          error ? "bg-[#ED0131]" : "bg-[#3E3E98] "
+          error ? "bg-[#ED0131]" : `bg-[${bg}] `
         }  ${isOpen ? "rounded-t-xl" : "rounded-xl"}`}
         onClick={() => {
           isOpen ? setIsOpen(false) : setIsOpen(true);
