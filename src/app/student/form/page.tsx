@@ -5,49 +5,101 @@ import FileUpload from "@/components/FileUpload";
 import InputField from "@/components/InputField";
 import Radio from "@/components/Radio";
 import TextArea from "@/components/TextArea";
+import { StudentDetails } from "@/schema/student";
 import { studentFormvalidationSchema } from "@/schema/validation";
+import { form } from "@/services/api/form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const Page = () => {
+  const [studentForm, setStudentForm] = useState<StudentDetails>();
   const {
     handleSubmit,
     control,
     formState: { errors },
-    getValues,
     watch,
   } = useForm({
     defaultValues: {
-      dwms: "",
-      emailId: "",
-      institution: "",
-      student: "",
-      c1: false,
-      c2: false,
-      c3: false,
-      c4: false,
-      c5: false,
-      c6: false,
-      c7: false,
-      i1: false,
-      i2: false,
-      i3: false,
-      p1: false,
-      p2: false,
-      p3: false,
-      p4: false,
-      p5: false,
-      p6: false,
-      p6Text: "",
+      // Fisrt sec
+      EMAIL_ID: studentForm?.EMAIL_ID || "",
+      INST_NAME: studentForm?.INST_NAME || "",
+      STU_NAME: studentForm?.STU_NAME || "",
+      DWMS_ID: studentForm?.DWMS_ID || "",
+      // Curation Activities
+      DWMS_COMPLETE: studentForm?.DWMS_COMPLETE || false,
+      CA_COMP: studentForm?.CA_COMP || false,
+      CC_COMP: studentForm?.CC_COMP || false,
+      PDT_COMP: studentForm?.PDT_COMP || false,
+      BCEST_GRADE: studentForm?.BCEST_GRADE || false,
+      RI_COMP: studentForm?.RI_COMP || false,
+      WRP_COMP: studentForm?.WRP_COMP || false,
+      // Industry Connect Activities
+      PT_WRK_SHP_COUNT: studentForm?.PT_WRK_SHP_COUNT || false,
+      IIP_PART: studentForm?.IIP_PART || false,
+      LCP_PART: studentForm?.LCP_PART || false,
+      // Placement Activities
+      SP_DWMS: studentForm?.SP_DWMS || false,
+      INTERN_COMP: studentForm?.INTERN_COMP || false,
+      ATTN_PLCMNT_DRV: studentForm?.ATTN_PLCMNT_DRV || false,
+      OFR_LTR: studentForm?.OFR_LTR || false,
+      JB_SHRT_LST: studentForm?.JB_SHRT_LST || false,
+      PLMNT_ACCT: studentForm?.PLMNT_ACCT || false,
+      PLMNT_ACCT_TEXT: studentForm?.PLMNT_ACCT_TEXT || "",
     },
     resolver: yupResolver(studentFormvalidationSchema),
+    values: studentForm,
   });
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const get = toast.loading("Updating...");
+    form
+      .updateStudentDetails(data)
+      .then((response) => {
+        toast.update(get, {
+          render: "Done",
+          type: "success",
+          isLoading: false,
+          autoClose: 1000,
+        });
+      })
+      .catch((error) => {
+        toast.update(get, {
+          render: "Something went wrong",
+          type: "error",
+          isLoading: false,
+          autoClose: 1000,
+        });
+      });
   };
+
+  const fetchdata = () => {
+    const get = toast.loading("Fetching Your Details....");
+    form
+      .getStudentDetails()
+      .then((response) => {
+        toast.update(get, {
+          render: "Done",
+          type: "success",
+          isLoading: false,
+          autoClose: 1000,
+        });
+        setStudentForm(response.data.student);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.update(get, {
+          render: "Something went wrong",
+          type: "error",
+          isLoading: false,
+        });
+      });
+  };
+
+  useEffect(() => {
+    fetchdata();
+  }, []);
 
   return (
     <div className=" min-h-screen w-full  bg-[#E1E1FF] flex flex-col  items-center  pb-8 px-4 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
@@ -55,10 +107,10 @@ const Page = () => {
         bg="#3E3E98"
         header="1. Personal Details"
         error={Boolean(
-          errors?.dwms?.message ||
-            errors?.emailId?.message ||
-            errors?.institution?.message ||
-            errors?.student?.message
+          errors?.EMAIL_ID?.message ||
+            errors?.INST_NAME?.message ||
+            errors?.STU_NAME?.message ||
+            errors?.DWMS_ID?.message
         )}
       >
         <>
@@ -67,15 +119,19 @@ const Page = () => {
             rules={{
               required: true,
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <InputField
-                label="Email ID "
-                required
-                error={errors?.emailId?.message}
-                onChange={onChange}
-              />
-            )}
-            name="emailId"
+            render={({ field: { onChange, onBlur, value } }) => {
+              return (
+                <InputField
+                  label="Email ID"
+                  required
+                  error={errors?.EMAIL_ID?.message}
+                  onChange={onChange}
+                  value={value}
+                  readOnly
+                />
+              );
+            }}
+            name="EMAIL_ID"
           />
           <Controller
             control={control}
@@ -86,11 +142,13 @@ const Page = () => {
               <InputField
                 label="Name of Institution "
                 required
-                error={errors?.institution?.message}
+                error={errors?.INST_NAME?.message}
                 onChange={onChange}
+                value={value}
+                readOnly
               />
             )}
-            name="institution"
+            name="INST_NAME"
           />
           <Controller
             control={control}
@@ -101,11 +159,13 @@ const Page = () => {
               <InputField
                 label="Name of Student "
                 required
-                error={errors?.student?.message}
+                error={errors?.STU_NAME?.message}
                 onChange={onChange}
+                value={value}
+                readOnly
               />
             )}
-            name="student"
+            name="STU_NAME"
           />
           <Controller
             control={control}
@@ -116,11 +176,13 @@ const Page = () => {
               <InputField
                 label="DWMS ID "
                 required
-                error={errors?.dwms?.message}
+                error={errors?.DWMS_ID?.message}
                 onChange={onChange}
+                value={value}
+                readOnly
               />
             )}
-            name="dwms"
+            name="DWMS_ID"
           />
 
           <FileUpload label="Photo" />
@@ -138,12 +200,12 @@ const Page = () => {
                 label="1. Is your profile on the DWMS platform complete? Have you taken the first step to set your career path?"
                 hint="If you have still not reached 100%, don't worry! Click here to complete your profile."
                 required
-                name="c1"
+                name="DWMS_COMPLETE"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="c1"
+            name="DWMS_COMPLETE"
           />
           <Controller
             control={control}
@@ -155,12 +217,12 @@ const Page = () => {
                 label="2. Did you take time to complete your Career Assessment? "
                 hint="Yet to take the assessment and receive your Career Report Card? Wait no more - click here to start the test and score points!"
                 required
-                name="c2"
+                name="CA_COMP"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="c2"
+            name="CA_COMP"
           />
           <Controller
             control={control}
@@ -172,12 +234,12 @@ const Page = () => {
                 label="3. Have you attended the Career Counselling Session? *"
                 hint="Yet to get guidance about your career? Login to DWMS and book your slot today!"
                 required
-                name="c3"
+                name="CC_COMP"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="c3"
+            name="CC_COMP"
           />
 
           <Controller
@@ -190,12 +252,12 @@ const Page = () => {
                 label="4. Have you successfully completed the Personality Development Training?  "
                 hint="Still waiting to enhance your language capabilities and professional skills? Wait no more! Login to DWMS and get trained by the masters!"
                 required
-                name="c4"
+                name="PDT_COMP"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="c4"
+            name="PDT_COMP"
           />
 
           <Controller
@@ -208,12 +270,12 @@ const Page = () => {
                 label="5. Please enter your grade for British Council English Score Test *"
                 hint="If you have not taken the test yet, why wait? Access the test today and flaunt your English Skills!"
                 required
-                name="c5"
+                name="BCEST_GRADE"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="c5"
+            name="BCEST_GRADE"
           />
 
           <Controller
@@ -226,12 +288,12 @@ const Page = () => {
                 label="6. Have you completed the Robotic Interview? *"
                 hint="Test yourself through the Robotic Interview & ace your upcoming interviews!"
                 required
-                name="c6"
+                name="RI_COMP"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="c6"
+            name="RI_COMP"
           />
 
           <Controller
@@ -244,14 +306,14 @@ const Page = () => {
                 label="7. Successfully completed the Work Readiness Programme (WRP)? Please upload your certificate.  "
                 hint="Be ready for work through WRP and stand out from the rest!"
                 required
-                name="c7"
+                name="WRP_COMP"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="c7"
+            name="WRP_COMP"
           />
-          {watch("c7") && <FileUpload label="" />}
+          {watch("WRP_COMP") && <FileUpload label="" />}
         </>
       </Accordian>
       <Accordian header="3. Industry Connect Activities" bg="#3E3E98">
@@ -266,12 +328,12 @@ const Page = () => {
                 label="1. How many workshops have you attended in connection with Placement Training, Resume Building and Workshops on the Future of Jobs? "
                 hint="Did you know that 40% of recruiters hire candidates based on resumes? Don't waste time; come and get equipped from the masters!"
                 required
-                name="i1"
+                name="PT_WRK_SHP_COUNT"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="i1"
+            name="PT_WRK_SHP_COUNT"
           />
           <Controller
             control={control}
@@ -283,12 +345,12 @@ const Page = () => {
                 label="2. Were you a participant of any Industry Insight Programmes? "
                 hint="Never lose a chance to get acclimatized with the Industry! Sign up and Refresh Yourself!"
                 required
-                name="2"
+                name="IIP_PART"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="i2"
+            name="IIP_PART"
           />
 
           <Controller
@@ -301,12 +363,12 @@ const Page = () => {
                 label="3. Did you participate in the Learning Circles Programmes? "
                 hint="Learn and Grow Together with your Peers!"
                 required
-                name="13"
+                name="LCP_PART"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="i3"
+            name="LCP_PART"
           />
         </>
       </Accordian>
@@ -322,12 +384,12 @@ const Page = () => {
                 label="1. Have you enrolled in any Skill Programmes on DWMS? "
                 hint=""
                 required
-                name="p1"
+                name="SP_DWMS"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="p1"
+            name="SP_DWMS"
           />
           <Controller
             control={control}
@@ -339,15 +401,15 @@ const Page = () => {
                 label="2. Have you completed any internship? If yes, please upload a screenshot of the internship offer. *"
                 hint=""
                 required
-                name="p2"
+                name="INTERN_COMP"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="p2"
+            name="INTERN_COMP"
           />
 
-          {watch("p2") && <FileUpload label="" />}
+          {watch("INTERN_COMP") && <FileUpload label="" />}
           <Controller
             control={control}
             rules={{
@@ -358,12 +420,12 @@ const Page = () => {
                 label="3. Have you attended any placement / recruitment drives?"
                 hint=""
                 required
-                name="p3"
+                name="ATTN_PLCMNT_DRV"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="p3"
+            name="ATTN_PLCMNT_DRV"
           />
 
           <Controller
@@ -376,15 +438,15 @@ const Page = () => {
                 label="4. Have you received offer letters from any employer? *"
                 hint=""
                 required
-                name="p4"
+                name="OFR_LTR"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="p4"
+            name="OFR_LTR"
           />
 
-          {watch("p4") && <FileUpload label="" />}
+          {watch("OFR_LTR") && <FileUpload label="" />}
 
           <Controller
             control={control}
@@ -396,12 +458,12 @@ const Page = () => {
                 label="5. Have you been shortlisted for any jobs?"
                 hint=""
                 required
-                name="p5"
+                name="JB_SHRT_LST"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="p5"
+            name="JB_SHRT_LST"
           />
 
           <Controller
@@ -414,21 +476,23 @@ const Page = () => {
                 label="6. Have you been shortlisted for any jobs?"
                 hint=""
                 required
-                name="p6"
+                name="PLMNT_ACCT"
                 onChange={onChange}
                 value={value}
               />
             )}
-            name="p6"
+            name="PLMNT_ACCT"
           />
-          {watch("p6") && (
+          {watch("PLMNT_ACCT") && (
             <Controller
               control={control}
               rules={{
                 required: true,
               }}
-              render={({ field: { onChange, onBlur, value } }) => <TextArea />}
-              name="p6Text"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextArea onChange={onChange} value={value} />
+              )}
+              name="PLMNT_ACCT_TEXT"
             />
           )}
         </>

@@ -1,11 +1,22 @@
-import React from 'react'
+import React from "react";
 
-const TextArea = () => {
-  return (
-    <div className='mt-4'>
-        <textarea className='w-full h-32 rounded outline-none p-3'></textarea>
-    </div>
-  )
+interface Props {
+  onChange: (e: any) => void;
+  value?: string;
 }
 
-export default TextArea
+const TextArea: React.FC<Props> = ({ onChange, value }) => {
+  return (
+    <div className="mt-4">
+      <textarea
+        className="w-full h-32 rounded outline-none p-3"
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
+      ></textarea>
+    </div>
+  );
+};
+
+export default TextArea;

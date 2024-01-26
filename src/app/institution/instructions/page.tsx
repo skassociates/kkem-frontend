@@ -66,7 +66,7 @@ const Page = () => {
         </div>
       </div>
       <div className="md:w-1/2 flex justify-end ">
-        <Link href={"/student/form"}>
+        <Link href={"/institution/form"}>
           <Button label="View Form" onPress={() => {}} customStyle="min-w-60" />
         </Link>
       </div>

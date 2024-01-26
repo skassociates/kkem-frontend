@@ -6,9 +6,9 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div className="min-h-screen w-full bg-[#E1E1FF] flex flex-col justify-center items-center  py-8 px-2 ">
-      <div className="md:w-1/2 border border-[#3E3E98] rounded-xl ">
-        <div className="bg-[#3E3E98] px-9 py-4 text-white rounded-t-xl   ">
+    <div className="min-h-screen w-full bg-[#EFF8FC] flex flex-col justify-center items-center  py-8 px-2 ">
+      <div className="md:w-1/2 border border-[#26A9DF] rounded-xl ">
+        <div className="bg-[#26A9DF] px-9 py-4 text-white rounded-t-xl   ">
           Instructions
         </div>
         <div className="p-9">
@@ -60,8 +60,12 @@ const Page = () => {
         </div>
       </div>
       <div className="md:w-1/2 flex justify-end ">
-        <Link href={"/student/form"}>
-          <Button label="View Form" onPress={() => {}} customStyle="min-w-60" />
+        <Link href={"/admin/form"}>
+          <Button
+            label="View Form"
+            onPress={() => {}}
+            customStyle="min-w-60 bg-[#26A9DF]"
+          />
         </Link>
       </div>
     </div>

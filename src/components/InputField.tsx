@@ -5,9 +5,18 @@ interface Props {
   required?: boolean;
   error?: string;
   onChange: (e: any) => void;
+  value?: string;
+  readOnly?: boolean;
 }
 
-const InputField: React.FC<Props> = ({ label, required, error, onChange }) => {
+const InputField: React.FC<Props> = ({
+  label,
+  required,
+  error,
+  onChange,
+  value,
+  readOnly,
+}) => {
   return (
     <div className="mt-7">
       <div className="text-[#6F7482] ">
@@ -22,6 +31,8 @@ const InputField: React.FC<Props> = ({ label, required, error, onChange }) => {
         onChange={(e) => {
           onChange(e.target.value);
         }}
+        defaultValue={value}
+        readOnly={readOnly}
       />
       {error && <div className="text-[#ED0131] text-xs">{error}</div>}
     </div>

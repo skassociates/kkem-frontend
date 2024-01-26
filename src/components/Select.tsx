@@ -5,9 +5,18 @@ interface Props {
   required: boolean;
   hint?: string;
   options: Array<string>;
+  onChange: (e: string) => void;
+  value: string;
 }
 
-const Select: React.FC<Props> = ({ label, required, hint, options }) => {
+const Select: React.FC<Props> = ({
+  label,
+  required,
+  hint,
+  options,
+  onChange,
+  value,
+}) => {
   return (
     <div className="mt-7">
       <div className="text-base">
@@ -18,12 +27,15 @@ const Select: React.FC<Props> = ({ label, required, hint, options }) => {
       <select
         name="skdhb"
         id="kbhsh"
-        className="p-3 w-full border-0 outline-none rounded mt-3"
+        className="p-3 w-full border-0 outline-none rounded mt-3 "
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
       >
-        <option value="">Select an Option</option>
+        <option value={""}>Select an Option</option>
         {options.map((obj, index) => {
           return (
-            <option value={obj} key={index}>
+            <option value={obj} key={index} selected={obj === value}>
               {obj}
             </option>
           );
