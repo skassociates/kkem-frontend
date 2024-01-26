@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Accordian from "@/components/Accordian";
 import Button from "@/components/Button";

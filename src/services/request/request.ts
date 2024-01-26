@@ -1,7 +1,9 @@
 import axios from "axios";
 
 
-const token = localStorage.AUTH_TOKEN || ''
+
+
+const token = ''
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:3001/",

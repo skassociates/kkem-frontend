@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Accordian from "@/components/Accordian";
 import Button from "@/components/Button";
@@ -102,7 +103,8 @@ const Page = () => {
   }, []);
 
   return (
-    <div className=" min-h-screen w-full  bg-[#E1E1FF] flex flex-col  items-center  pb-8 px-4 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
+    <div className=" min-h-screen w-full  bg-[#E1E1FF] flex flex-col  items-center  pb-8  scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
+      <img src="/Googleform.png" alt="" className=" h-[412px]" />
       <Accordian
         bg="#3E3E98"
         header="1. Personal Details"
