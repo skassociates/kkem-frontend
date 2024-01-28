@@ -11,6 +11,9 @@ const FileUpload: React.FC<Props> = ({ label }) => {
   const [datafile, setFile] = useState(null);
 
   const handleChange = async (data: any) => {
+    // console.log(setFile(data));
+    console.log(data);
+
     files
       .upload(data)
       .then((response) => {
@@ -24,6 +27,27 @@ const FileUpload: React.FC<Props> = ({ label }) => {
   console.log({ datafile });
   return (
     <>
+      <input
+        type="file"
+        name=""
+        id=""
+        onChange={(e) => {
+          e.preventDefault();
+          let formData = new FormData();
+          formData.append("file", e.target.files[0]);
+          let options = { content: formData };
+
+          console.log(e.target.files[0]);
+          files
+            .upload(formData)
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error: any) => {
+              console.log(error);
+            });
+        }}
+      />
       <FileUploader handleChange={handleChange} name="file" types={fileTypes}>
         <div className="mt-7 text-[#6F7482]">
           <div>{label}</div>
