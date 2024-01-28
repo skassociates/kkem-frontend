@@ -35,10 +35,8 @@ const InputField: React.FC<Props> = ({
           >
             <img src="/close.svg" alt="" className="absolute right-1 top-1" />
           </div>
-          <div>Career Assessment</div>
-          <div className="italic text-[#6F7482]">
-            A test to analyse the different ways to advance careers.
-          </div>
+          <div>{poPup?.heading}</div>
+          <div className="italic text-[#6F7482]">{poPup?.desc}</div>
         </div>
       )}
       <div className="text-[#6F7482] flex">
