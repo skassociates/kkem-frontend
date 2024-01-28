@@ -10,13 +10,14 @@ import { StudentDetails } from "@/schema/student";
 import { studentFormvalidationSchema } from "@/schema/validation";
 import { form } from "@/services/api/form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const Page = () => {
   const [studentForm, setStudentForm] = useState<StudentDetails>();
+  const route = useRouter();
   const {
     handleSubmit,
     control,
@@ -53,7 +54,7 @@ const Page = () => {
     resolver: yupResolver(studentFormvalidationSchema),
     values: studentForm,
   });
-  const route = useRouter();
+
   const onSubmit = (data: any) => {
     const get = toast.loading("Updating...");
     form
@@ -96,6 +97,7 @@ const Page = () => {
           render: "Something went wrong",
           type: "error",
           isLoading: false,
+          autoClose: 1000,
         });
       });
   };

@@ -10,7 +10,7 @@ import { adminDetails } from "@/schema/student";
 import { adminFormvalidationSchema } from "@/schema/validation";
 import { form } from "@/services/api/form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
