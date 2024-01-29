@@ -124,6 +124,14 @@ const Page = () => {
         )}
       >
         <>
+          <div className="text-[#6F7482] ml-4 italic mt-2">
+            Congratulations on taking your first step towards enhancing your
+            Employability!
+            <br />
+            We wish and hope that you improve your Employability Quotient and
+            land your name on the Leaderboard! You'll do great! Kindly fill the
+            below details carefully.
+          </div>
           <Controller
             control={control}
             rules={{
@@ -200,6 +208,15 @@ const Page = () => {
       </Accordian>
       <Accordian header="2. Curation Activities" bg="#3E3E98">
         <>
+          <div className="text-[#6F7482] ml-4 italic mt-2">
+            Did you know that students who completed 90% of the curation
+            activities on the DWMS platform have a higher rate of employability?
+            <br />
+            Please scroll down below and enter details of the curation
+            activities you have been a part of and increase your chances of
+            getting employed! No worries if you haven't started yet! You still
+            have time to complete these acivities and upgrade yourself!
+          </div>
           <Controller
             control={control}
             rules={{
@@ -335,6 +352,10 @@ const Page = () => {
       </Accordian>
       <Accordian header="3. Industry Connect Activities" bg="#3E3E98">
         <>
+          <div className="text-[#6F7482] ml-4 italic mt-2">
+            How updated are you with the industry and emerging trends? Have you
+            taken some time out to connect with industry experts?
+          </div>
           <Controller
             control={control}
             rules={{
@@ -388,6 +409,12 @@ const Page = () => {
       </Accordian>
       <Accordian header="4. Placement Activities" bg="#3E3E98">
         <>
+          <div className="text-[#6F7482] ml-4 italic mt-2">
+            Are you all set to kickstart your career?
+            <br />
+            Dive down below to enter details of your placement activities, earn
+            maximum points and top the Leaderboard!
+          </div>
           <Controller
             control={control}
             rules={{
