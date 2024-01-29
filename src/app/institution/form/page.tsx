@@ -8,6 +8,7 @@ import Select from "@/components/Select";
 import { instituteDetails } from "@/schema/student";
 import { institutionFormvalidationSchema } from "@/schema/validation";
 import { form } from "@/services/api/form";
+import { axiosInstance } from "@/services/request/request";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -86,6 +87,8 @@ const Page = () => {
   };
 
   useEffect(() => {
+    axiosInstance.defaults.headers.post["Authorization"] =
+      localStorage.getItem("AUTH_TOKEN");
     fetchdata();
   }, []);
 

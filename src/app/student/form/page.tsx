@@ -10,6 +10,7 @@ import TextArea from "@/components/TextArea";
 import { StudentDetails } from "@/schema/student";
 import { studentFormvalidationSchema } from "@/schema/validation";
 import { form } from "@/services/api/form";
+import { axiosInstance } from "@/services/request/request";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ import { toast } from "react-toastify";
 
 const Page = () => {
   const [studentForm, setStudentForm] = useState<StudentDetails>();
+
   const route = useRouter();
   const {
     handleSubmit,
@@ -103,6 +105,8 @@ const Page = () => {
   };
 
   useEffect(() => {
+    axiosInstance.defaults.headers.post["Authorization"] =
+      localStorage.getItem("AUTH_TOKEN");
     fetchdata();
   }, []);
 
@@ -129,8 +133,8 @@ const Page = () => {
             Employability!
             <br />
             We wish and hope that you improve your Employability Quotient and
-            land your name on the Leaderboard! You'll do great! Kindly fill the
-            below details carefully.
+            land your name on the Leaderboard! You&apos;ll do great! Kindly fill
+            the below details carefully.
           </div>
           <Controller
             control={control}
@@ -214,8 +218,8 @@ const Page = () => {
             <br />
             Please scroll down below and enter details of the curation
             activities you have been a part of and increase your chances of
-            getting employed! No worries if you haven't started yet! You still
-            have time to complete these acivities and upgrade yourself!
+            getting employed! No worries if you haven&apos;t started yet! You
+            still have time to complete these acivities and upgrade yourself!
           </div>
           <Controller
             control={control}
@@ -242,7 +246,7 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
                 label="2. Did you take time to complete your Career Assessment? "
-                hint="Yet to take the assessment and receive your Career Report Card? Wait no more - click here to start the test and score points!"
+                hint="Yet to take the assessment and receive your Career Report Card? Wait no more - <a href='https://knowledgemission.kerala.gov.in/login-jobseeker.jsp' class='text-blue-500 underline'>click here</a> to start the test and score points!"
                 required
                 name="CA_COMP"
                 onChange={onChange}
@@ -259,7 +263,7 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
                 label="3. Have you attended the Career Counselling Session?"
-                hint="Yet to get guidance about your career? Login to DWMS and book your slot today!"
+                hint="Yet to get guidance about your career? <a href='https://knowledgemission.kerala.gov.in/login-jobseeker.jsp' class='text-blue-500 underline' >Login to DWMS</a> and book your slot today!"
                 required
                 name="CC_COMP"
                 onChange={onChange}
@@ -268,7 +272,6 @@ const Page = () => {
             )}
             name="CC_COMP"
           />
-
           <Controller
             control={control}
             rules={{
@@ -277,7 +280,7 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
                 label="4. Have you successfully completed the Personality Development Training?  "
-                hint="Still waiting to enhance your language capabilities and professional skills? Wait no more! Login to DWMS and get trained by the masters!"
+                hint="Still waiting to enhance your language capabilities and professional skills? Wait no more! <a href='https://knowledgemission.kerala.gov.in/login-jobseeker.jsp' class='text-blue-500 underline' >Login to DWMS</a>  and get trained by the masters!"
                 required
                 name="PDT_COMP"
                 onChange={onChange}
@@ -286,7 +289,6 @@ const Page = () => {
             )}
             name="PDT_COMP"
           />
-
           <Controller
             control={control}
             rules={{
@@ -306,12 +308,11 @@ const Page = () => {
                 ]}
                 required
                 value={value}
-                hint="If you have not taken the test yet, why wait? Access the test today and flaunt your English Skills!"
+                hint="If you have not taken the test yet, why wait? <a href='https://knowledgemission.kerala.gov.in/login-jobseeker.jsp' class='text-blue-500 underline' >Access the test</a> today and flaunt your English Skills!"
               />
             )}
             name="BCEST_GRADE"
           />
-
           <Controller
             control={control}
             rules={{
@@ -320,7 +321,7 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
                 label="6. Have you completed the Robotic Interview?"
-                hint="Test yourself through the Robotic Interview & ace your upcoming interviews!"
+                hint="Test yourself through the <a href='https://knowledgemission.kerala.gov.in/login-jobseeker.jsp' class='text-blue-500 underline'>Robotic Interview</a> & ace your upcoming interviews!"
                 required
                 name="RI_COMP"
                 onChange={onChange}
@@ -329,7 +330,6 @@ const Page = () => {
             )}
             name="RI_COMP"
           />
-
           <Controller
             control={control}
             rules={{
@@ -338,7 +338,7 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
                 label="7. Successfully completed the Work Readiness Programme (WRP)? Please upload your certificate.  "
-                hint="Be ready for work through WRP and stand out from the rest!"
+                hint="Be ready for work through <a href='https://knowledgemission.kerala.gov.in/login-jobseeker.jsp' class='text-blue-500 underline'>WRP</a>  and stand out from the rest!"
                 required
                 name="WRP_COMP"
                 onChange={onChange}
