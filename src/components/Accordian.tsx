@@ -14,7 +14,7 @@ const Accordian: React.FC<Props> = ({ children, header, error, bg }) => {
 
   return (
     <div
-      className={`md:w-1/2 border rounded-xl mt-10 ${
+      className={`md:w-1/2  w-[98%] border rounded-xl mt-10 ${
         error ? "border-[#ED0131]" : `border-[${bg}]`
       }`}
     >

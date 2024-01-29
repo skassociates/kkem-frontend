@@ -13,8 +13,8 @@ const Page = () => {
         </div>
         <div className="p-9">
           <div className="text-3xl">
-            Kerala Skills Express - <br />
-            Student Leaderboard Form
+            Connect Career to Campus 2023 - <br />
+            Career Ambassodors Leaderboard Form
           </div>
           <div className="mt-8 text-lg">
             As part of the Connect Career to Campus (CCC) Campaign, KKEM is
@@ -42,8 +42,9 @@ const Page = () => {
               <li>
                 Please follow this naming convention for the supporting
                 documents - DWMS ID_Your Name_Proof for (Name of Section).{" "}
+                <br />
+                For instance, DW101010_Ann Michael_Proof for WRP
               </li>
-              <li>For instance, DW101010_Ann Michael_Proof for WRP</li>
               <li>
                 Kindly ensure that any Personal Identifiable Information (PII)
                 in the document is masked before uploading. KKEM is in no way

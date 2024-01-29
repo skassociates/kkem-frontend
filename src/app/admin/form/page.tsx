@@ -26,21 +26,21 @@ const Page = () => {
   } = useForm({
     defaultValues: {
       //  sec 1
-      EMAIL_ID: "",
-      INST_NAME: "",
-      CA_NAME: "",
-      TOT_STR: "",
+      EMAIL_ID: adminDetails?.EMAIL_ID || "",
+      INST_NAME: adminDetails?.INST_NAME || "",
+      CA_NAME: adminDetails?.CA_NAME || "",
+      TOT_STR: adminDetails?.TOT_STR || "",
       // sec 2
-      DWMS_ORT_SSN: false,
-      CUR_SRV_COMP: [],
-      PCT_STD_DWMS_PROF_COMP: "",
-      DWMS_HLP_DSK: false,
+      DWMS_ORT_SSN: adminDetails?.DWMS_ORT_SSN || false,
+      CUR_SRV_COMP: adminDetails?.CUR_SRV_COMP || [],
+      PCT_STD_DWMS_PROF_COMP: adminDetails?.PCT_STD_DWMS_PROF_COMP || "",
+      DWMS_HLP_DSK: adminDetails?.DWMS_HLP_DSK || false,
       // sec 3
-      PCT_FY_STD_WEBNR: "",
-      PCT_STD_RSM_WRK_SHP: "",
-      KKEM_IIP: false,
-      PCT_STD_RCM_DRV: "",
-      PCT_STD_JOB_OFFR: "",
+      PCT_FY_STD_WEBNR: adminDetails?.PCT_FY_STD_WEBNR || "",
+      PCT_STD_RSM_WRK_SHP: adminDetails?.PCT_STD_RSM_WRK_SHP || "",
+      KKEM_IIP: adminDetails?.KKEM_IIP || false,
+      PCT_STD_RCM_DRV: adminDetails?.PCT_STD_RCM_DRV || "",
+      PCT_STD_JOB_OFFR: adminDetails?.PCT_STD_JOB_OFFR || "",
     },
     resolver: yupResolver(adminFormvalidationSchema),
     values: adminDetails,
@@ -88,6 +88,7 @@ const Page = () => {
           render: "Something went wrong",
           type: "error",
           isLoading: false,
+          autoClose: 1000,
         });
       });
   };
@@ -98,7 +99,7 @@ const Page = () => {
   return (
     <div className=" min-h-screen w-full  bg-[#EFF8FC] flex flex-col  items-center  pb-8 px-4 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
       <Accordian
-        bg="#613D97"
+        bg="#24ABE2"
         header="1. Personal Details"
         error={Boolean(
           errors?.EMAIL_ID?.message ||
@@ -168,19 +169,20 @@ const Page = () => {
                 error={errors?.TOT_STR?.message}
                 onChange={onChange}
                 value={value}
+                type="number"
               />
             )}
             name="TOT_STR"
           />
         </>
       </Accordian>
-      <Accordian header="2. Curation Activities" bg="#613D97">
+      <Accordian header="2. Curation Activities" bg="#24ABE2">
         <>
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
-                label="Did you successfully complete the DWMS Orientation Session? "
+                label="1. Did you successfully complete the DWMS Orientation Session? "
                 required
                 name="DWMS_ORT_SSN"
                 onChange={onChange}
@@ -195,7 +197,7 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <CheckBox
                 hint=""
-                label="From the list below, select the curation services which you have completed."
+                label="2. From the list below, select the curation services which you have completed."
                 name="CUR_SRV_COMP"
                 onChange={onChange}
                 // value={value}
@@ -219,7 +221,7 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Select
-                label="Percentage of final year students (assigned to you) who have completed their DWMS   profiles? "
+                label="3. Percentage of final year students (assigned to you) who have completed their DWMS   profiles? "
                 onChange={onChange}
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
@@ -236,7 +238,7 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
-                label="4. Did you arrange a helpdesk in your campus to help students with DWMS related queries? * "
+                label="4. Did you arrange a helpdesk in your campus to help students with DWMS related queries?"
                 hint=""
                 required
                 name="DWMS_HLP_DSK"
@@ -248,7 +250,7 @@ const Page = () => {
           />
         </>
       </Accordian>
-      <Accordian header="3. Industry Connect Activities" bg="#613D97">
+      <Accordian header="3. Industry Connect Activities" bg="#24ABE2">
         <>
           <Controller
             control={control}
@@ -257,9 +259,9 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Select
-                hint="Did you know that students who are updated with the industry trends have a higher chance of getting employed?
+                hint=" Did you know that students who are updated with the industry trends have a higher chance of getting employed?
 Keep encouraging your peers, stay updated with industry trends and enhance your Employability Indicator!"
-                label="What percentage of the final year students (assigned to you) have attended webinars on the future of jobs? "
+                label="1. What percentage of the final year students (assigned to you) have attended webinars on the future of jobs? "
                 onChange={onChange}
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
@@ -277,7 +279,7 @@ Keep encouraging your peers, stay updated with industry trends and enhance your 
               <Select
                 hint="Resumes help 40% of recruiters to hire the best candidates. 
 Create perfected resumes and land in your dream jobs!"
-                label="Out of the total students in your assigned batch (since October 2023), what percentage have attended resume workshops?"
+                label="2. Out of the total students in your assigned batch (since October 2023), what percentage have attended resume workshops?"
                 onChange={onChange}
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
@@ -311,7 +313,7 @@ Create perfected resumes and land in your dream jobs!"
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Select
-                label="How many of your assigned students attended recruitment drives conducted in your institution? "
+                label="4. How many of your assigned students attended recruitment drives conducted in your institution? "
                 onChange={onChange}
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
@@ -327,7 +329,7 @@ Create perfected resumes and land in your dream jobs!"
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Select
-                label="How many of the assigned students received job offers through the placement drives? "
+                label="5. How many of the assigned students received job offers through the placement drives? "
                 onChange={onChange}
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
@@ -338,8 +340,19 @@ Create perfected resumes and land in your dream jobs!"
           />
         </>
       </Accordian>
-      <div className="w-1/2  flex justify-end">
-        <Button label="Save" onPress={handleSubmit(onSubmit)} />
+      <div className="md:w-1/2  w-full p-2 flex flex-col md:gap-4  md:flex-row-reverse md:justify-start justify-end">
+        <Button
+          label="Save"
+          onPress={handleSubmit(onSubmit)}
+          customStyle=" bg-[#24ABE2]"
+        />
+        <Button
+          label="Cancel"
+          onPress={() => {
+            route.push("/admin/login");
+          }}
+          customStyle=" bg-[#6B6B6B]"
+        />
       </div>
     </div>
   );

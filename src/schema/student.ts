@@ -8,7 +8,7 @@ export interface StudentDetails {
     CA_COMP: boolean;
     CC_COMP: boolean;
     PDT_COMP: boolean;
-    BCEST_GRADE: boolean;
+    BCEST_GRADE: string;
     RI_COMP: boolean;
     WRP_COMP: boolean;
 

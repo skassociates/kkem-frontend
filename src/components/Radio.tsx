@@ -6,7 +6,7 @@ interface Props {
   required?: boolean;
   name: string;
   onChange: (e: boolean) => void;
-  value: boolean;
+  value?: boolean;
 }
 
 const Radio: React.FC<Props> = ({
@@ -23,7 +23,10 @@ const Radio: React.FC<Props> = ({
         {label}
         {required && <span className="text-[#ED0131]"> *</span>}
       </div>
-      <div className="text-[#6F7482] ml-4 italic mt-2">{hint}</div>
+      <div
+        className="text-[#6F7482] ml-4 italic mt-2"
+        dangerouslySetInnerHTML={{ __html: hint }}
+      ></div>
 
       <div className="flex gap-5 mt-4 ml-4">
         <div className="flex items-center gap-2">

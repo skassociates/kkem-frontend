@@ -12,6 +12,7 @@ interface Props {
     heading?: string;
     desc?: string;
   };
+  type?: string;
 }
 
 const InputField: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const InputField: React.FC<Props> = ({
   value,
   readOnly,
   poPup,
+  type = "text",
 }) => {
   const [popup, setPopup] = useState(false);
   return (
@@ -56,7 +58,7 @@ const InputField: React.FC<Props> = ({
         )}
       </div>
       <input
-        type="text"
+        type={type}
         className={`p-3 w-full border-0 outline-none rounded ${
           error && "border-[1px] border-[#ED0131]"
         }`}

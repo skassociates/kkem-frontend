@@ -80,6 +80,7 @@ const Page = () => {
           render: "Something went wrong",
           type: "error",
           isLoading: false,
+          autoClose: 1000,
         });
       });
   };
@@ -90,7 +91,11 @@ const Page = () => {
 
   return (
     <div className=" min-h-screen w-full  bg-[#EADDFF] flex flex-col  items-center  pb-8 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
-      <img src="/Googleform.png" alt="" className=" h-[412px]" />
+      <img
+        src="/Googleform.png"
+        alt=""
+        className=" h-[412px] hidden md:flex "
+      />
       <Accordian
         bg="#613D97"
         header="1. Personal Details"
@@ -162,6 +167,7 @@ const Page = () => {
                 error={errors?.TOT_STR?.message}
                 onChange={onChange}
                 value={value}
+                type="number"
               />
             )}
             name="TOT_STR"
@@ -272,8 +278,19 @@ const Page = () => {
           />
         </>
       </Accordian>
-      <div className="w-1/2  flex justify-end">
-        <Button label="Save" onPress={handleSubmit(onSubmit)} />
+      <div className="md:w-1/2  w-full p-2 flex flex-col md:gap-4  md:flex-row-reverse md:justify-start justify-end">
+        <Button
+          label="Save"
+          onPress={handleSubmit(onSubmit)}
+          customStyle=" bg-[#613D97]"
+        />
+        <Button
+          label="Cancel"
+          onPress={() => {
+            route.push("/institution/login");
+          }}
+          customStyle=" bg-[#6B6B6B]"
+        />
       </div>
     </div>
   );

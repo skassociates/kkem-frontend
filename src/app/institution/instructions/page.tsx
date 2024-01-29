@@ -45,8 +45,7 @@ const Page = () => {
                 Please follow this naming convention for the supporting
                 documents - Institution Code_Name of Institution_Proof for (Name
                 of Section).
-              </li>
-              <li>
+                <br />
                 For instance, INST101010_ABC College, Kollam_Proof for Placement
                 Offers
               </li>

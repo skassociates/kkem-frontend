@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import FileUpload from "@/components/FileUpload";
 import InputField from "@/components/InputField";
 import Radio from "@/components/Radio";
+import Select from "@/components/Select";
 import TextArea from "@/components/TextArea";
 import { StudentDetails } from "@/schema/student";
 import { studentFormvalidationSchema } from "@/schema/validation";
@@ -35,7 +36,7 @@ const Page = () => {
       CA_COMP: studentForm?.CA_COMP || false,
       CC_COMP: studentForm?.CC_COMP || false,
       PDT_COMP: studentForm?.PDT_COMP || false,
-      BCEST_GRADE: studentForm?.BCEST_GRADE || false,
+      BCEST_GRADE: studentForm?.BCEST_GRADE || "",
       RI_COMP: studentForm?.RI_COMP || false,
       WRP_COMP: studentForm?.WRP_COMP || false,
       // Industry Connect Activities
@@ -48,7 +49,6 @@ const Page = () => {
       ATTN_PLCMNT_DRV: studentForm?.ATTN_PLCMNT_DRV || false,
       OFR_LTR: studentForm?.OFR_LTR || false,
       JB_SHRT_LST: studentForm?.JB_SHRT_LST || false,
-      PLMNT_ACCT: studentForm?.PLMNT_ACCT || false,
       PLMNT_ACCT_TEXT: studentForm?.PLMNT_ACCT_TEXT || "",
     },
     resolver: yupResolver(studentFormvalidationSchema),
@@ -108,7 +108,11 @@ const Page = () => {
 
   return (
     <div className=" min-h-screen w-full  bg-[#E1E1FF] flex flex-col  items-center  pb-8  scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
-      <img src="/Googleform.png" alt="" className=" h-[412px]" />
+      <img
+        src="/Googleform.png"
+        alt=""
+        className=" h-[412px] hidden md:flex "
+      />
       <Accordian
         bg="#3E3E98"
         header="1. Personal Details"
@@ -204,7 +208,7 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
                 label="1. Is your profile on the DWMS platform complete? Have you taken the first step to set your career path?"
-                hint="If you have still not reached 100%, don't worry! Click here to complete your profile."
+                hint="If you have still not reached 100%, don't worry! <a href='https://knowledgemission.kerala.gov.in/login-jobseeker.jsp' class='text-blue-500 underline'>Click here</a> to complete your profile."
                 required
                 name="DWMS_COMPLETE"
                 onChange={onChange}
@@ -237,7 +241,7 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
-                label="3. Have you attended the Career Counselling Session? *"
+                label="3. Have you attended the Career Counselling Session?"
                 hint="Yet to get guidance about your career? Login to DWMS and book your slot today!"
                 required
                 name="CC_COMP"
@@ -272,13 +276,20 @@ const Page = () => {
               required: true,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Radio
-                label="5. Please enter your grade for British Council English Score Test *"
-                hint="If you have not taken the test yet, why wait? Access the test today and flaunt your English Skills!"
-                required
-                name="BCEST_GRADE"
+              <Select
+                label="5. Please enter your grade for British Council English Score Test"
                 onChange={onChange}
+                options={[
+                  "Grade C",
+                  "Grade B2",
+                  "Grade B1",
+                  "Grade A2",
+                  "Grade A1",
+                  "Not Taken",
+                ]}
+                required
                 value={value}
+                hint="If you have not taken the test yet, why wait? Access the test today and flaunt your English Skills!"
               />
             )}
             name="BCEST_GRADE"
@@ -291,7 +302,7 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
-                label="6. Have you completed the Robotic Interview? *"
+                label="6. Have you completed the Robotic Interview?"
                 hint="Test yourself through the Robotic Interview & ace your upcoming interviews!"
                 required
                 name="RI_COMP"
@@ -343,9 +354,6 @@ const Page = () => {
           />
           <Controller
             control={control}
-            rules={{
-              required: true,
-            }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
                 label="2. Were you a participant of any Industry Insight Programmes? "
@@ -404,7 +412,7 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
-                label="2. Have you completed any internship? If yes, please upload a screenshot of the internship offer. *"
+                label="2. Have you completed any internship? If yes, please upload a screenshot of the internship offer."
                 hint=""
                 required
                 name="INTERN_COMP"
@@ -441,7 +449,7 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
-                label="4. Have you received offer letters from any employer? *"
+                label="4. Have you received offer letters from any employer?"
                 hint=""
                 required
                 name="OFR_LTR"
@@ -471,40 +479,35 @@ const Page = () => {
             )}
             name="JB_SHRT_LST"
           />
-
           <Controller
             control={control}
             rules={{
               required: true,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Radio
-                label="6. Have you been shortlisted for any jobs?"
-                hint=""
-                required
-                name="PLMNT_ACCT"
+              <TextArea
                 onChange={onChange}
                 value={value}
+                label="6. Have you participated in any other placement activities conducted in your institution (E.g. Hackathons)? If so, please share details. "
               />
             )}
-            name="PLMNT_ACCT"
+            name="PLMNT_ACCT_TEXT"
           />
-          {watch("PLMNT_ACCT") && (
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextArea onChange={onChange} value={value} />
-              )}
-              name="PLMNT_ACCT_TEXT"
-            />
-          )}
         </>
       </Accordian>
-      <div className="w-1/2  flex justify-end">
-        <Button label="Save" onPress={handleSubmit(onSubmit)} />
+      <div className="md:w-1/2  w-full p-2 flex flex-col md:gap-4  md:flex-row-reverse md:justify-start justify-end">
+        <Button
+          label="Save"
+          onPress={handleSubmit(onSubmit)}
+          customStyle=" bg-[#3E3E98]"
+        />
+        <Button
+          label="Cancel"
+          onPress={() => {
+            route.push("/student/login");
+          }}
+          customStyle=" bg-[#6B6B6B]"
+        />
       </div>
     </div>
   );
