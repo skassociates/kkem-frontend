@@ -144,6 +144,7 @@ const Page = () => {
                 error={errors?.EMAIL_ID?.message}
                 onChange={onChange}
                 value={value}
+                readOnly
               />
             )}
             name="EMAIL_ID"
@@ -160,6 +161,7 @@ const Page = () => {
                 error={errors?.INST_NAME?.message}
                 onChange={onChange}
                 value={value}
+                readOnly
               />
             )}
             name="INST_NAME"
@@ -199,7 +201,15 @@ const Page = () => {
           />
         </>
       </Accordian>
-      <Accordian header="2. Placement Activities" bg="#613D97">
+      <Accordian
+        header="2. Placement Activities"
+        bg="#613D97"
+        error={Boolean(
+          errors?.RRCMNT_DRV_COUNT?.message ||
+            errors?.PLC_DRV_JOB_OFR_COUNT?.message ||
+            errors?.INTRN_SHP_STD_COUNT?.message
+        )}
+      >
         <>
           <Controller
             control={control}
@@ -221,6 +231,7 @@ const Page = () => {
                 onChange={onChange}
                 value={value}
                 hint=""
+                error={errors?.RRCMNT_DRV_COUNT?.message}
               />
             )}
             name="RRCMNT_DRV_COUNT"
@@ -251,6 +262,7 @@ const Page = () => {
                 onChange={onChange}
                 value={value}
                 hint=""
+                error={errors?.PLC_DRV_JOB_OFR_COUNT?.message}
               />
             )}
             name="PLC_DRV_JOB_OFR_COUNT"
@@ -282,6 +294,7 @@ const Page = () => {
                 onChange={onChange}
                 value={value}
                 hint=""
+                error={errors?.INTRN_SHP_STD_COUNT?.message}
               />
             )}
             name="INTRN_SHP_STD_COUNT"

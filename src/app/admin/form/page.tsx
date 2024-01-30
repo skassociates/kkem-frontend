@@ -147,6 +147,7 @@ const Page = () => {
                 error={errors?.EMAIL_ID?.message}
                 onChange={onChange}
                 value={value}
+                readOnly
               />
             )}
             name="EMAIL_ID"
@@ -163,6 +164,7 @@ const Page = () => {
                 error={errors?.INST_NAME?.message}
                 onChange={onChange}
                 value={value}
+                readOnly
               />
             )}
             name="INST_NAME"
@@ -179,6 +181,7 @@ const Page = () => {
                 error={errors?.CA_NAME?.message}
                 onChange={onChange}
                 value={value}
+                readOnly
               />
             )}
             name="CA_NAME"
@@ -202,7 +205,14 @@ const Page = () => {
           />
         </>
       </Accordian>
-      <Accordian header="2. Curation Activities" bg="#24ABE2">
+      <Accordian
+        header="2. Curation Activities"
+        bg="#24ABE2"
+        error={Boolean(
+          errors?.CUR_SRV_COMP?.message ||
+            errors?.PCT_STD_DWMS_PROF_COMP?.message
+        )}
+      >
         <>
           <Controller
             control={control}
@@ -237,6 +247,7 @@ const Page = () => {
                 ]}
                 value={value}
                 required
+                error={errors?.CUR_SRV_COMP?.message}
               />
             )}
             name="CUR_SRV_COMP"
@@ -254,6 +265,7 @@ const Page = () => {
                 required
                 value={value}
                 hint=""
+                error={errors?.PCT_STD_DWMS_PROF_COMP?.message}
               />
             )}
             name="PCT_STD_DWMS_PROF_COMP"
@@ -278,7 +290,16 @@ const Page = () => {
           />
         </>
       </Accordian>
-      <Accordian header="3. Industry Connect Activities" bg="#24ABE2">
+      <Accordian
+        header="3. Industry Connect Activities"
+        bg="#24ABE2"
+        error={Boolean(
+          errors?.PCT_FY_STD_WEBNR?.message ||
+            errors?.PCT_STD_RSM_WRK_SHP?.message ||
+            errors?.PCT_STD_RCM_DRV?.message ||
+            errors?.PCT_STD_JOB_OFFR?.message
+        )}
+      >
         <>
           <Controller
             control={control}
@@ -294,6 +315,7 @@ Keep encouraging your peers, stay updated with industry trends and enhance your 
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
                 value={value}
+                error={errors?.PCT_FY_STD_WEBNR?.message}
               />
             )}
             name="PCT_FY_STD_WEBNR"
@@ -312,6 +334,7 @@ Create perfected resumes and land in your dream jobs!"
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
                 value={value}
+                error={errors?.PCT_STD_RSM_WRK_SHP?.message}
               />
             )}
             name="PCT_STD_RSM_WRK_SHP"
@@ -347,6 +370,7 @@ Create perfected resumes and land in your dream jobs!"
                 required
                 value={value}
                 hint=""
+                error={errors?.PCT_STD_RCM_DRV?.message}
               />
             )}
             name="PCT_STD_RCM_DRV"
@@ -364,6 +388,7 @@ Create perfected resumes and land in your dream jobs!"
                 required
                 value={value}
                 hint=""
+                error={errors?.PCT_STD_JOB_OFFR?.message}
               />
             )}
             name="PCT_STD_JOB_OFFR"

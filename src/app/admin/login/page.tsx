@@ -80,7 +80,7 @@ const Page = () => {
         <div className="flex justify-center">
           <Button
             label="Login"
-            customStyle={"min-w-60"}
+            customStyle={"min-w-60 bg-[#24ABE2]"}
             onPress={handleSubmit(onLogin)}
           />
         </div>

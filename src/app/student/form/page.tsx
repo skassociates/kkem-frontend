@@ -239,7 +239,11 @@ const Page = () => {
           <FileUpload label="Photo" />
         </>
       </Accordian>
-      <Accordian header="2. Curation Activities" bg="#3E3E98">
+      <Accordian
+        header="2. Curation Activities"
+        bg="#3E3E98"
+        error={Boolean(errors?.BCEST_GRADE?.message)}
+      >
         <>
           <div className="text-[#6F7482] ml-4 italic mt-2">
             Did you know that students who completed 90% of the curation
@@ -336,6 +340,7 @@ const Page = () => {
                   "Not Taken",
                 ]}
                 required
+                error={errors?.BCEST_GRADE?.message}
                 value={value}
                 hint="If you have not taken the test yet, why wait? <a href='https://knowledgemission.kerala.gov.in/login-jobseeker.jsp' class='text-blue-500 underline' >Access the test</a> today and flaunt your English Skills!"
               />
@@ -379,7 +384,11 @@ const Page = () => {
           {watch("WRP_COMP") && <FileUpload label="" />}
         </>
       </Accordian>
-      <Accordian header="3. Industry Connect Activities" bg="#3E3E98">
+      <Accordian
+        header="3. Industry Connect Activities"
+        bg="#3E3E98"
+        error={Boolean(errors?.PT_WRK_SHP_COUNT?.message)}
+      >
         <>
           <div className="text-[#6F7482] ml-4 italic mt-2">
             How updated are you with the industry and emerging trends? Have you
@@ -399,6 +408,7 @@ const Page = () => {
                 required
                 value={value}
                 hint="Did you know that 40% of recruiters hire candidates based on resumes? Don't waste time; come and get equipped from the masters!"
+                error={errors?.PT_WRK_SHP_COUNT?.message}
               />
             )}
             name="PT_WRK_SHP_COUNT"

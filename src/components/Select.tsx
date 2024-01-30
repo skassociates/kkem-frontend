@@ -12,6 +12,7 @@ interface Props {
     heading?: string;
     desc?: string;
   };
+  error?: string;
 }
 
 const Select: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const Select: React.FC<Props> = ({
   onChange,
   value,
   poPup,
+  error,
 }) => {
   const [popup, setPopup] = useState(false);
   return (
@@ -64,7 +66,9 @@ const Select: React.FC<Props> = ({
       <select
         name="skdhb"
         id="kbhsh"
-        className="p-3 w-full border-0 outline-none rounded mt-3 "
+        className={`p-3 w-full border-0 outline-none rounded mt-3 ${
+          error && "border-[1px] border-[#ED0131]"
+        }`}
         onChange={(e) => {
           onChange(e.target.value);
         }}
@@ -78,6 +82,7 @@ const Select: React.FC<Props> = ({
           );
         })}
       </select>
+      {error && <div className="text-[#ED0131] text-xs pt-0.5">{error}</div>}
     </div>
   );
 };

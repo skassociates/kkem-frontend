@@ -8,6 +8,7 @@ interface Props {
   onChange: (e: Array<string>) => void;
   value: Array<string>;
   options: Array<string>;
+  error?: string;
 }
 
 const CheckBox: React.FC<Props> = ({
@@ -18,28 +19,36 @@ const CheckBox: React.FC<Props> = ({
   onChange,
   value,
   options,
+  error,
 }) => {
-  let selectedValue: Array<string> = value;
-  const onSelect = (val: string) => {
-    if (value?.includes(val)) {
-      const index = value.indexOf(val);
+  const onSelect = (selectedValue: string) => {
+    const updatedValues = [...value];
+
+    if (value.includes(selectedValue)) {
+      const index = value.indexOf(selectedValue);
       if (index > -1) {
-        selectedValue = value.splice(index, 1);
-        onChange(selectedValue);
+        updatedValues.splice(index, 1);
+        onChange(updatedValues);
       }
     } else {
-      selectedValue.push(val);
-      onChange(selectedValue);
+      updatedValues.push(selectedValue);
+      onChange(updatedValues);
     }
   };
 
+  const isNoneSelected = value.length === 0;
+
   return (
     <div className="mt-7">
-      <div className="text-base">
+      <div
+        className={`text-base  ${(error || isNoneSelected) && "text-[#ED0131]"}
+       `}
+      >
         {label}
         {required && <span className="text-[#ED0131]"> *</span>}
       </div>
       <div className="text-[#6F7482] ml-4 italic mt-2">{hint}</div>
+
       <div className="flex flex-row flex-wrap gap-5">
         {options.map((obj, index) => {
           return (
@@ -62,6 +71,9 @@ const CheckBox: React.FC<Props> = ({
           );
         })}
       </div>
+      {(error || isNoneSelected) && (
+        <div className="text-[#ED0131] text-xs pt-0.5">{error}</div>
+      )}
     </div>
   );
 };
