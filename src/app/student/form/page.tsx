@@ -42,7 +42,7 @@ const Page = () => {
       RI_COMP: studentForm?.RI_COMP || false,
       WRP_COMP: studentForm?.WRP_COMP || false,
       // Industry Connect Activities
-      PT_WRK_SHP_COUNT: studentForm?.PT_WRK_SHP_COUNT || false,
+      PT_WRK_SHP_COUNT: studentForm?.PT_WRK_SHP_COUNT || "",
       IIP_PART: studentForm?.IIP_PART || false,
       LCP_PART: studentForm?.LCP_PART || false,
       // Placement Activities
