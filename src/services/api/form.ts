@@ -14,8 +14,11 @@ const getStudentDetails = async () => {
 };
 
 const updateStudentDetails = async (body: any) => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
   try {
-    const response = await axiosInstance.put("/students/update", body);
+    const response = await axiosInstance.put("/students/update", body, {
+      headers: { Authorization: varToken },
+    });
     return response;
   } catch (error) {
     throw error;
