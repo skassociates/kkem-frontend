@@ -17,8 +17,36 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+interface MyData {
+  EMAIL_ID: string;
+  INSTITUTION_NAME: string;
+  STU_NAME: string;
+  DWMS_ID: string;
+}
+
 const Page = () => {
   const [studentForm, setStudentForm] = useState<StudentDetails>();
+  // let newObject: any = window.localStorage?.getItem("dataObj");
+  // let dataObj = JSON.parse(newObject);
+  const [stuData, setDataObj] = useState<MyData | null>(null);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("dataObj");
+    if (storedData) {
+      try {
+        // Parse JSON data and remove any trailing characters (e.g., '4')
+        const cleanedData = storedData.replace(/[^{}:\w\s,"'.]+/g, "");
+        const parsedData: MyData = JSON.parse(cleanedData);
+        setDataObj(parsedData);
+        setValue("EMAIL_ID", parsedData.EMAIL_ID);
+        setValue("INST_NAME", parsedData.INSTITUTION_NAME);
+        setValue("STU_NAME", parsedData.STU_NAME);
+        setValue("DWMS_ID", parsedData.DWMS_ID);
+      } catch (error) {
+        console.error("Error parsing data from localStorage:", error);
+      }
+    }
+  }, []);
 
   const route = useRouter();
   const {
@@ -26,6 +54,7 @@ const Page = () => {
     control,
     formState: { errors },
     watch,
+    setValue,
   } = useForm({
     defaultValues: {
       // Fisrt sec
@@ -365,9 +394,6 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Select
                 label="1. How many workshops have you attended in connection with Placement Training, Resume Building and Workshops on the Future of Jobs? "
-                hint="Did you know that 40% of recruiters hire candidates based on resumes? Don't waste time; come and get equipped from the masters!"
-                required
-                name="PT_WRK_SHP_COUNT"
                 onChange={onChange}
                 options={["More than 5", "3 - 5", "2", "1", "None"]}
                 required

@@ -15,21 +15,44 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-
+interface MyData {
+  EMAIL_ID: string;
+  INST_NAME: string;
+  CA_NAME: string;
+}
 const Page = () => {
   const [adminDetails, setAdminDetails] = useState<adminDetails>();
+  const [adminData, setDataObj] = useState<MyData | null>(null);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("dataObj");
+    if (storedData) {
+      try {
+        // Parse JSON data and remove any trailing characters (e.g., '4')
+        const cleanedData = storedData.replace(/[^{}:\w\s,"'.]+/g, "");
+        const parsedData: MyData = JSON.parse(cleanedData);
+        setDataObj(parsedData);
+        setValue("EMAIL_ID", parsedData.EMAIL_ID);
+        setValue("INST_NAME", parsedData.INST_NAME);
+        setValue("CA_NAME", parsedData.CA_NAME);
+      } catch (error) {
+        console.error("Error parsing data from localStorage:", error);
+      }
+    }
+  }, []);
   const {
     handleSubmit,
     control,
     formState: { errors },
     getValues,
     watch,
+    setValue,
   } = useForm({
     defaultValues: {
       //  sec 1
-      EMAIL_ID: adminDetails?.EMAIL_ID || "",
-      INST_NAME: adminDetails?.INST_NAME || "",
-      CA_NAME: adminDetails?.CA_NAME || "",
+      EMAIL_ID: adminDetails?.EMAIL_ID || adminData?.EMAIL_ID,
+      INST_NAME: adminDetails?.INST_NAME || adminData?.INST_NAME,
+      CA_NAME: adminDetails?.CA_NAME || adminData?.CA_NAME,
       TOT_STR: adminDetails?.TOT_STR || "",
       // sec 2
       DWMS_ORT_SSN: adminDetails?.DWMS_ORT_SSN || false,

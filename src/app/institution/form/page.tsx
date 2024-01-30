@@ -15,23 +15,45 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+interface MyData {
+  EMAIL_ID: string;
+  INST_NAME: string;
+}
 const Page = () => {
   const [institutionDetails, setInstitutionDetails] =
     useState<instituteDetails>();
+  const [instData, setDataObj] = useState<MyData | null>(null);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("dataObj");
+    if (storedData) {
+      try {
+        // Parse JSON data and remove any trailing characters (e.g., '4')
+        const cleanedData = storedData.replace(/[^{}:\w\s,"'.]+/g, "");
+        const parsedData: MyData = JSON.parse(cleanedData);
+        setDataObj(parsedData);
+        setValue("EMAIL_ID", parsedData.EMAIL_ID);
+        setValue("INST_NAME", parsedData.INST_NAME);
+      } catch (error) {
+        console.error("Error parsing data from localStorage:", error);
+      }
+    }
+  }, []);
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      EMAIL_ID: "",
-      INST_NAME: "",
-      PLC_CORD_NAME: "",
-      TOT_STR: "",
-      RRCMNT_DRV_COUNT: "",
-      PLC_DRV_JOB_OFR_COUNT: "",
-      INTRN_SHP_STD_COUNT: "",
-      PLCMNT_ACT: false,
+      EMAIL_ID: institutionDetails?.EMAIL_ID || "",
+      INST_NAME: institutionDetails?.INST_NAME || "",
+      PLC_CORD_NAME: institutionDetails?.PLC_CORD_NAME || "",
+      TOT_STR: institutionDetails?.TOT_STR || "",
+      RRCMNT_DRV_COUNT: institutionDetails?.RRCMNT_DRV_COUNT || "",
+      PLC_DRV_JOB_OFR_COUNT: institutionDetails?.PLC_DRV_JOB_OFR_COUNT || "",
+      INTRN_SHP_STD_COUNT: institutionDetails?.INTRN_SHP_STD_COUNT || "",
+      PLCMNT_ACT: institutionDetails?.PLCMNT_ACT || false,
     },
     resolver: yupResolver(institutionFormvalidationSchema),
     values: institutionDetails,
@@ -198,6 +220,7 @@ const Page = () => {
                 ]}
                 onChange={onChange}
                 value={value}
+                hint=""
               />
             )}
             name="RRCMNT_DRV_COUNT"
@@ -227,6 +250,7 @@ const Page = () => {
                 ]}
                 onChange={onChange}
                 value={value}
+                hint=""
               />
             )}
             name="PLC_DRV_JOB_OFR_COUNT"
@@ -257,6 +281,7 @@ const Page = () => {
                 ]}
                 onChange={onChange}
                 value={value}
+                hint=""
               />
             )}
             name="INTRN_SHP_STD_COUNT"

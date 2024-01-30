@@ -30,6 +30,7 @@ const Page = () => {
       .then((response) => {
         toast.dismiss(get);
         localStorage.AUTH_TOKEN = response.data.token;
+        localStorage.setItem("dataObj", JSON.stringify(response.data.data));
         router.push("/student/instructions");
       })
       .catch((error) => {
@@ -45,6 +46,7 @@ const Page = () => {
 
   return (
     <div className="h-screen w-full bg-[#E1E1FF] flex flex-col justify-center items-center">
+      <div className="text-red-500">All the fields marked * are mandatory</div>
       <div className="md:w-1/3">
         <Controller
           control={control}
@@ -62,7 +64,7 @@ const Page = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <InputField
-              label="Email id"
+              label="Email ID"
               required
               error={errors?.email?.message}
               onChange={onChange}
