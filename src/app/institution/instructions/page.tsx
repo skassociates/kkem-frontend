@@ -12,7 +12,9 @@ const Page = () => {
           Instructions
         </div>
         <div className="p-9">
-          <div className="text-3xl">Institutions</div>
+          <div className="text-3xl">
+            Connect Career to Campus 2023 - Institutions Form
+          </div>
           <div className="mt-8 text-lg">
             As part of the Connect Career to Campus (CCC) Campaign, KKEM is
             proud to introduce the{" "}

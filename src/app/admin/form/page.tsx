@@ -213,6 +213,7 @@ const Page = () => {
                   "Work Readiness Programme (WRP)",
                 ]}
                 value={value}
+                required
               />
             )}
             name="CUR_SRV_COMP"
@@ -229,6 +230,7 @@ const Page = () => {
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
                 value={value}
+                hint=""
               />
             )}
             name="PCT_STD_DWMS_PROF_COMP"
@@ -321,6 +323,7 @@ Create perfected resumes and land in your dream jobs!"
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
                 value={value}
+                hint=""
               />
             )}
             name="PCT_STD_RCM_DRV"
@@ -337,6 +340,7 @@ Create perfected resumes and land in your dream jobs!"
                 options={["100%", "60 - 90%", "30 - 60%", "1 - 30%", "Nil"]}
                 required
                 value={value}
+                hint=""
               />
             )}
             name="PCT_STD_JOB_OFFR"

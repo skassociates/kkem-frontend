@@ -4,7 +4,7 @@ import React, { useState } from "react";
 interface Props {
   label: string;
   required: boolean;
-  hint?: string;
+  hint: string;
   options: Array<string>;
   onChange: (e: string) => void;
   value: string;
@@ -57,7 +57,10 @@ const Select: React.FC<Props> = ({
           )}
         </div>
       </div>
-      <div className="text-[#6F7482] ml-4 italic mt-2">{hint}</div>
+      <div
+        className="text-[#6F7482] ml-4 italic mt-2"
+        dangerouslySetInnerHTML={{ __html: hint }}
+      ></div>
       <select
         name="skdhb"
         id="kbhsh"

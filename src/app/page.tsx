@@ -16,7 +16,7 @@ const Page = () => {
       </Link>
       <Link href={"/admin/login"}>
         <div className="bg-[#26A9DF] px-4 py-2 text-white rounded-full">
-          Career Ambassidor
+          Career Ambassador
         </div>
       </Link>
     </div>

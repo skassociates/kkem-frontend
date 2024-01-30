@@ -15,7 +15,7 @@ export const studentFormvalidationSchema = yup
         RI_COMP: yup.boolean().required("Robotic Interview is required"),
         WRP_COMP: yup.boolean().required(),// change to file upload
         // Industry Connect Activities
-        PT_WRK_SHP_COUNT: yup.boolean().required("Placement Training is required"),//change to string change to drop down or radio group
+        PT_WRK_SHP_COUNT: yup.string().required("Placement Training is required"),//change to string change to drop down or radio group
         IIP_PART: yup.boolean(),
         LCP_PART: yup.boolean(),
         // Placement Activities
@@ -31,7 +31,7 @@ export const studentFormvalidationSchema = yup
 // replace the object with enum from backend
 export const institutionFormvalidationSchema = yup
     .object({
-        EMAIL_ID: yup.string().required("Email ID is reuired"),
+        EMAIL_ID: yup.string().required("Email ID is required"),
         INST_NAME: yup.string().required("Institution is required"),
         PLC_CORD_NAME: yup.string().required("Placement Coordinator Name is required"),
         TOT_STR: yup.string().required("Total Student Strength is required"),

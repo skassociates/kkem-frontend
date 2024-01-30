@@ -12,7 +12,7 @@ export interface StudentDetails {
     RI_COMP: boolean;
     WRP_COMP: boolean;
 
-    PT_WRK_SHP_COUNT: boolean;
+    PT_WRK_SHP_COUNT: string;
     IIP_PART: boolean;
     LCP_PART: boolean;
 

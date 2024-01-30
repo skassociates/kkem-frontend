@@ -356,23 +356,28 @@ const Page = () => {
             How updated are you with the industry and emerging trends? Have you
             taken some time out to connect with industry experts?
           </div>
+
           <Controller
             control={control}
             rules={{
               required: true,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Radio
+              <Select
                 label="1. How many workshops have you attended in connection with Placement Training, Resume Building and Workshops on the Future of Jobs? "
                 hint="Did you know that 40% of recruiters hire candidates based on resumes? Don't waste time; come and get equipped from the masters!"
                 required
                 name="PT_WRK_SHP_COUNT"
                 onChange={onChange}
+                options={["More than 5", "3 - 5", "2", "1", "None"]}
+                required
                 value={value}
+                hint="Did you know that 40% of recruiters hire candidates based on resumes? Don't waste time; come and get equipped from the masters!"
               />
             )}
             name="PT_WRK_SHP_COUNT"
           />
+
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
