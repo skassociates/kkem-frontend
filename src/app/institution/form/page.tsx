@@ -29,8 +29,7 @@ const Page = () => {
     if (storedData) {
       try {
         // Parse JSON data and remove any trailing characters (e.g., '4')
-        const cleanedData = storedData.replace(/[^{}:\w\s,"'.]+/g, "");
-        const parsedData: MyData = JSON.parse(cleanedData);
+        const parsedData: MyData = JSON.parse(storedData);
         setDataObj(parsedData);
         setValue("EMAIL_ID", parsedData.EMAIL_ID);
         setValue("INST_NAME", parsedData.INST_NAME);
@@ -86,6 +85,7 @@ const Page = () => {
 
   const fetchdata = () => {
     const get = toast.loading("Fetching Your Details....");
+
     form
       .getInstituteDetails()
       .then((response) => {

@@ -40,14 +40,17 @@ const CheckBox: React.FC<Props> = ({
 
   return (
     <div className="mt-7">
+      {error}
+
       <div
-        className={`text-base  ${(error || isNoneSelected) && "text-[#ED0131]"}
+        className={`text-base  ${error && "text-[#ED0131]"}
        `}
       >
         {label}
         {required && <span className="text-[#ED0131]"> *</span>}
       </div>
       <div className="text-[#6F7482] ml-4 italic mt-2">{hint}</div>
+      {error && <div className="text-[#ED0131] text-xs pt-0.5">{error}</div>}
 
       <div className="flex flex-row flex-wrap gap-5">
         {options.map((obj, index) => {
@@ -71,9 +74,6 @@ const CheckBox: React.FC<Props> = ({
           );
         })}
       </div>
-      {(error || isNoneSelected) && (
-        <div className="text-[#ED0131] text-xs pt-0.5">{error}</div>
-      )}
     </div>
   );
 };

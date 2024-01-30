@@ -30,24 +30,6 @@ const Page = () => {
   // let dataObj = JSON.parse(newObject);
   const [stuData, setDataObj] = useState<MyData | null>(null);
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("dataObj");
-    if (storedData) {
-      try {
-        // Parse JSON data and remove any trailing characters (e.g., '4')
-        const cleanedData = storedData.replace(/[^{}:\w\s,"'.]+/g, "");
-        const parsedData: MyData = JSON.parse(cleanedData);
-        setDataObj(parsedData);
-        setValue("EMAIL_ID", parsedData.EMAIL_ID);
-        setValue("INST_NAME", parsedData.INSTITUTION_NAME);
-        setValue("STU_NAME", parsedData.STU_NAME);
-        setValue("DWMS_ID", parsedData.DWMS_ID);
-      } catch (error) {
-        console.error("Error parsing data from localStorage:", error);
-      }
-    }
-  }, []);
-
   const route = useRouter();
   const {
     handleSubmit,
@@ -109,7 +91,7 @@ const Page = () => {
       });
   };
 
-  const fetchdata = () => {
+  const fetchdata = async () => {
     const get = toast.loading("Fetching Your Details....");
     form
       .getStudentDetails()
@@ -134,8 +116,23 @@ const Page = () => {
   };
 
   useEffect(() => {
-    axiosInstance.defaults.headers.post["Authorization"] =
-      localStorage.getItem("AUTH_TOKEN");
+    const storedData = localStorage.getItem("dataObj");
+    if (storedData) {
+      try {
+        // Parse JSON data and remove any trailing characters (e.g., '4')
+        const parsedData: MyData = JSON.parse(storedData);
+        setDataObj(parsedData);
+        setValue("EMAIL_ID", parsedData.EMAIL_ID);
+        setValue("INST_NAME", parsedData.INSTITUTION_NAME);
+        setValue("STU_NAME", parsedData.STU_NAME);
+        setValue("DWMS_ID", parsedData.DWMS_ID);
+      } catch (error) {
+        console.error("Error parsing data from localStorage:", error);
+      }
+    }
+    // axiosInstance.defaults.headers.get["authorization"] =
+    //   localStorage.getItem("AUTH_TOKEN");
+
     fetchdata();
   }, []);
 
