@@ -48,41 +48,53 @@ const Page = () => {
   };
 
   return (
-    <div className="h-screen w-full bg-[#EFF8FC] flex flex-col justify-center items-center">
-      <div className="text-red-500">All the fields marked * are mandatory</div>
-
-      <div className="md:w-1/3">
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              label="DWMS ID"
-              required
-              error={errors?.dwmsid?.message}
-              onChange={onChange}
-            />
-          )}
-          name="dwmsid"
-        />
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              label="Email ID"
-              required
-              error={errors?.email?.message}
-              onChange={onChange}
-            />
-          )}
-          name="email"
-        />
-
-        <div className="flex justify-center">
-          <Button
-            label="Login"
-            customStyle={"min-w-60 bg-[#24ABE2]"}
-            onPress={handleSubmit(onLogin)}
+    <div className="h-screen w-full bg-white flex flex-col justify-center items-center">
+      <img
+        src="/Googleform.png"
+        className="md:w-1/2 hidden md:flex md:h-[355px] mb-8"
+        alt=""
+      />
+      <div className=" bg-[#EFF8FC] w-full md:w-1/2 h-screen p-2 md:h-1/2 flex flex-col rounded-[22px] justify-center items-center">
+        <div className=" min-w-full flex justify-center flex-col">
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <div className="w-full flex justify-center">
+                <InputField
+                  label="DWMS ID"
+                  required
+                  error={errors?.dwmsid?.message}
+                  onChange={onChange}
+                />
+              </div>
+            )}
+            name="dwmsid"
           />
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <div className="w-full flex justify-center">
+                <InputField
+                  label="Email ID"
+                  required
+                  error={errors?.email?.message}
+                  onChange={onChange}
+                />
+              </div>
+            )}
+            name="email"
+          />
+
+          <div className="flex justify-center ">
+            <Button
+              label="Login"
+              customStyle={"min-w-60"}
+              onPress={handleSubmit(onLogin)}
+            />
+          </div>
+          <div className="text-red-500 text-right p-4 ">
+            All the fields marked * are mandatory
+          </div>
         </div>
       </div>
     </div>

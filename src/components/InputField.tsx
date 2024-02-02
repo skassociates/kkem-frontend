@@ -27,9 +27,9 @@ const InputField: React.FC<Props> = ({
 }) => {
   const [popup, setPopup] = useState(false);
   return (
-    <div className="mt-7 relative">
+    <div className="mt-7 relative w-full md:w-1/2 ">
       {popup && (
-        <div className="w-full bg-white rounded-lg shadow-2xl md:w-1/2 p-4 absolute ">
+        <div className="w-full bg-white rounded-lg shadow-2xl p-4 absolute ">
           <div
             onClick={() => {
               setPopup(false);

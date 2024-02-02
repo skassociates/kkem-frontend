@@ -10,12 +10,11 @@ try {
 } catch (error) {
 
 }
-const productionurl = "https://kkem-backend.vercel.app/"
 
 
 
 export const axiosInstance = axios.create({
-  baseURL: productionurl ? productionurl : "http://localhost:3001/",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   // baseURL: "http://localhost:3001/",
   headers: {
     // 'Content-Type': "application/json",
