@@ -24,8 +24,7 @@ const Page = () => {
             like you to embark on this journey and become a top scorer on the
             CCC Leaderboard! Complete all the required activities, earn maximum
             points, and stand a chance to be a top performing Career Ambassador!
-            Kindly take a few moments to read the instructions below: <br />{" "}
-            <br />
+            <br /> <br />
             <div>
               Kindly take a few moments to read the instructions below:
             </div>{" "}
@@ -55,7 +54,7 @@ const Page = () => {
       <div className="md:w-1/2 flex justify-end ">
         <Link href={"/admin/form"}>
           <Button
-            label="View Form"
+            label="Let's Roll"
             onPress={() => {}}
             customStyle="min-w-60 bg-[#26A9DF]"
           />

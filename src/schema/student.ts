@@ -1,29 +1,30 @@
 export interface StudentDetails {
-    EMAIL_ID: string;
-    INST_NAME: string;
-    STU_NAME: string;
-    DWMS_ID: string;
+  EMAIL_ID: string;
+  INST_NAME: string;
+  STU_NAME: string;
+  DWMS_ID: string;
 
-    DWMS_COMPLETE: boolean;
-    CA_COMP: boolean;
-    CC_COMP: boolean;
-    PDT_COMP: boolean;
-    BCEST_GRADE: string;
-    RI_COMP: boolean;
-    WRP_COMP: boolean;
+  DWMS_COMPLETE: boolean;
+  CA_COMP: boolean;
+  CC_COMP: boolean;
+  PDT_COMP: boolean;
+  BCEST_GRADE: string;
+  RI_COMP: boolean;
+  WRP_COMP: boolean;
 
-    PT_WRK_SHP_COUNT: string;
-    IIP_PART: boolean;
-    LCP_PART: boolean;
+  PT_WRK_SHP_COUNT: string;
+  IIP_PART: boolean;
+  LCP_PART: boolean;
 
-    SP_DWMS: boolean;
-    INTERN_COMP: boolean;
-    ATTN_PLCMNT_DRV: boolean;
-    OFR_LTR: boolean;
-    JB_SHRT_LST: boolean;
-    PLMNT_ACCT: boolean;
+  SP_DWMS: boolean;
+  DWMT_T:string;
+  INTERN_COMP: string;
+  ATTN_PLCMNT_DRV: boolean;
+  OFR_LTR: boolean;
+  JB_SHRT_LST: boolean;
+  PLMNT_ACCT: boolean;
 
-    PLMNT_ACCT_TEXT: string;
+  PLMNT_ACCT_TEXT: string;
 }
 
 export interface instituteDetails {

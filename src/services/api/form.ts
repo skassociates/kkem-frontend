@@ -4,7 +4,7 @@ import { axiosInstance } from "../request/request";
 const getStudentDetails = async () => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
   try {
-    const response = await axiosInstance.get("/students/", {
+    const response = await axiosInstance.get("/students/",{
       headers: { Authorization: varToken },
     });
     return response;
@@ -64,11 +64,15 @@ const getAdminDetails = async () => {
 };
 
 const upateAdminDetails = async (body: any) => {
+    const varToken = localStorage.getItem("AUTH_TOKEN");
+
   try {
     const response = await axiosInstance.put(
       "/career-ambassadors/update",
-      body
-    );
+      body, {
+      headers: { Authorization: varToken },
+    });
+    
     return response;
   } catch (error) {
     throw error;

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { files } from "@/services/api/fileupload";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
 }
 const FileUpload: React.FC<Props> = ({ label }) => {
   const fileRef: any = useRef(null);
+  const [fileName, setFileName] = useState();
   return (
     <>
       <input
@@ -17,6 +18,7 @@ const FileUpload: React.FC<Props> = ({ label }) => {
         id=""
         ref={fileRef}
         onChange={(e: any) => {
+        
           const get = toast.loading("Uploading your file....");
           e.preventDefault();
           let formData = new FormData();
@@ -25,6 +27,7 @@ const FileUpload: React.FC<Props> = ({ label }) => {
           files
             .upload(formData)
             .then((response) => {
+                setFileName(e.target.files[0].name);
               toast.update(get, {
                 render: "File uploaded successfully",
                 type: "success",
@@ -59,6 +62,9 @@ const FileUpload: React.FC<Props> = ({ label }) => {
             Limit: 1 MB, jpg/jpeg format
           </div>
         </div>
+        {fileName && (
+          <div className="text-green-500">{fileName} - successfully uploaded</div>
+        )}
       </div>
     </>
   );

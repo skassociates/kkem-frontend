@@ -62,7 +62,11 @@ const Page = () => {
       </div>
       <div className="md:w-1/2 flex justify-end ">
         <Link href={"/student/form"}>
-          <Button label="View Form" onPress={() => {}} customStyle="min-w-60" />
+          <Button
+            label="Let's Roll"
+            onPress={() => {}}
+            customStyle="min-w-60"
+          />
         </Link>
       </div>
     </div>

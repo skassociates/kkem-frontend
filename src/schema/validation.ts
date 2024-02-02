@@ -21,7 +21,8 @@ export const studentFormvalidationSchema = yup.object({
   LCP_PART: yup.boolean(),
   // Placement Activities
   SP_DWMS: yup.boolean().required(),
-  INTERN_COMP: yup.boolean().required("Intership is required"),
+  DWMT_T: yup.string(), // .required("Required field") ,
+  INTERN_COMP: yup.string().required("Intership is required"),
   ATTN_PLCMNT_DRV: yup.boolean().required("Placement Drive is required"),
   OFR_LTR: yup.boolean().required("Offer Letter is required"),
   JB_SHRT_LST: yup.boolean().required("Job Short List is required"),
