@@ -58,7 +58,7 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <div className="w-full flex justify-center">
                 <InputField
-                  label="DWMS ID"
+                  label="INSTITUTION ID"
                   required
                   error={errors?.instid?.message}
                   onChange={onChange}

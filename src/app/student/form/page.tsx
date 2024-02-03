@@ -147,9 +147,9 @@ console.log(errors);
         alt=""
         className=" h-[412px] hidden md:flex "
       />
-      <div className="flex md:hidden text-3xl font-semibold mt-4">
+      {/* <div className="flex md:hidden text-3xl font-semibold mt-4">
         Student form
-      </div>
+      </div> */}
       <Accordian
         bg="#3E3E98"
         header="1. Personal Details"
@@ -161,9 +161,12 @@ console.log(errors);
         )}
       >
         <>
-          <div className="text-[#6F7482] ml-4 italic mt-2">
-            Congratulations on taking your first step towards enhancing your
-            Employability!
+          <div className="text-[#2b2c31] ml-4  mt-2 text-base">
+            <b>
+              {" "}
+              Congratulations on taking your first step towards enhancing your
+              Employability!
+            </b>
             <br />
             We wish and hope that you improve your Employability Quotient and
             land your name on the Leaderboard!
@@ -252,7 +255,7 @@ console.log(errors);
         error={Boolean(errors?.BCEST_GRADE?.message)}
       >
         <>
-          <div className="text-[#6F7482] ml-4 italic mt-2">
+          <div className="text-[#2b2c31] ml-4 mt-2">
             Did you know that students who completed 90% of the curation
             activities on the DWMS platform have a higher rate of employability?
             <br />
@@ -401,7 +404,7 @@ console.log(errors);
         error={Boolean(errors?.PT_WRK_SHP_COUNT?.message)}
       >
         <>
-          <div className="text-[#6F7482] ml-4 italic mt-2">
+          <div className="text-[#2b2c31] ml-4 mt-2">
             How updated are you with the industry and emerging trends? Have you
             taken some time out to connect with industry experts?
           </div>
@@ -465,7 +468,7 @@ console.log(errors);
         error={Boolean(errors?.INTERN_COMP?.message)}
       >
         <>
-          <div className="text-[#6F7482] ml-4 italic mt-2">
+          <div className="text-[#2b2c31] ml-4  mt-2">
             Are you all set to kickstart your career?
             <br />
             Dive down below to enter details of your placement activities, earn

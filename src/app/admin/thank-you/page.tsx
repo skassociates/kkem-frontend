@@ -15,7 +15,7 @@ const Page = () => {
           <br />
           <div>
             Thank you for sharing your inputs for the Employability Enhancement
-            Indicator Leaderboard. You may edit your responses in future upon
+            Index Leaderboard. You may edit your responses in future upon
             completion of pending segments, and also view your points on the
             Leaderboard. <br />
             <br />

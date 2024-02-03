@@ -134,6 +134,14 @@ const Page = () => {
         )}
       >
         <>
+          <div className="text-[#2b2c31] ml-4  mt-2">
+            Congratulations on taking the first step towards enhancing the
+            employability of your students!<br/> We wish and hope that you&apos;ll be
+            able to improve the Employability Enhancement Index of your
+            institution and land your name on the Leaderboard!
+            <br />
+            Kindly fill the below details carefully.
+          </div>
           <Controller
             control={control}
             rules={{
@@ -337,7 +345,7 @@ const Page = () => {
           customStyle=" bg-[#6B6B6B]"
         />
       </div>
-     <Footer />
+      <Footer />
     </div>
   );
 };

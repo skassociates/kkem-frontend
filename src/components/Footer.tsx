@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center pt-4">
         <div className="text-black">
           <p className="text-center md:text-left">
-            © 2022 Copyright KHEM || KDSC
+            © 2022 Copyright KKEM || KDSC
           </p>
           <p className="text-center md:text-left">
             4th Floor, India Heights Building,

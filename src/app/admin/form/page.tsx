@@ -136,6 +136,13 @@ const Page = () => {
         )}
       >
         <>
+          <div className="text-[#2b2c31] ml-4  mt-2">
+            Congratulations on taking the first step in your professional
+            journey as KKEM&apos;s Career Ambassador! We wish and hope that
+            you&apos;ll be able to improve the Employability Enhancement Index
+            of your institution as well as your peers!
+          </div>
+
           <Controller
             control={control}
             rules={{
@@ -348,7 +355,7 @@ Create perfected resumes and land in your dream jobs!"
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Radio
-                label="3.Has your institution partnered with KKEM to conduct any Industry Insight Programmes? "
+                label="3. Has your institution partnered with KKEM to conduct any Industry Insight Programmes? "
                 hint="Share industry insights with your peers and boost your institution's Employability Enhancement Index!"
                 required
                 name="KKEM_IIP"
@@ -410,7 +417,7 @@ Create perfected resumes and land in your dream jobs!"
           customStyle=" bg-[#6B6B6B]"
         />
       </div>
-     <Footer />
+      <Footer />
     </div>
   );
 };
