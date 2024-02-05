@@ -282,7 +282,11 @@ const Page = () => {
             name="PLC_DRV_JOB_OFR_COUNT"
           />
           {watch("PLC_DRV_JOB_OFR_COUNT") && (
-            <FileUpload label="" allowedFormats={["application/pdf"]} folderId={folderId}/>
+            <FileUpload
+              label=""
+              allowedFormats={["image/jpeg", "image/jpg", "application/pdf"]}
+              folderId={folderId}
+            />
           )}
 
           <Controller

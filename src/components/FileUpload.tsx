@@ -46,11 +46,7 @@ const FileUpload: React.FC<Props> = ({ label, allowedFormats, folderId }) => {
           toast.error(`File size exceeds the limit of 5 MB.`);
         }
       } else {
-        toast.error(
-          `Invalid file format. Please upload ${allowedFormats.join(
-            ", "
-          )} files.`
-        );
+        toast.error("Please upload files in jpeg/jpg/pdf format only");
       }
     }
   };
@@ -83,9 +79,9 @@ const FileUpload: React.FC<Props> = ({ label, allowedFormats, folderId }) => {
             <span className="text-[#3C83E3] underline">Browse</span>
           </div>
           <div className="text-xs text-[#676767]">
-            Limit: 5 MB, select{" "}
-            {allowedFormats.map((mimeType) => mimeType.split("/")[1]).join(" ")}{" "}
-            format
+            Limit: 5 MB, File Upload option - {" "}
+            {allowedFormats.map((mimeType) => mimeType.split("/")[1]).join("/")}{" "}
+            formats
           </div>
         </div>
         {fileName && (

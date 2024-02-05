@@ -8,8 +8,8 @@ const Footer = () => {
       </div>
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center pt-4">
         <div className="text-black">
-          <p className="text-center md:text-left">
-            © 2022 Copyright KKEM || KDSC
+          <p className="text-center md:text-left font-semibold	">
+            © 2022 Copyright KKEM || K-DISC
           </p>
           <p className="text-center md:text-left">
             4th Floor, India Heights Building,

@@ -249,7 +249,7 @@ const Page = () => {
 
           <FileUpload
             label="Photo"
-            allowedFormats={["image/jpeg", "image/jpg"]}
+            allowedFormats={["image/jpeg", "image/jpg", "application/pdf"]}
             folderId={folderId}
           />
         </>
@@ -401,7 +401,11 @@ const Page = () => {
             name="WRP_COMP"
           />
           {watch("WRP_COMP") && (
-            <FileUpload label="" folderId={folderId} allowedFormats={["application/pdf"]} />
+            <FileUpload
+              label=""
+              folderId={folderId}
+              allowedFormats={["image/jpeg", "image/jpg", "application/pdf"]}
+            />
           )}
         </>
       </Accordian>
@@ -536,7 +540,11 @@ const Page = () => {
           />
           {(watch("INTERN_COMP") === "Completed" ||
             watch("INTERN_COMP") === "Pursuing") && (
-            <FileUpload label="" allowedFormats={["application/pdf"]} folderId={folderId} />
+            <FileUpload
+              label=""
+              allowedFormats={["image/jpeg", "image/jpg", "application/pdf"]}
+              folderId={folderId}
+            />
           )}
           <Controller
             control={control}
@@ -575,7 +583,11 @@ const Page = () => {
           />
 
           {watch("OFR_LTR") && (
-            <FileUpload label="" allowedFormats={["application/pdf"]} folderId={folderId} />
+            <FileUpload
+              label=""
+              allowedFormats={["image/jpeg", "image/jpg", "application/pdf"]}
+              folderId={folderId}
+            />
           )}
 
           <Controller
