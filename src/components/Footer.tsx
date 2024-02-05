@@ -20,7 +20,13 @@ const Footer = () => {
           <p className="text-center md:text-left">Thiruvananthapuram</p>
         </div>
         <div className="flex space-x-4 mt-3 md:mt-0">
-          <a href="#" className="text-gray-500 hover:text-gray-900">
+          <a
+            href="https://www.facebook.com/KeralaKnowledgeEconomyMission/"
+            className="text-gray-500 hover:text-gray-900"
+            aria-label="Find us on Facebook"
+            target="_blank"
+            rel="noopener"
+          >
             <svg
               className="w-10 h-10"
               fill="currentColor"
@@ -34,7 +40,13 @@ const Footer = () => {
               ></path>
             </svg>
           </a>
-          <a href="#" className="text-gray-500 hover:text-gray-900">
+          <a
+            href="https://www.instagram.com/keralaknowledgemission/"
+            className="text-gray-500 hover:text-gray-900"
+            aria-label="Find us on Instagram"
+            target="_blank"
+            rel="noopener"
+          >
             <svg
               className="w-10 h-10"
               fill="currentColor"
@@ -49,7 +61,7 @@ const Footer = () => {
             </svg>
           </a>
           <a
-            href=""
+            href="https://www.linkedin.com/company/kerala-knowledge-economy-mission"
             className="text-gray-500 hover:text-gray-900"
             aria-label="Find us on LinkedIn"
             target="_blank"

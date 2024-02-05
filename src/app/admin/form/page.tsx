@@ -141,6 +141,8 @@ const Page = () => {
             journey as KKEM&apos;s Career Ambassador! We wish and hope that
             you&apos;ll be able to improve the Employability Enhancement Index
             of your institution as well as your peers!
+            <br />
+            Kindly fill the below details carefully.
           </div>
 
           <Controller

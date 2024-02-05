@@ -30,6 +30,7 @@ const Page = () => {
   // let newObject: any = window.localStorage?.getItem("dataObj");
   // let dataObj = JSON.parse(newObject);
   const [stuData, setDataObj] = useState<MyData | null>(null);
+  const [folderId, setFolderID] = useState<any>();
 
   const route = useRouter();
   const {
@@ -68,8 +69,6 @@ const Page = () => {
     resolver: yupResolver(studentFormvalidationSchema),
     values: studentForm,
   });
-console.log(errors);
-
   const onSubmit = (data: any) => {
     const get = toast.loading("Updating...");
     form
@@ -106,6 +105,7 @@ console.log(errors);
           autoClose: 1000,
         });
         setStudentForm(response.data.student);
+        setFolderID(response.data.student.folderId)
       })
       .catch((error) => {
         console.log(error);
@@ -224,6 +224,7 @@ console.log(errors);
                 onChange={onChange}
                 value={value}
                 readOnly
+                customStyle="capitalize"
               />
             )}
             name="STU_NAME"
@@ -246,7 +247,11 @@ console.log(errors);
             name="DWMS_ID"
           />
 
-          <FileUpload label="Photo" />
+          <FileUpload
+            label="Photo"
+            allowedFormats={["image/jpeg", "image/jpg"]}
+            folderId={folderId}
+          />
         </>
       </Accordian>
       <Accordian
@@ -395,7 +400,9 @@ console.log(errors);
             )}
             name="WRP_COMP"
           />
-          {watch("WRP_COMP") && <FileUpload label="" />}
+          {watch("WRP_COMP") && (
+            <FileUpload label="" folderId={folderId} allowedFormats={["application/pdf"]} />
+          )}
         </>
       </Accordian>
       <Accordian
@@ -528,7 +535,9 @@ console.log(errors);
             name="INTERN_COMP"
           />
           {(watch("INTERN_COMP") === "Completed" ||
-            watch("INTERN_COMP") === "Pursuing") && <FileUpload label="" />}
+            watch("INTERN_COMP") === "Pursuing") && (
+            <FileUpload label="" allowedFormats={["application/pdf"]} folderId={folderId} />
+          )}
           <Controller
             control={control}
             rules={{
@@ -565,7 +574,9 @@ console.log(errors);
             name="OFR_LTR"
           />
 
-          {watch("OFR_LTR") && <FileUpload label="" />}
+          {watch("OFR_LTR") && (
+            <FileUpload label="" allowedFormats={["application/pdf"]} folderId={folderId} />
+          )}
 
           <Controller
             control={control}

@@ -25,6 +25,7 @@ const Page = () => {
   const [institutionDetails, setInstitutionDetails] =
     useState<instituteDetails>();
   const [instData, setDataObj] = useState<MyData | null>(null);
+  const [folderId, setFolderID] = useState<any>();
 
   useEffect(() => {
     const storedData = localStorage.getItem("dataObj");
@@ -98,6 +99,7 @@ const Page = () => {
           autoClose: 1000,
         });
         setInstitutionDetails(response.data.institution);
+        setFolderID(response.data.student.folderId);
       })
       .catch((error) => {
         console.log(error);
@@ -136,9 +138,10 @@ const Page = () => {
         <>
           <div className="text-[#2b2c31] ml-4  mt-2">
             Congratulations on taking the first step towards enhancing the
-            employability of your students!<br/> We wish and hope that you&apos;ll be
-            able to improve the Employability Enhancement Index of your
-            institution and land your name on the Leaderboard!
+            employability of your students!
+            <br /> We wish and hope that you&apos;ll be able to improve the
+            Employability Enhancement Index of your institution and land your
+            name on the Leaderboard!
             <br />
             Kindly fill the below details carefully.
           </div>
@@ -278,7 +281,9 @@ const Page = () => {
             )}
             name="PLC_DRV_JOB_OFR_COUNT"
           />
-          {watch("PLC_DRV_JOB_OFR_COUNT") && <FileUpload label="" />}
+          {watch("PLC_DRV_JOB_OFR_COUNT") && (
+            <FileUpload label="" allowedFormats={["application/pdf"]} folderId={folderId}/>
+          )}
 
           <Controller
             control={control}
