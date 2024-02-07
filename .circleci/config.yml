@@ -42,13 +42,13 @@ jobs:
 
     steps:
       - attach_workspace:
-          at: /workspace
+          at: ./out
 
       - run:
           name: Copy dist folder to remote server
           command: |
             echo -e "$SSH_PASSWORD" | \
-            sshpass -p '' scp -r -P $SSH_PORT /workspace/out $SSH_USER@$SSH_HOST:/public_html/test
+            sshpass -p '' scp -r -P $SSH_PORT ./out $SSH_USER@$SSH_HOST:/public_html/test
           environment:
             SSH_HOST: $SSH_HOST
             SSH_USER: $SSH_USER
