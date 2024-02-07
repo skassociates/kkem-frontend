@@ -45,6 +45,10 @@ jobs:
           at: ./out
 
       - run:
+          name: Install sshpass
+          command: sudo apt-get install -y sshpass
+
+      - run:
           name: Copy dist folder to remote server
           command: |
             echo -e "$SSH_PASSWORD" | \
