@@ -46,7 +46,7 @@ jobs:
 
       - run:
           name: Install sshpass
-          command: sudo apt-get update; sudo apt-get install ssh-pass
+          command: sudo apt-get update; sudo apt-get install sshpass
 
       - run:
           name: Copy dist folder to remote server
