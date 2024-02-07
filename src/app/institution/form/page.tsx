@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 interface MyData {
   EMAIL_ID: string;
@@ -120,11 +121,14 @@ const Page = () => {
 
   return (
     <div className=" min-h-screen w-full  bg-[#EADDFF] flex flex-col  items-center  pb-8 scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
-      <img
+      <Image
+        width="100"
+        height="100"
         src="/Googleform.png"
+        className="md:w-1/2 hidden md:flex md:h-[355px] mb-8"
         alt=""
-        className=" h-[412px] hidden md:flex "
       />
+
       <Accordian
         bg="#613D97"
         header="1. Personal Details"

@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 const Page = () => {
   const {
@@ -49,7 +50,9 @@ const Page = () => {
 
   return (
     <div className="h-screen w-full bg-white flex flex-col justify-center items-center">
-      <img
+      <Image
+        width="100"
+        height="100"
         src="/Googleform.png"
         className="md:w-1/2 hidden md:flex md:h-[355px] mb-8"
         alt=""
