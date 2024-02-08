@@ -29,7 +29,7 @@ const Accordian: React.FC<Props> = ({ children, header, error, bg }) => {
         <div>{header}</div>
         <div>
           <img
-            src="/downarrow.svg"
+            src="/console/downarrow.svg"
             alt="arrow"
             width={20}
             height={20}
