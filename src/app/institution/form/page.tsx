@@ -100,7 +100,7 @@ const Page = () => {
           autoClose: 1000,
         });
         setInstitutionDetails(response.data.institution);
-        setFolderID(response.data.student.folderId);
+        setFolderID(response.data.institution.folderId);
       })
       .catch((error) => {
         console.log(error);
