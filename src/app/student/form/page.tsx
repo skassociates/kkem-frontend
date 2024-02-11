@@ -144,7 +144,7 @@ const Page = () => {
   return (
     <div className=" min-h-screen w-full  bg-[#E1E1FF] flex flex-col  items-center  pb-8  scrollbar scrollbar-thumb-red-900 scrollbar-track-gray-100 ">
       <Image
-        src="/Googleform.png"
+        src="/console/Googleform.png"
         className="md:w-1/2 hidden md:flex md:h-[355px] mb-8"
         alt=""
         width="100"

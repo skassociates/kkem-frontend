@@ -53,7 +53,7 @@ const Page = () => {
       <Image
         width="100"
         height="100"
-        src="/Googleform.png"
+        src="/console/Googleform.png"
         className="md:w-1/2 hidden md:flex md:h-[355px] mb-8"
         alt=""
       />

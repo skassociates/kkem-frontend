@@ -35,7 +35,7 @@ const Select: React.FC<Props> = ({
               setPopup(false);
             }}
           >
-            <img src="/close.svg" alt="" className="absolute right-1 top-1" />
+            <img src="/console/close.svg" alt="" className="absolute right-1 top-1" />
           </div>
           <div>{poPup?.heading}</div>
           <div className="italic text-[#6F7482]">{poPup?.desc}</div>
@@ -54,7 +54,7 @@ const Select: React.FC<Props> = ({
                 setPopup(true);
               }}
             >
-              <img src="/info.svg" alt="" />
+              <img src="/console/info.svg" alt="" />
             </div>
           )}
         </div>

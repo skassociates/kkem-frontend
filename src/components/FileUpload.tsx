@@ -73,7 +73,7 @@ const FileUpload: React.FC<Props> = ({ label, allowedFormats, folderId }) => {
             fileRef?.current?.click();
           }}
         >
-          <img src="/Uploadicon.svg" alt="upload icon" />
+          <img src="/console/Uploadicon.svg" alt="upload icon" />
           <div className="text-sm">
             Drag & drop files or{" "}
             <span className="text-[#3C83E3] underline">Browse</span>
