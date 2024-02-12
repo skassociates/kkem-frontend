@@ -63,6 +63,7 @@ const Page = () => {
     values: institutionDetails,
   });
 
+
   const route = useRouter();
   const onSubmit = (data: any) => {
     const get = toast.loading("Updating...");
@@ -285,13 +286,14 @@ const Page = () => {
             )}
             name="PLC_DRV_JOB_OFR_COUNT"
           />
-          {watch("PLC_DRV_JOB_OFR_COUNT") && (
-            <FileUpload
-              label=""
-              allowedFormats={["image/jpeg", "image/jpg", "application/pdf"]}
-              folderId={folderId}
-            />
-          )}
+          {watch("PLC_DRV_JOB_OFR_COUNT") &&
+            watch("PLC_DRV_JOB_OFR_COUNT") !== "None" && (
+              <FileUpload
+                label=""
+                allowedFormats={["image/jpeg", "image/jpg", "application/pdf"]}
+                folderId={folderId}
+              />
+            )}
 
           <Controller
             control={control}

@@ -222,11 +222,11 @@ const Page = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputField
-                label="Name of Student "
+                label="Name of Student"
                 required
                 error={errors?.STU_NAME?.message}
                 onChange={onChange}
-                value={value}
+                value={value.toLowerCase()}
                 readOnly
                 customStyle="capitalize"
               />
