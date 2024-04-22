@@ -3,7 +3,7 @@ import React from "react";
 
 function Dashboard() {
   return (
-    <div className="min-h-screen bg-[#003B89]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <div className="bg-white py-2">
         <div className="container mx-auto flex flex-row justify-between items-center">
           <div>
@@ -16,7 +16,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="bg-[#003B89] py-12 ">
+      <div className="bg-[#D3D1D2] py-12 ">
         <div className="container mx-auto flex flex-row justify-between items-center">
           <div>
             <div className="text-3xl text-white"> Student Name</div>
@@ -42,7 +42,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="bg-[#7CBDD0] py-12">
+      <div className="bg-[#DE4E4E] py-12">
         <div className="container mx-auto">
           <div className="flex flex-wrap">
             <div className="w-1/2">
@@ -134,7 +134,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="bg-[#003B89] py-12">
+      <div className="bg-[#D3D1D2] py-12">
         <div className="container mx-auto text-right">
           <a href="#" className="underline text-white">
             Click this link to access Student Form
