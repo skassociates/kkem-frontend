@@ -16,22 +16,22 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="bg-[#D3D1D2] py-12 ">
-        <div className="container mx-auto flex flex-row justify-between items-center">
+      <div className="bg-[#D3D1D2] py-12  mx-auto">
+        <div className="container max-w-[750px] mx-auto flex flex-row justify-between items-center">
           <div>
-            <div className="text-3xl text-white"> Student Name</div>
-            <div className="flex flex-row gap-16 mt-8">
+            <div className="text-3xl"> Career Ambassador Name</div>
+            <div className="flex flex-row gap-16 mt-8 text-xs">
               <div>
-                <div className="text-slate-400">DWMS ID</div>
-                <div className="text-white">123456</div>
-                <div className="text-slate-400">Email ID</div>
-                <div className="text-white">student@gmail.com</div>
+                <div className="text-slate-500 ">DWMS ID</div>
+                <div className="font-medium">123456</div>
+                <div className="text-slate-500  mt-2">Email ID</div>
+                <div className="font-medium">student@gmail.com</div>
               </div>
               <div>
-                <div className="text-slate-400">Institution Name</div>
-                <div className="text-white">Institution</div>
-                <div className="text-slate-400">Institution Type</div>
-                <div className="text-white">Institution Type</div>
+                <div className="text-slate-500">Institution Name</div>
+                <div className="font-medium">Institution</div>
+                <div className="text-slate-500  mt-2">Institution Type</div>
+                <div className="font-medium">Institution Type</div>
               </div>
             </div>
           </div>
@@ -43,88 +43,80 @@ function Dashboard() {
         </div>
       </div>
       <div className="bg-[#DE4E4E] py-12">
-        <div className="container mx-auto">
+        <div className="container max-w-[750px] mx-auto">
           <div className="flex flex-wrap">
             <div className="w-1/2">
-              <div className="text-[#003B89]">Curation Activities :</div>
-              <Progressbar label="65%" max={6} value={3} />
+              <div className="text-white">
+                Curation Activities <br />
+                (Based on Submitted Responses) :
+              </div>
+              <Progressbar label="65%" max={4} value={2} color={"white"} />
             </div>
             <div className="w-1/2">
-              <div className="text-[#003B89]">
-                Industry Connect Activities :
-                <Progressbar label="65%" max={4} value={3} />
+              <div className="text-white">
+                Industry Connect & Placement Activities <br /> (Based on
+                Submitted Responses) :
+                <Progressbar label="65%" max={5} value={3} color={"white"} />
               </div>
             </div>
-            <div className="w-1/2 mt-5">
-              <div className="text-[#003B89]">Placement Activities :</div>
-              <Progressbar label="65%" max={3} value={3} />
-            </div>
           </div>
-          <div className="mt-8 flex flex-row">
-            <div className="w-1/2 p-5">
-              <div className="text-2xl font-semibold mb-4">Top 5 colleges</div>
-              <table className="table-fixed rounded">
-                <thead className="bg-[#5072A0] p-3">
+          <div className="mt-8 flex flex-row gap-4">
+            <div className="flex-1">
+              <div className="text-2xl font-bold mb-4 text-white">
+                Top 5 colleges
+              </div>
+              <table className="table-fixed rounded w-full">
+                <thead className="bg-[#162B47] p-3 text-white">
                   <tr>
-                    <th className="p-2">Song</th>
-                    <th className="p-2">Artist</th>
-                    <th className="p-2">Year</th>
+                    <th className="p-2 text-left">Rank</th>
+                    <th className="p-2 w-1/2 text-left">Name of College</th>
+                    <th className="p-2 text-left">Points</th>
                   </tr>
                 </thead>
-                <tbody className="[&>*:nth-child(odd)]:bg-[#5072A04D] [&>*:nth-child(even)]:bg-white">
+                <tbody className="[&>*:nth-child(odd)]:bg-[#c0d2e9ed] [&>*:nth-child(even)]:bg-white">
                   <tr>
-                    <td className="p-3">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
+                    <td className="p-3">1</td>
                     <td className="p-3">Malcolm Lockyer</td>
                     <td className="p-3">1961</td>
                   </tr>
                   <tr>
-                    <td className="p-3">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
+                    <td className="p-3">1</td>
                     <td className="p-3">Malcolm Lockyer</td>
                     <td className="p-3">1961</td>
                   </tr>
                   <tr>
-                    <td className="p-3">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
+                    <td className="p-3">1</td>
                     <td className="p-3">Malcolm Lockyer</td>
                     <td className="p-3">1961</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div className="w-1/2 p-5 ">
-              <div className="text-2xl font-semibold mb-4">Top Performers</div>
+            <div className="flex-1">
+              <div className="text-2xl font-bold mb-4 text-white">
+                Top Performers
+              </div>
               <table className="table-fixed rounded">
-                <thead className="bg-[#5072A0] p-3">
+                <thead className="bg-[#162B47] p-3 text-white">
                   <tr>
-                    <th className="p-2">Song</th>
-                    <th className="p-2">Artist</th>
-                    <th className="p-2">Year</th>
+                    <th className="p-2 text-left">Rank</th>
+                    <th className="p-2 w-1/2 text-left">Name</th>
+                    <th className="p-2 text-left">Points</th>
                   </tr>
                 </thead>
-                <tbody className="[&>*:nth-child(odd)]:bg-[#5072A04D] [&>*:nth-child(even)]:bg-white">
+                <tbody className="[&>*:nth-child(odd)]:bg-[#c0d2e9ed] [&>*:nth-child(even)]:bg-white">
                   <tr>
-                    <td className="p-3">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
+                    <td className="p-3">1</td>
                     <td className="p-3">Malcolm Lockyer</td>
                     <td className="p-3">1961</td>
                   </tr>
                   <tr>
-                    <td className="p-3">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="p-3">Malcolm Lockyer</td>
+                    <td className="p-3">1</td>
+                    <td className="p-3">Malcolm Lockyer asdf asfd sdfsa</td>
                     <td className="p-3">1961</td>
                   </tr>
                   <tr>
-                    <td className="p-3">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
+                    <td className="p-3">1</td>
                     <td className="p-3">Malcolm Lockyer</td>
                     <td className="p-3">1961</td>
                   </tr>
@@ -135,10 +127,18 @@ function Dashboard() {
         </div>
       </div>
       <div className="bg-[#D3D1D2] py-12">
-        <div className="container mx-auto text-right">
-          <a href="#" className="underline text-white">
-            Click this link to access Student Form
-          </a>
+        <div className="container mx-auto max-w-[750px] text-right">
+          <div
+            className="flex flex-col gap-4 text-[#162B47]
+"
+          >
+            <a href="#" className="underline">
+              Click this link to access Student Form
+            </a>
+            <a href="#" className="underline">
+              Click this link to access Student Form
+            </a>{" "}
+          </div>
         </div>
       </div>
     </div>

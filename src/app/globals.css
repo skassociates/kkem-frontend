@@ -14,3 +14,31 @@ tr:last-of-type td:first-of-type {
 tr:last-of-type td:last-of-type {
   border-bottom-right-radius: 20px;
 }
+
+dialog {
+  outline: none;
+  border-radius: 16px;
+}
+dialog[open] {
+  animation: show 1s ease normal;
+}
+@keyframes show {
+  from {
+    transform: translateY(-110%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+.dialog::backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-animation: none;
+}
+.dialog[open]::backdrop {
+  -webkit-animation: show-backdrop 0.5s ease 0.2s normal;
+}
