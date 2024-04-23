@@ -42,3 +42,7 @@ dialog[open] {
 .dialog[open]::backdrop {
   -webkit-animation: show-backdrop 0.5s ease 0.2s normal;
 }
+
+.active-tab {
+  background-color: #f5dcab;
+}

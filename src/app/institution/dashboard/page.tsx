@@ -2,11 +2,14 @@
 
 import ProgressIndicator from "@/components/ProgressIndicator";
 import Progressbar from "@/components/Progressbar";
+import Table from "@/components/Table";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 function Dashboard() {
   const dialog = React.useRef();
+
+  const [showDetails, setShowDetails] = useState(false);
 
   const closeModal = () => {
     dialog.current && dialog.current.close();
@@ -57,75 +60,117 @@ function Dashboard() {
         </div>
       </div>
       <div className="bg-[#6E6350] py-12 ">
-        <div className="container mx-auto max-w-[750px] ">
-          <div className="flex flex-wrap">
-            {" "}
-            <div className="w-1/2">
-              <div className="text-white">Progress of Activities :</div>
-              <ProgressIndicator width={70} />
+        {!showDetails && (
+          <div className="container mx-auto max-w-[750px] ">
+            <div className="flex flex-wrap">
+              {" "}
+              <div className="w-1/2">
+                <div className="text-white">Progress of Activities :</div>
+                <ProgressIndicator width={70} />
+              </div>
+            </div>
+            <div className="mt-8 flex flex-row gap-8">
+              <div className="flex-1">
+                <div className="text-2xl font-bold mb-4 text-white">
+                  Top Scorers
+                </div>
+                <table className="table-fixed rounded w-full">
+                  <thead className="bg-[#5D584E] p-3 text-white">
+                    <tr>
+                      <th className="p-2 text-left">Points</th>
+                      <th className="p-2 w-1/2 text-left">Students</th>
+                    </tr>
+                  </thead>
+                  <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
+                    <tr onClick={() => showModal()} className="cursor-pointer">
+                      <td className="p-3">1</td>
+                      <td className="p-3">Malcolm Lockyer</td>
+                    </tr>
+                    <tr onClick={() => showModal()}>
+                      <td className="p-3">1</td>
+                      <td className="p-3">Malcolm Lockyer</td>
+                    </tr>
+                    <tr onClick={() => showModal()}>
+                      <td className="p-3">1</td>
+                      <td className="p-3">Malcolm Lockyer</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="flex-1">
+                <div className="text-2xl font-bold mb-4 text-transparent">
+                  Details
+                </div>
+                <div className="flex flex-col gap-6">
+                  <div
+                    onClick={() => setShowDetails(true)}
+                    className="py-6 px-3 flex gap-6 border-2 border-white text-white"
+                  >
+                    <h2 className=" text-4xl font-bold">10%</h2>
+                    <p className="text-sm">
+                      of students have completed Curation Activities
+                    </p>
+                  </div>
+                  <div
+                    onClick={() => setShowDetails(true)}
+                    className="py-6 px-3 flex gap-6 border-2 border-white text-white"
+                  >
+                    <h2 className=" text-4xl font-bold">10%</h2>
+                    <p className="text-sm">
+                      of students have completed Curation Activities
+                    </p>
+                  </div>{" "}
+                  <div
+                    onClick={() => setShowDetails(true)}
+                    className="py-6 px-3 flex gap-6 border-2 border-white text-white"
+                  >
+                    <h2 className=" text-4xl font-bold">10%</h2>
+                    <p className="text-sm">
+                      of students have completed Curation Activities
+                    </p>
+                  </div>{" "}
+                  <div
+                    onClick={() => setShowDetails(true)}
+                    className="py-6 px-3 flex gap-6 border-2 border-white text-white"
+                  >
+                    <h2 className=" text-4xl font-bold">10%</h2>
+                    <p className="text-sm">
+                      of students have completed Curation Activities
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="mt-8 flex flex-row gap-8">
-            <div className="flex-1">
-              <div className="text-2xl font-bold mb-4 text-white">
-                Top Scorers
-              </div>
-              <table className="table-fixed rounded w-full">
-                <thead className="bg-[#5D584E] p-3 text-white">
-                  <tr>
-                    <th className="p-2 text-left">Points</th>
-                    <th className="p-2 w-1/2 text-left">Students</th>
-                  </tr>
-                </thead>
-                <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                  <tr onClick={() => showModal()} className="cursor-pointer">
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                  </tr>
-                  <tr onClick={() => showModal()}>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                  </tr>
-                  <tr onClick={() => showModal()}>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="flex-1">
-              <div className="text-2xl font-bold mb-4 text-transparent">
-                Details
-              </div>
-              <div className="flex flex-col gap-6">
-                <div className="py-6 px-3 flex gap-6 border-2 border-white text-white">
-                  <h2 className=" text-4xl font-bold">10%</h2>
-                  <p className="text-sm">
-                    of students have completed Curation Activities
-                  </p>
-                </div>
-                <div className="py-6 px-3 flex gap-6 border-2 border-white text-white">
-                  <h2 className=" text-4xl font-bold">10%</h2>
-                  <p className="text-sm">
-                    of students have completed Curation Activities
-                  </p>
-                </div>{" "}
-                <div className="py-6 px-3 flex gap-6 border-2 border-white text-white">
-                  <h2 className=" text-4xl font-bold">10%</h2>
-                  <p className="text-sm">
-                    of students have completed Curation Activities
-                  </p>
-                </div>{" "}
-                <div className="py-6 px-3 flex gap-6 border-2 border-white text-white">
-                  <h2 className=" text-4xl font-bold">10%</h2>
-                  <p className="text-sm">
-                    of students have completed Curation Activities
-                  </p>
-                </div>
+        )}
+        {showDetails && (
+          <div className="container mx-auto max-w-[750px] ">
+            <div className="flex w-full justify-between items-center">
+              <p className="text-lg text-white">
+                <span className="font-semibold">10%</span> of students have
+                completed Curation Activities
+              </p>
+              <div
+                onClick={() => setShowDetails(false)}
+                className="rounded-full px-6 py-3 flex items-center gap-2 mb-4 bg-[#B4A48A]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  width="24px"
+                  fill="#FFFFFF"
+                >
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                </svg>
+
+                <span className="text-white">Back</span>
               </div>
             </div>
+            <Table />
           </div>
-        </div>
+        )}
       </div>
       <div className="bg-[#C8BD6D] py-12 max-w-[750px] mx-auto">
         <div className="container mx-auto text-right">
