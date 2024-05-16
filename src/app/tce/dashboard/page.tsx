@@ -3,21 +3,46 @@
 import ProgressIndicator from "@/components/ProgressIndicator";
 import Progressbar from "@/components/Progressbar";
 import Table from "@/components/Table";
+import { getTCEColleges } from "@/services/api/tce";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { QueryClient, useQuery } from "react-query";
 
 function Dashboard() {
   const dialog = React.useRef();
 
+  const queryClient = new QueryClient();
+
   const [showDetails, setShowDetails] = useState(false);
-  const [type, setType] = useState("engineering");
+  const [topPerformers, setTopPerformers] = useState([]);
+  const [selectedInstitution, setSelectedInstitution] = useState(null);
+
+  const [type, setType] = useState("ENG_CLG");
 
   const closeModal = () => {
     dialog.current && dialog.current.close();
   };
 
   const showModal = () => {
-    dialog.current && dialog.current.showModal();
+    // dialog.current && dialog.current.showModal();
+  };
+
+  const { data, isLoading, isError, isSuccess } = useQuery(
+    "repoData",
+    getTCEColleges
+  );
+
+  useEffect(() => {
+    if (data) {
+      updateType(type);
+    }
+  }, [data]);
+
+  const updateType = (value: string) => {
+    setType(value);
+    setSelectedInstitution(null);
+    const list = data[value];
+    setTopPerformers(list);
   };
 
   return (
@@ -56,23 +81,21 @@ function Dashboard() {
               <div className="w-full border-b border-[#996F1F] flex items-center cursor-pointer">
                 <span
                   className={`px-3 py-2 ${
-                    type == "engineering" ? "active-tab" : ""
+                    type == "ENG_CLG" ? "active-tab" : ""
                   }`}
-                  onClick={() => setType("engineering")}
+                  onClick={() => updateType("ENG_CLG")}
                 >
                   Engineering
                 </span>
                 <span
-                  className={`px-3 py-2 ${
-                    type == "polytechnic" ? "active-tab" : ""
-                  }`}
-                  onClick={() => setType("polytechnic")}
+                  className={`px-3 py-2 ${type == "POLY" ? "active-tab" : ""}`}
+                  onClick={() => updateType("POLY")}
                 >
                   Polytechnic
                 </span>
                 <span
-                  className={`px-3 py-2 ${type == "arts" ? "active-tab" : ""}`}
-                  onClick={() => setType("arts")}
+                  className={`px-3 py-2 ${type == "ARTS" ? "active-tab" : ""}`}
+                  onClick={() => updateType("ARTS")}
                 >
                   Arts & Science
                 </span>
@@ -147,7 +170,7 @@ function Dashboard() {
                   List of Institutions
                 </h4>
                 <div className="mt-8 flex flex-row gap-8">
-                  <div className="flex-1">
+                  <div className=" w-1/2">
                     <table className="table-fixed rounded w-full">
                       <thead className="bg-[#C22B20] p-3 text-white">
                         <tr>
@@ -156,67 +179,65 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                        <tr
-                          onClick={() => showModal()}
-                          className="cursor-pointer"
-                        >
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
-                        <tr onClick={() => showModal()}>
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
-                        <tr onClick={() => showModal()}>
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
+                        {topPerformers.map((performers, index) => {
+                          return (
+                            <tr
+                              key={index}
+                              onClick={() => setSelectedInstitution(performers)}
+                            >
+                              <td className="p-3">{index + 1}</td>
+                              <td className="p-3">{performers.INST_NAME}</td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
-                  <div className="flex-1">
-                    <div className="text-2xl mb-4 text-[#6F4F12]">
-                      Summary of Collage 1
-                    </div>
-                    <div className="flex flex-col gap-6">
-                      <div
-                        onClick={() => setShowDetails(true)}
-                        className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
-                      >
-                        <h2 className=" text-4xl font-bold">10%</h2>
-                        <p className="text-sm">
-                          of students have completed Curation Activities
-                        </p>
+                  {selectedInstitution && (
+                    <div className="w-1/2">
+                      <div className="text-2xl mb-4 text-[#6F4F12]">
+                        Summary of Collage 1
                       </div>
-                      <div
-                        onClick={() => setShowDetails(true)}
-                        className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
-                      >
-                        <h2 className=" text-4xl font-bold">10%</h2>
-                        <p className="text-sm">
-                          of students have completed Curation Activities
-                        </p>
-                      </div>{" "}
-                      <div
-                        onClick={() => setShowDetails(true)}
-                        className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
-                      >
-                        <h2 className=" text-4xl font-bold">10%</h2>
-                        <p className="text-sm">
-                          of students have completed Curation Activities
-                        </p>
-                      </div>{" "}
-                      <div
-                        onClick={() => setShowDetails(true)}
-                        className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
-                      >
-                        <h2 className=" text-4xl font-bold">10%</h2>
-                        <p className="text-sm">
-                          of students have completed Curation Activities
-                        </p>
+                      <div className="flex flex-col gap-6">
+                        <div
+                          onClick={() => setShowDetails(true)}
+                          className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
+                        >
+                          <h2 className=" text-4xl font-bold">10%</h2>
+                          <p className="text-sm">
+                            of students have completed Curation Activities
+                          </p>
+                        </div>
+                        <div
+                          onClick={() => setShowDetails(true)}
+                          className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
+                        >
+                          <h2 className=" text-4xl font-bold">10%</h2>
+                          <p className="text-sm">
+                            of students have completed Curation Activities
+                          </p>
+                        </div>{" "}
+                        <div
+                          onClick={() => setShowDetails(true)}
+                          className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
+                        >
+                          <h2 className=" text-4xl font-bold">10%</h2>
+                          <p className="text-sm">
+                            of students have completed Curation Activities
+                          </p>
+                        </div>{" "}
+                        <div
+                          onClick={() => setShowDetails(true)}
+                          className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
+                        >
+                          <h2 className=" text-4xl font-bold">10%</h2>
+                          <p className="text-sm">
+                            of students have completed Curation Activities
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -247,7 +268,28 @@ function Dashboard() {
                 <span className="text-white">Back</span>
               </div>
             </div>
-            <Table />
+            <table className="table-fixed rounded w-full">
+              <thead className="bg-[#C22B20] p-3 text-white">
+                <tr>
+                  <th className="p-2 text-left">Points</th>
+                  <th className="p-2 w-1/2 text-left">Students</th>
+                </tr>
+              </thead>
+              <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
+                <tr onClick={() => showModal()} className="cursor-pointer">
+                  <td className="p-3">1</td>
+                  <td className="p-3">Malcolm Lockyer</td>
+                </tr>
+                <tr onClick={() => showModal()}>
+                  <td className="p-3">1</td>
+                  <td className="p-3">Malcolm Lockyer</td>
+                </tr>
+                <tr onClick={() => showModal()}>
+                  <td className="p-3">1</td>
+                  <td className="p-3">Malcolm Lockyer</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         )}
       </div>

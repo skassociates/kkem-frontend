@@ -46,3 +46,26 @@ dialog[open] {
 .active-tab {
   background-color: #f5dcab;
 }
+.main-score {
+  position: relative;
+}
+.main-score::before {
+  content: "";
+  width: 16px;
+  height: 60px;
+  background-color: #162b47;
+  position: absolute;
+  bottom: -12px;
+  left: -8px;
+  border-radius: 4px;
+}
+.main-score::after {
+  content: "";
+  width: 16px;
+  height: 60px;
+  background-color: #162b47;
+  position: absolute;
+  bottom: -12px;
+  right: -8px;
+  border-radius: 4px;
+}

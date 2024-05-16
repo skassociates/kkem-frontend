@@ -19,6 +19,11 @@ const Page = () => {
           Career Ambassador
         </div>
       </Link>
+      <Link href={"/tce/login"}>
+        <div className="bg-[#26A9DF] px-4 py-2 text-white rounded-full">
+          TCE
+        </div>
+      </Link>
     </div>
   );
 };

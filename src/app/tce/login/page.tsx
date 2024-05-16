@@ -54,7 +54,7 @@ const Page = () => {
         className="md:w-1/2 hidden md:flex md:h-[355px] mb-8"
         alt=""
       />
-      <div className=" bg-[#F7F2FF] w-full md:w-1/2 h-screen p-2 md:h-1/2 flex flex-col rounded-[22px] justify-center items-center">
+      <div className=" bg-[#DE4E4E]/10 w-full md:w-1/2 h-screen p-2 md:h-1/2 flex flex-col rounded-[22px] justify-center items-center">
         <div className=" min-w-full flex justify-center flex-col">
           <Controller
             control={control}
