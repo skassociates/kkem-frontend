@@ -4,7 +4,7 @@ import { axiosInstance } from "../request/request";
 const getStudentDetails = async () => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
   try {
-    const response = await axiosInstance.get("/students/",{
+    const response = await axiosInstance.get("/students/", {
       headers: { Authorization: varToken },
     });
     return response;
@@ -17,6 +17,18 @@ const updateStudentDetails = async (body: any) => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
   try {
     const response = await axiosInstance.put("/students/update", body, {
+      headers: { Authorization: varToken },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getStudentDashboard = async () => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+  try {
+    const response = await axiosInstance.get("/students/dashboard", {
       headers: { Authorization: varToken },
     });
     return response;
@@ -64,15 +76,17 @@ const getAdminDetails = async () => {
 };
 
 const upateAdminDetails = async (body: any) => {
-    const varToken = localStorage.getItem("AUTH_TOKEN");
+  const varToken = localStorage.getItem("AUTH_TOKEN");
 
   try {
     const response = await axiosInstance.put(
       "/career-ambassadors/update",
-      body, {
-      headers: { Authorization: varToken },
-    });
-    
+      body,
+      {
+        headers: { Authorization: varToken },
+      }
+    );
+
     return response;
   } catch (error) {
     throw error;
@@ -86,4 +100,5 @@ export const form = {
   updateInstitutionDetails,
   getAdminDetails,
   upateAdminDetails,
+  getStudentDashboard,
 };

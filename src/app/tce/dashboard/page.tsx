@@ -44,7 +44,6 @@ function Dashboard() {
     const list = data[value];
     setTopPerformers(list);
   };
-
   return (
     <div className="min-h-screen bg-[#C22B20]">
       <div className="bg-white py-2">
