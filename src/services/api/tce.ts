@@ -13,3 +13,9 @@ export const getTCEColleges = async (body: any) => {
     })
     .then((res) => res.data);
 };
+
+export const getStudents = async (body: any) => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+
+  return axiosInstance.get("/students/getStu").then((res) => res.data);
+};

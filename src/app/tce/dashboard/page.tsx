@@ -3,7 +3,7 @@
 import ProgressIndicator from "@/components/ProgressIndicator";
 import Progressbar from "@/components/Progressbar";
 import Table from "@/components/Table";
-import { getTCEColleges } from "@/services/api/tce";
+import { getStudents, getTCEColleges } from "@/services/api/tce";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
@@ -31,6 +31,9 @@ function Dashboard() {
     "repoData",
     getTCEColleges
   );
+  const { data: tceStudents, refetch } = useQuery("tceStudents", getStudents, {
+    enabled: false,
+  });
 
   useEffect(() => {
     if (data) {
@@ -44,6 +47,12 @@ function Dashboard() {
     const list = data[value];
     setTopPerformers(list);
   };
+
+  const showDetailsPage = () => {
+    setShowDetails(true);
+    refetch();
+  };
+
   return (
     <div className="min-h-screen bg-[#C22B20]">
       <div className="bg-white py-2">
@@ -195,11 +204,11 @@ function Dashboard() {
                   {selectedInstitution && (
                     <div className="w-1/2">
                       <div className="text-2xl mb-4 text-[#6F4F12]">
-                        Summary of Collage 1
+                        Summary of {selectedInstitution.INST_NAME}
                       </div>
                       <div className="flex flex-col gap-6">
                         <div
-                          onClick={() => setShowDetails(true)}
+                          onClick={() => showDetailsPage()}
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
                           <h2 className=" text-4xl font-bold">10%</h2>
@@ -208,7 +217,7 @@ function Dashboard() {
                           </p>
                         </div>
                         <div
-                          onClick={() => setShowDetails(true)}
+                          onClick={() => showDetailsPage()}
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
                           <h2 className=" text-4xl font-bold">10%</h2>
@@ -217,7 +226,7 @@ function Dashboard() {
                           </p>
                         </div>{" "}
                         <div
-                          onClick={() => setShowDetails(true)}
+                          onClick={() => showDetailsPage()}
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
                           <h2 className=" text-4xl font-bold">10%</h2>
@@ -226,7 +235,7 @@ function Dashboard() {
                           </p>
                         </div>{" "}
                         <div
-                          onClick={() => setShowDetails(true)}
+                          onClick={() => showDetailsPage()}
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
                           <h2 className=" text-4xl font-bold">10%</h2>
@@ -275,18 +284,14 @@ function Dashboard() {
                 </tr>
               </thead>
               <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                <tr onClick={() => showModal()} className="cursor-pointer">
-                  <td className="p-3">1</td>
-                  <td className="p-3">Malcolm Lockyer</td>
-                </tr>
-                <tr onClick={() => showModal()}>
-                  <td className="p-3">1</td>
-                  <td className="p-3">Malcolm Lockyer</td>
-                </tr>
-                <tr onClick={() => showModal()}>
-                  <td className="p-3">1</td>
-                  <td className="p-3">Malcolm Lockyer</td>
-                </tr>
+                {tceStudents.data.map((student) => {
+                  return (
+                    <tr key={student.DWMS_ID}>
+                      <td className="p-3">{student.score}</td>
+                      <td className="p-3">{student.STU_NAME}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
