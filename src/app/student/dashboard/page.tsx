@@ -1,6 +1,6 @@
 "use client";
 import Progressbar from "@/components/Progressbar";
-import { getTopColleges } from "@/services/api/commonApi";
+import { getTopColleges, getTopStudents } from "@/services/api/commonApi";
 import { form } from "@/services/api/form";
 import React, { useEffect, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
@@ -23,6 +23,8 @@ function Dashboard() {
   // const [topColl, setTopColl] = useState([]);
 
   const { data } = useQuery("collData", getTopColleges);
+
+  const { data: topStu } = useQuery("stuData", getTopStudents);
 
   const fetchdata = async () => {
     const get = toast.loading("Fetching Your Details....");
@@ -54,7 +56,6 @@ function Dashboard() {
   const percentage = Math.round((studentDashboard.CA_PRCNT / 7) * 100);
   const IPApercentage = Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
   const PApercentage = Math.round((studentDashboard.PA_PRCNT / 6) * 100);
-  console.log("sd", data);
 
   return (
     <div className="min-h-screen bg-[#003B89]">
@@ -93,7 +94,7 @@ function Dashboard() {
             </div>
           </div>
           <div>
-            <div className="bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold">
+            <div className=" main-score bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold">
               {studentDashboard.score}
             </div>
           </div>
@@ -145,14 +146,15 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#5072A04D] [&>*:nth-child(even)]:bg-white">
-                  {/* {topColls.map((performers: any, index: any) => {
+                  {data?.data?.map((performers: any, index: any) => {
                     return (
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
                         <td className="p-3">{performers.INST_NAME}</td>
+                        <td className="p-3">{performers.TOT_STR}</td>
                       </tr>
                     );
-                  })} */}
+                  })}
                 </tbody>
               </table>
             </div>
@@ -167,21 +169,15 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#5072A04D] [&>*:nth-child(even)]:bg-white">
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                    <td className="p-3">1961</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer asdf asfd sdfsa</td>
-                    <td className="p-3">1961</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                    <td className="p-3">1961</td>
-                  </tr>
+                  {topStu?.map((performers: any, index: any) => {
+                    return (
+                      <tr key={index}>
+                        <td className="p-3">{index + 1}</td>
+                        <td className="p-3">{performers.STU_NAME}</td>
+                        <td className="p-3">{performers.score}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

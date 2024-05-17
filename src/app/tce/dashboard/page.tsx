@@ -3,6 +3,7 @@
 import ProgressIndicator from "@/components/ProgressIndicator";
 import Progressbar from "@/components/Progressbar";
 import Table from "@/components/Table";
+import { getTopColleges, getTopStudents } from "@/services/api/commonApi";
 import { getTCEColleges } from "@/services/api/tce";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -32,6 +33,9 @@ function Dashboard() {
     getTCEColleges
   );
 
+  const { data: topCol } = useQuery("collData", getTopColleges);
+
+  const { data: topStu } = useQuery("stuData", getTopStudents);
   useEffect(() => {
     if (data) {
       updateType(type);
@@ -111,26 +115,19 @@ function Dashboard() {
                     <table className="table-fixed rounded w-full">
                       <thead className="bg-[#C22B20] p-3 text-white">
                         <tr>
-                          <th className="p-2 text-left">Points</th>
-                          <th className="p-2 w-1/2 text-left">Students</th>
+                          <th className="p-2 w-1/2 text-left">Rank</th>
+                          <th className="p-2 w-1/2 text-left">Institute</th>
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                        <tr
-                          onClick={() => showModal()}
-                          className="cursor-pointer"
-                        >
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
-                        <tr onClick={() => showModal()}>
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
-                        <tr onClick={() => showModal()}>
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
+                        {topCol?.data?.map((performers: any, index: any) => {
+                          return (
+                            <tr key={index}>
+                              <td className="p-3">{index + 1}</td>
+                              <td className="p-3">{performers.INST_NAME}</td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -146,21 +143,14 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                        <tr
-                          onClick={() => showModal()}
-                          className="cursor-pointer"
-                        >
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
-                        <tr onClick={() => showModal()}>
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
-                        <tr onClick={() => showModal()}>
-                          <td className="p-3">1</td>
-                          <td className="p-3">Malcolm Lockyer</td>
-                        </tr>
+                        {topStu?.map((performers: any, index: any) => {
+                          return (
+                            <tr key={index}>
+                              <td className="p-3">{performers.score}</td>
+                              <td className="p-3">{performers.STU_NAME}</td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -174,18 +164,16 @@ function Dashboard() {
                       <thead className="bg-[#C22B20] p-3 text-white">
                         <tr>
                           <th className="p-2 text-left">Points</th>
-                          <th className="p-2 w-1/2 text-left">Students</th>
+                          <th className="p-2 w-1/2 text-left">Institutes</th>
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                        {topPerformers.map((performers, index) => {
+                        {topStu?.map((performers: any, index: any) => {
                           return (
-                            <tr
-                              key={index}
-                              onClick={() => setSelectedInstitution(performers)}
-                            >
+                            <tr key={index}>
                               <td className="p-3">{index + 1}</td>
-                              <td className="p-3">{performers.INST_NAME}</td>
+                              <td className="p-3">{performers.STU_NAME}</td>
+                              <td className="p-3">{performers.score}</td>
                             </tr>
                           );
                         })}
