@@ -33,7 +33,8 @@ const Page = () => {
         toast.dismiss(get);
         localStorage.AUTH_TOKEN = response.data.token;
         localStorage.setItem("dataObj", JSON.stringify(response.data.data));
-        router.push("/student/instructions");
+        // router.push("/student/instructions");
+        router.push("/student/dashboard");
       })
       .catch((error) => {
         console.log(error);
@@ -48,23 +49,26 @@ const Page = () => {
 
   return (
     <div className="h-screen w-full bg-white flex flex-col justify-center items-center">
-
-      <Image src="/console/Googleform.png" className="md:w-1/2 hidden md:flex md:h-[355px] mb-8" alt="" width="100" height="100"/>
+      <Image
+        src="/console/Googleform.png"
+        className="md:w-1/2 hidden md:flex md:h-[355px] mb-8"
+        alt=""
+        width="100"
+        height="100"
+      />
       <div className=" bg-[#E1E1FF] w-full md:w-1/2 h-screen p-2 md:h-1/2 flex flex-col rounded-[22px] justify-center items-center">
         <div className=" min-w-full flex justify-center flex-col">
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-           
-                <div className="w-full flex justify-center">
-                  <InputField
-                    label="DWMS ID"
-                    required
-                    error={errors?.dwmsid?.message}
-                    onChange={onChange}
-                  />
-                </div>
-            
+              <div className="w-full flex justify-center">
+                <InputField
+                  label="DWMS ID"
+                  required
+                  error={errors?.dwmsid?.message}
+                  onChange={onChange}
+                />
+              </div>
             )}
             name="dwmsid"
           />
@@ -95,8 +99,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-   
-    </div>  
+    </div>
   );
 };
 

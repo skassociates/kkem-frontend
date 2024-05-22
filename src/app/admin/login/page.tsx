@@ -35,7 +35,7 @@ const Page = () => {
         toast.dismiss(get);
         localStorage.AUTH_TOKEN = response.data.token;
         localStorage.setItem("dataObj", JSON.stringify(response.data.data));
-        router.push("/admin/instructions");
+        router.push("/admin/dashboard");
       })
       .catch((error) => {
         console.log(error);

@@ -177,12 +177,14 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                        {topStu?.map((performers: any, index: any) => {
+                        {topPerformers?.map((performers: any, index: any) => {
                           return (
-                            <tr key={index}>
+                            <tr
+                              key={index}
+                              onClick={() => setSelectedInstitution(performers)}
+                            >
                               <td className="p-3">{index + 1}</td>
-                              <td className="p-3">{performers.STU_NAME}</td>
-                              <td className="p-3">{performers.score}</td>
+                              <td className="p-3">{performers.INST_NAME}</td>
                             </tr>
                           );
                         })}
@@ -272,7 +274,7 @@ function Dashboard() {
                 </tr>
               </thead>
               <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                {tceStudents.data.map((student) => {
+                {tceStudents?.data.map((student: any) => {
                   return (
                     <tr key={student.DWMS_ID}>
                       <td className="p-3">{student.score}</td>

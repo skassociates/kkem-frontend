@@ -3,19 +3,28 @@
 import ProgressIndicator from "@/components/ProgressIndicator";
 import Progressbar from "@/components/Progressbar";
 import Table from "@/components/Table";
+import { getinstdash, gettopStuIns } from "@/services/api/form";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { QueryClient, useQuery } from "react-query";
 
 function Dashboard() {
-  const dialog = React.useRef();
+  const queryClient = new QueryClient();
+  const { data } = useQuery("insData", getinstdash);
+  //gettopStuIns
+  const { data: topStu } = useQuery("topStu", gettopStuIns);
 
+  const dialog = React.useRef();
+  const [studData, setStudData] = useState<any>(null);
   const [showDetails, setShowDetails] = useState(false);
 
   const closeModal = () => {
+    setStudData(null);
     dialog.current && dialog.current.close();
   };
 
-  const showModal = () => {
+  const showModal = (data: any) => {
+    setStudData(data);
     dialog.current && dialog.current.showModal();
   };
 
@@ -36,24 +45,26 @@ function Dashboard() {
       <div className="bg-[#C8BD6D] py-12 max-w-[750px] mx-auto">
         <div className="container mx-auto flex flex-row justify-between items-center">
           <div>
-            <div className="text-3xl text-white">Institution Name</div>
+            <div className="text-3xl text-white">
+              {data?.data.data.INST_NAME}
+            </div>
             <div className="flex flex-row gap-16 mt-8 text-xs">
               <div>
-                <div className="text-slate-500 ">DWMS ID</div>
-                <div className="font-medium">123456</div>
+                <div className="text-slate-500 ">Inst ID</div>
+                <div className="font-medium">{data?.data.data.INST_ID}</div>
                 <div className="text-slate-500  mt-2">Email ID</div>
-                <div className="font-medium">student@gmail.com</div>
+                <div className="font-medium">{data?.data.data.EMAIL_ID}</div>
               </div>
               <div>
-                <div className="text-slate-500">Institution Name</div>
-                <div className="font-medium">Institution</div>
+                {/* <div className="text-slate-500">Institution Name</div>
+                <div className="font-medium">Institution</div> */}
                 <div className="text-slate-500  mt-2">Institution Type</div>
-                <div className="font-medium">Institution Type</div>
+                <div className="font-medium">{data?.data.data.INST_TYPE}</div>
               </div>
             </div>
           </div>
           <div>
-            <div className="bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold">
+            <div className="bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold main-score">
               02
             </div>
           </div>
@@ -66,7 +77,8 @@ function Dashboard() {
               {" "}
               <div className="w-1/2">
                 <div className="text-white">Progress of Activities :</div>
-                <ProgressIndicator width={70} />
+                {/*  put PAC here inside the width */}
+                <ProgressIndicator width={data?.data.data.PAC} />
               </div>
             </div>
             <div className="mt-8 flex flex-row gap-8">
@@ -81,19 +93,25 @@ function Dashboard() {
                       <th className="p-2 w-1/2 text-left">Students</th>
                     </tr>
                   </thead>
-                  <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                    <tr onClick={() => showModal()} className="cursor-pointer">
-                      <td className="p-3">1</td>
-                      <td className="p-3">Malcolm Lockyer</td>
-                    </tr>
-                    <tr onClick={() => showModal()}>
-                      <td className="p-3">1</td>
-                      <td className="p-3">Malcolm Lockyer</td>
-                    </tr>
-                    <tr onClick={() => showModal()}>
-                      <td className="p-3">1</td>
-                      <td className="p-3">Malcolm Lockyer</td>
-                    </tr>
+                  <tbody className="[&>*:nth-child(odd)]:bg-[rgb(198,198,198)] [&>*:nth-child(even)]:bg-white">
+                    {topStu &&
+                      Object.keys(topStu?.data.data).map((key) => {
+                        return (
+                          <tr
+                            onClick={() =>
+                              showModal({
+                                mark: key,
+                                names: topStu?.data.data[key],
+                              })
+                            }
+                          >
+                            <td className="p-3">{key}</td>
+                            <td className="p-3">
+                              {topStu?.data.data[key].join(", ")}
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>
@@ -129,15 +147,6 @@ function Dashboard() {
                       of students have completed Curation Activities
                     </p>
                   </div>{" "}
-                  <div
-                    onClick={() => setShowDetails(true)}
-                    className="py-6 px-3 flex gap-6 border-2 border-white text-white"
-                  >
-                    <h2 className=" text-4xl font-bold">10%</h2>
-                    <p className="text-sm">
-                      of students have completed Curation Activities
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -174,51 +183,56 @@ function Dashboard() {
       </div>
       <div className="bg-[#C8BD6D] py-12 max-w-[750px] mx-auto">
         <div className="container mx-auto text-right">
-          <a href="#" className="underline text-[#6E6350]">
+          <a
+            href="/institution/instructions"
+            className="underline text-[#6E6350]"
+          >
             Click this link to access Institution Form
           </a>
         </div>
       </div>
 
-      <dialog className="dialog bg-gray-100" ref={dialog}>
-        <div className="p-6">
-          <div className="flex justify-between mb-3">
-            <span>Students</span>{" "}
-            <Image
-              onClick={() => closeModal()}
-              src={require("../../../../public/close.svg")}
-              alt="close"
-              className="cursor-pointer"
-            ></Image>
+      {studData && (
+        <dialog className="dialog bg-gray-100" ref={dialog}>
+          <div className="p-6">
+            <div className="flex justify-between mb-3">
+              <span>Students</span>{" "}
+              <Image
+                onClick={() => closeModal()}
+                src={require("../../../../public/close.svg")}
+                alt="close"
+                className="cursor-pointer"
+              ></Image>
+            </div>
+            <table className="table-fixed border-collapse border border-slate-500 px-2 py-1 text-xs">
+              <thead>
+                <tr className="text-gray-500">
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    Name
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    Score
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {studData.names.map((name: any) => {
+                  return (
+                    <tr>
+                      <td className="border border-slate-700 px-2 py-1">
+                        {name}
+                      </td>
+                      <td className="border border-slate-700 px-2 py-1">
+                        {studData.mark}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
-          <table className="table-fixed border-collapse border border-slate-500 px-2 py-1 text-xs">
-            <thead>
-              <tr className="text-gray-500">
-                <th className="border border-slate-600 font-normal px-2 py-1">
-                  Name
-                </th>
-                <th className="border border-slate-600 font-normal px-2 py-1">
-                  Institution
-                </th>
-                <th className="border border-slate-600 font-normal px-2 py-1">
-                  Score
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-slate-700 px-2 py-1">Indiana</td>
-                <td className="border border-slate-700 px-2 py-1">
-                  Indianapolis
-                </td>{" "}
-                <td className="border border-slate-700 px-2 py-1">
-                  Indianapolis
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </dialog>
+        </dialog>
+      )}
     </div>
   );
 }

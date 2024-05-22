@@ -27,8 +27,10 @@ const updateStudentDetails = async (body: any) => {
 
 const getStudentDashboard = async () => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
+  console.log("varToken", varToken);
+
   try {
-    const response = await axiosInstance.get("/students/dashboard", {
+    const response = await axiosInstance.post("/students/dashboard", {
       headers: { Authorization: varToken },
     });
     return response;
@@ -93,6 +95,28 @@ const upateAdminDetails = async (body: any) => {
   }
 };
 
+export const getCAdash = async () => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+
+  return axiosInstance.get("/career-ambassadors/dashboard", {
+    headers: { Authorization: varToken },
+  });
+};
+
+export const getinstdash = async () => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+  return axiosInstance.get("/institutions/dashboard", {
+    headers: { Authorization: varToken },
+  });
+};
+
+export const gettopStuIns = async () => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+  return axiosInstance.get("/institutions/gettopStuIns", {
+    headers: { Authorization: varToken },
+  });
+};
+
 export const form = {
   getStudentDetails,
   updateStudentDetails,
@@ -101,4 +125,5 @@ export const form = {
   getAdminDetails,
   upateAdminDetails,
   getStudentDashboard,
+  getCAdash,
 };

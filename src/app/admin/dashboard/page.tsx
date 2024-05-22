@@ -1,7 +1,22 @@
+"use client";
+
 import Progressbar from "@/components/Progressbar";
-import React from "react";
+import { getTopColleges, getTopStudents } from "@/services/api/commonApi";
+import { getCAdash } from "@/services/api/form";
+import React, { useEffect, useState } from "react";
+import { QueryClient, useQuery } from "react-query";
 
 function Dashboard() {
+  const queryClient = new QueryClient();
+
+  const { data } = useQuery("caData", getCAdash);
+
+  const { data: topCol } = useQuery("collData", getTopColleges);
+
+  const { data: topStu } = useQuery("stuData", getTopStudents);
+
+  const percentage = Math.round((data?.data.data.CA_PRCNT / 4) * 100);
+  const IPApercentage = Math.round((data?.data.data.ICA_PRCNT / 5) * 100);
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
       <div className="bg-white py-2">
@@ -19,19 +34,19 @@ function Dashboard() {
       <div className="bg-[#D3D1D2] py-12  mx-auto">
         <div className="container max-w-[750px] mx-auto flex flex-row justify-between items-center">
           <div>
-            <div className="text-3xl"> Career Ambassador Name</div>
+            <div className="text-3xl">{data?.data.data.CA_NAME}</div>
             <div className="flex flex-row gap-16 mt-8 text-xs">
               <div>
                 <div className="text-slate-500 ">DWMS ID</div>
-                <div className="font-medium">123456</div>
+                <div className="font-medium">{data?.data.data.DWMS_ID}</div>
                 <div className="text-slate-500  mt-2">Email ID</div>
-                <div className="font-medium">student@gmail.com</div>
+                <div className="font-medium">{data?.data.data.EMAIL_ID}</div>
               </div>
               <div>
                 <div className="text-slate-500">Institution Name</div>
-                <div className="font-medium">Institution</div>
+                <div className="font-medium">{data?.data.data.INST_NAME}</div>
                 <div className="text-slate-500  mt-2">Institution Type</div>
-                <div className="font-medium">Institution Type</div>
+                <div className="font-medium">{data?.data.data.INST_TYPE}</div>
               </div>
             </div>
           </div>
@@ -50,13 +65,25 @@ function Dashboard() {
                 Curation Activities <br />
                 (Based on Submitted Responses) :
               </div>
-              <Progressbar label="65%" max={4} value={2} color={"white"} />
+              {/* <Progressbar label="65%" max={4} value={2} color={"white"} /> */}
+              <Progressbar
+                label={`${percentage}%`}
+                max={4}
+                value={data?.data.data.CA_PRCNT}
+                color="white"
+              />
             </div>
             <div className="w-1/2">
               <div className="text-white">
                 Industry Connect & Placement Activities <br /> (Based on
                 Submitted Responses) :
-                <Progressbar label="65%" max={5} value={3} color={"white"} />
+                {/* <Progressbar label="65%" max={5} value={3} color={"white"} /> */}
+                <Progressbar
+                  label={`${IPApercentage}%`}
+                  max={5}
+                  value={data?.data.data.ICA_PRCNT}
+                  color="white"
+                />
               </div>
             </div>
           </div>
@@ -74,21 +101,15 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#c0d2e9ed] [&>*:nth-child(even)]:bg-white">
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                    <td className="p-3">1961</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                    <td className="p-3">1961</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                    <td className="p-3">1961</td>
-                  </tr>
+                  {topCol?.data?.map((performers: any, index: any) => {
+                    return (
+                      <tr key={index}>
+                        <td className="p-3">{index + 1}</td>
+                        <td className="p-3">{performers.INST_NAME}</td>
+                        <td className="p-3">{performers.TOT_STR}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -105,21 +126,15 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#c0d2e9ed] [&>*:nth-child(even)]:bg-white">
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                    <td className="p-3">1961</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer asdf asfd sdfsa</td>
-                    <td className="p-3">1961</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3">1</td>
-                    <td className="p-3">Malcolm Lockyer</td>
-                    <td className="p-3">1961</td>
-                  </tr>
+                  {topStu?.map((performers: any, index: any) => {
+                    return (
+                      <tr key={index}>
+                        <td className="p-3">{index + 1}</td>
+                        <td className="p-3">{performers.STU_NAME}</td>
+                        <td className="p-3">{performers.score}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -128,16 +143,10 @@ function Dashboard() {
       </div>
       <div className="bg-[#D3D1D2] py-12">
         <div className="container mx-auto max-w-[750px] text-right">
-          <div
-            className="flex flex-col gap-4 text-[#162B47]
-"
-          >
-            <a href="#" className="underline">
-              Click this link to access Student Form
+          <div className="flex flex-col gap-4 text-[#162B47]">
+            <a href="/admin/instructions" className="underline">
+              Click this link to access Entry Form
             </a>
-            <a href="#" className="underline">
-              Click this link to access Student Form
-            </a>{" "}
           </div>
         </div>
       </div>

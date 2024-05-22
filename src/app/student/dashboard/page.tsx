@@ -19,6 +19,7 @@ function Dashboard() {
     DWMS_ID: "",
     EMAIL_ID: "",
     INST_NAME: "",
+    INST_TYPE: "",
   });
   // const [topColl, setTopColl] = useState([]);
 
@@ -89,7 +90,7 @@ function Dashboard() {
                 <div className="text-slate-400">Institution Name</div>
                 <div className="text-white">{studentDashboard.INST_NAME}</div>
                 <div className="text-slate-400 mt-2">Institution Type</div>
-                <div className="text-white">Institution Type</div>
+                <div className="text-white">{studentDashboard.INST_TYPE}</div>
               </div>
             </div>
           </div>
@@ -134,15 +135,15 @@ function Dashboard() {
               />
             </div>
           </div>
-          <div className="mt-8 flex flex-row gap-4">
-            <div className="flex-1">
+          <div className="mt-8 flex flex-row gap-12">
+            <div className="flex-grow-2">
               <div className="text-2xl font-bold mb-4">Top 5 colleges</div>
               <table className="table-fixed rounded w-full">
                 <thead className="bg-[#5072A0] p-3 text-white">
                   <tr>
-                    <th className="p-2 text-left">Rank</th>
+                    <th className="p-2 w-1/6 text-left">Rank</th>
                     <th className="p-2 w-1/2 text-left">Name of College</th>
-                    <th className="p-2 text-left">Points</th>
+                    <th className="p-2 w-1/6 text-left">Points</th>
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#5072A04D] [&>*:nth-child(even)]:bg-white">
@@ -158,7 +159,7 @@ function Dashboard() {
                 </tbody>
               </table>
             </div>
-            <div className="flex-1">
+            <div className="flex-grow-2">
               <div className="text-2xl font-bold mb-4">Top Performers</div>
               <table className="table-fixed rounded">
                 <thead className="bg-[#5072A0] p-3 text-white">
@@ -186,7 +187,7 @@ function Dashboard() {
       </div>
       <div className="bg-[#003B89] py-12 max-w-[750px] mx-auto">
         <div className="container mx-auto text-right">
-          <a href="#" className="underline text-white">
+          <a href="/student/instructions" className="underline text-white">
             Click this link to access Student Form
           </a>
         </div>
