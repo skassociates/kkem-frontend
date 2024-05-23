@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 "use client";
 
 import ProgressIndicator from "@/components/ProgressIndicator";
@@ -211,7 +212,31 @@ function Dashboard() {
                     Name
                   </th>
                   <th className="border border-slate-600 font-normal px-2 py-1">
-                    Score
+                    DWMS ID
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    Email ID
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    DWMS Profile Completion
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    Career Assessment
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    Career Counselling
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    Personality Development Training
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    English Score Test
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    Robotic Interview
+                  </th>
+                  <th className="border border-slate-600 font-normal px-2 py-1">
+                    Work Readiness Program
                   </th>
                 </tr>
               </thead>
