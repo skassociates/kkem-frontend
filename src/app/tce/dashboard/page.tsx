@@ -15,17 +15,17 @@ import {
 } from "@/services/api/commonApi";
 import { getStudents, getTCEColleges } from "@/services/api/tce";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { QueryClient, useMutation, useQuery } from "react-query";
 
 function Dashboard() {
-  const dialog = React.useRef();
+  const dialog = useRef<HTMLDialogElement>(null);
 
   const queryClient = new QueryClient();
 
   const [showDetails, setShowDetails] = useState<any>();
   const [topPerformers, setTopPerformers] = useState([]);
-  const [selectedInstitution, setSelectedInstitution] = useState(null);
+  const [selectedInstitution, setSelectedInstitution] = useState<any>(null);
   // const [showstu, setshowstu] = useState<any>(null);
 
   const [type, setType] = useState("ENG_CLG");
@@ -211,7 +211,7 @@ function Dashboard() {
                   {selectedInstitution && (
                     <div className="w-1/2">
                       <div className="text-2xl mb-4 text-[#6F4F12]">
-                        Summary of {selectedInstitution.INST_NAME}
+                        Summary of {selectedInstitution?.INST_NAME}
                       </div>
                       <div className="flex flex-col gap-6">
                         <div

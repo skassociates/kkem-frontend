@@ -116,6 +116,17 @@ export const gettopStuIns = async () => {
     headers: { Authorization: varToken },
   });
 };
+export const calculateStudents = async () => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+  try {
+    const response = await axiosInstance.get("/students/calc", {
+      headers: { Authorization: varToken },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const form = {
   getStudentDetails,
@@ -126,4 +137,5 @@ export const form = {
   upateAdminDetails,
   getStudentDashboard,
   getCAdash,
+  calculateStudents,
 };

@@ -1,6 +1,11 @@
 import React from "react";
 
-const Table = ({ data, headersOrder }) => {
+interface TableProps {
+  data: Array<{ [key: string]: string | number | boolean }>;
+  headersOrder?: string[];
+}
+
+const Table: React.FC<TableProps> = ({ data, headersOrder }) => {
   // Check if data is available and not empty
 
   if (!data || data.length === 0) {

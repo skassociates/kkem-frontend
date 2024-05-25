@@ -75,6 +75,7 @@ const Page = () => {
     form
       .updateStudentDetails(data)
       .then((response) => {
+        form.calculateStudents();
         toast.update(get, {
           render: "Done",
           type: "success",
@@ -94,7 +95,6 @@ const Page = () => {
   };
 
   const fetchdata = async () => {
-
     const get = toast.loading("Fetching Your Details....");
     form
       .getStudentDetails()
@@ -106,7 +106,7 @@ const Page = () => {
           autoClose: 1000,
         });
         setStudentForm(response.data.student);
-        setFolderID(response.data.student.folderId)
+        setFolderID(response.data.student.folderId);
       })
       .catch((error) => {
         console.log(error);
@@ -125,7 +125,7 @@ const Page = () => {
     //   try {
     //     // Parse JSON data and remove any trailing characters (e.g., '4')
     //     const parsedData: MyData = JSON.parse(storedData);
-    //     console.log("parsedData", parsedData);        
+    //     console.log("parsedData", parsedData);
     //     setDataObj(parsedData);
     //     setValue("EMAIL_ID", parsedData.EMAIL_ID);
     //     setValue("INST_NAME", parsedData.INSTITUTION_NAME);

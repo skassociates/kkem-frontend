@@ -11,7 +11,7 @@ import {
 import { getgetstudIns } from "@/services/api/commonApi";
 import { getinstdash, gettopStuIns } from "@/services/api/form";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
 
 function Dashboard() {
@@ -22,7 +22,7 @@ function Dashboard() {
 
   const { data: pecCom } = useQuery("pecCom", getgetstudIns);
 
-  const dialog = React.useRef();
+  const dialog = useRef<HTMLDialogElement>(null);
   const [studData, setStudData] = useState<any>(null);
   const [showDetails, setShowDetails] = useState<any>(null);
 
@@ -106,6 +106,7 @@ function Dashboard() {
                       Object.keys(topStu?.data.data).map((key) => {
                         return (
                           <tr
+                            key={key}
                             onClick={() =>
                               showModal({
                                 mark: key,
@@ -256,7 +257,7 @@ function Dashboard() {
               <tbody>
                 {studData.names.map((name: any) => {
                   return (
-                    <tr>
+                    <tr key={studData.mark}>
                       <td className="border border-slate-700 px-2 py-1">
                         {name}
                       </td>
