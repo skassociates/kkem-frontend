@@ -3,6 +3,12 @@
 import ProgressIndicator from "@/components/ProgressIndicator";
 import Progressbar from "@/components/Progressbar";
 import Table from "@/components/Table";
+import {
+  CA_header_order,
+  ICA_header_order,
+  PA_header_order,
+} from "@/schema/student";
+import { getgetstudIns } from "@/services/api/commonApi";
 import { getinstdash, gettopStuIns } from "@/services/api/form";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -14,9 +20,11 @@ function Dashboard() {
   //gettopStuIns
   const { data: topStu } = useQuery("topStu", gettopStuIns);
 
+  const { data: pecCom } = useQuery("pecCom", getgetstudIns);
+
   const dialog = React.useRef();
   const [studData, setStudData] = useState<any>(null);
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState<any>(null);
 
   const closeModal = () => {
     setStudData(null);
@@ -121,30 +129,57 @@ function Dashboard() {
                 </div>
                 <div className="flex flex-col gap-6">
                   <div
-                    onClick={() => setShowDetails(true)}
+                    onClick={() =>
+                      setShowDetails({
+                        PRCNT: pecCom?.data.CA_COMP_P,
+                        studs: pecCom?.data.CA_students,
+                        string: "Curation Activities",
+                        headers: CA_header_order,
+                      })
+                    }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className=" text-4xl font-bold">10%</h2>
+                    <h2 className=" text-4xl font-bold">
+                      {pecCom?.data.CA_COMP_P}%
+                    </h2>
                     <p className="text-sm">
                       of students have completed Curation Activities
                     </p>
                   </div>
                   <div
-                    onClick={() => setShowDetails(true)}
+                    onClick={() =>
+                      setShowDetails({
+                        PRCNT: pecCom?.data.ICA_COMP_P,
+                        studs: pecCom?.data.ICA_students,
+                        string: "Industry Connect Activities",
+                        headers: ICA_header_order,
+                      })
+                    }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className=" text-4xl font-bold">10%</h2>
+                    <h2 className=" text-4xl font-bold">
+                      {pecCom?.data.ICA_COMP_P}%
+                    </h2>
                     <p className="text-sm">
-                      of students have completed Curation Activities
+                      of students have completed Industry Connect Activities
                     </p>
                   </div>{" "}
                   <div
-                    onClick={() => setShowDetails(true)}
+                    onClick={() =>
+                      setShowDetails({
+                        PRCNT: pecCom?.data.PA_COMP_P,
+                        studs: pecCom?.data.PA_students,
+                        string: "Placement Activities",
+                        headers: PA_header_order,
+                      })
+                    }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className=" text-4xl font-bold">10%</h2>
+                    <h2 className=" text-4xl font-bold">
+                      {pecCom?.data.PA_COMP_P}%
+                    </h2>
                     <p className="text-sm">
-                      of students have completed Curation Activities
+                      of students have completed Placement Activities
                     </p>
                   </div>{" "}
                 </div>
@@ -153,11 +188,11 @@ function Dashboard() {
           </div>
         )}
         {showDetails && (
-          <div className="container mx-auto max-w-[750px] ">
+          <div className="container mx-auto max-w-max ">
             <div className="flex w-full justify-between items-center">
               <p className="text-lg text-white">
-                <span className="font-semibold">10%</span> of students have
-                completed Curation Activities
+                <span className="font-semibold">{showDetails.PRCNT}%</span> of
+                students have completed {showDetails.string}
               </p>
               <div
                 onClick={() => setShowDetails(false)}
@@ -177,7 +212,10 @@ function Dashboard() {
                 <span className="text-white">Back</span>
               </div>
             </div>
-            <Table />
+            <Table
+              data={showDetails.studs}
+              headersOrder={showDetails.headers}
+            />
           </div>
         )}
       </div>

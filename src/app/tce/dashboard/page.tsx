@@ -3,20 +3,30 @@
 import ProgressIndicator from "@/components/ProgressIndicator";
 import Progressbar from "@/components/Progressbar";
 import Table from "@/components/Table";
-import { getTopColleges, getTopStudents } from "@/services/api/commonApi";
+import {
+  CA_header_order,
+  ICA_header_order,
+  PA_header_order,
+} from "@/schema/student";
+import {
+  getTopColleges,
+  getTopStudents,
+  getgetstudIns,
+} from "@/services/api/commonApi";
 import { getStudents, getTCEColleges } from "@/services/api/tce";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { QueryClient, useQuery } from "react-query";
+import { QueryClient, useMutation, useQuery } from "react-query";
 
 function Dashboard() {
   const dialog = React.useRef();
 
   const queryClient = new QueryClient();
 
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState<any>();
   const [topPerformers, setTopPerformers] = useState([]);
   const [selectedInstitution, setSelectedInstitution] = useState(null);
+  // const [showstu, setshowstu] = useState<any>(null);
 
   const [type, setType] = useState("ENG_CLG");
 
@@ -27,6 +37,8 @@ function Dashboard() {
   const showModal = () => {
     // dialog.current && dialog.current.showModal();
   };
+
+  const { mutate, data: colData } = useMutation("pecCom", getgetstudIns);
 
   const { data, isLoading, isError, isSuccess } = useQuery(
     "repoData",
@@ -52,8 +64,10 @@ function Dashboard() {
     setTopPerformers(list);
   };
 
-  const showDetailsPage = () => {
-    setShowDetails(true);
+  const showDetailsPage = (data: any) => {
+    // console.log("sda", data);
+
+    setShowDetails(data);
     refetch();
   };
 
@@ -124,8 +138,8 @@ function Dashboard() {
                     <table className="table-fixed rounded w-full">
                       <thead className="bg-[#C22B20] p-3 text-white">
                         <tr>
-                          <th className="p-2 w-1/2 text-left">Rank</th>
-                          <th className="p-2 w-1/2 text-left">Institute</th>
+                          <th className="p-2 w-1/4 text-left">Rank</th>
+                          <th className="p-2 w-3/4 text-left">Institute</th>
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
@@ -147,8 +161,8 @@ function Dashboard() {
                     <table className="table-fixed rounded w-full">
                       <thead className="bg-[#C22B20] p-3 text-white">
                         <tr>
-                          <th className="p-2 text-left">Points</th>
-                          <th className="p-2 w-1/2 text-left">Students</th>
+                          <th className="p-2 w-1/4 text-left">Points</th>
+                          <th className="p-2 w-3/4 text-left">Students</th>
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
@@ -172,8 +186,8 @@ function Dashboard() {
                     <table className="table-fixed rounded w-full">
                       <thead className="bg-[#C22B20] p-3 text-white">
                         <tr>
-                          <th className="p-2 text-left">Points</th>
-                          <th className="p-2 w-1/2 text-left">Institutes</th>
+                          <th className="p-2 w-1/4 text-left">Points</th>
+                          <th className="p-2 w-3/4 text-left">Institutes</th>
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
@@ -181,7 +195,10 @@ function Dashboard() {
                           return (
                             <tr
                               key={index}
-                              onClick={() => setSelectedInstitution(performers)}
+                              onClick={() => {
+                                setSelectedInstitution(performers);
+                                mutate(performers.INST_ID);
+                              }}
                             >
                               <td className="p-3">{index + 1}</td>
                               <td className="p-3">{performers.INST_NAME}</td>
@@ -198,39 +215,58 @@ function Dashboard() {
                       </div>
                       <div className="flex flex-col gap-6">
                         <div
-                          onClick={() => showDetailsPage()}
+                          onClick={() =>
+                            showDetailsPage({
+                              PRCNT: colData?.data.CA_COMP_P,
+                              studs: colData?.data.CA_students,
+                              string: "Curation Activities",
+                              headers: CA_header_order,
+                            })
+                          }
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
-                          <h2 className=" text-4xl font-bold">10%</h2>
+                          <h2 className=" text-4xl font-bold">
+                            {colData?.data.CA_COMP_P}%
+                          </h2>
                           <p className="text-sm">
                             of students have completed Curation Activities
                           </p>
                         </div>
                         <div
-                          onClick={() => showDetailsPage()}
+                          onClick={() =>
+                            showDetailsPage({
+                              PRCNT: colData?.data.ICA_COMP_P,
+                              studs: colData?.data.ICA_students,
+                              string: "Industry Connect Activities",
+                              headers: ICA_header_order,
+                            })
+                          }
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
-                          <h2 className=" text-4xl font-bold">10%</h2>
+                          <h2 className=" text-4xl font-bold">
+                            {colData?.data.ICA_COMP_P}%
+                          </h2>
                           <p className="text-sm">
-                            of students have completed Curation Activities
+                            of students have completed Industry Connect
+                            Activities
                           </p>
-                        </div>{" "}
+                        </div>
                         <div
-                          onClick={() => showDetailsPage()}
+                          onClick={() =>
+                            showDetailsPage({
+                              PRCNT: colData?.data.PA_COMP_P,
+                              studs: colData?.data.PA_students,
+                              string: "Industry Connect Activities",
+                              headers: PA_header_order,
+                            })
+                          }
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
-                          <h2 className=" text-4xl font-bold">10%</h2>
+                          <h2 className=" text-4xl font-bold">
+                            {colData?.data.PA_COMP_P}%
+                          </h2>
                           <p className="text-sm">
-                            of students have completed Curation Activities
-                          </p>
-                        </div>{" "}
-                        <div
-                          onClick={() => showDetailsPage()}
-                          className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
-                        >
-                          <h2 className=" text-4xl font-bold">10%</h2>
-                          <p className="text-sm">
-                            of students have completed Curation Activities
+                            of students have completed Placement Activities
                           </p>
                         </div>
                       </div>
@@ -242,11 +278,11 @@ function Dashboard() {
           </div>
         )}
         {showDetails && (
-          <div className="container mx-auto max-w-[750px] ">
+          <div className="container mx-auto max-w-max ">
             <div className="flex w-full justify-between items-center">
               <p className="text-lg text-white">
-                <span className="font-semibold">10%</span> of students have
-                completed Curation Activities
+                <span className="font-semibold">{showDetails.PRCNT}%</span> of
+                students have completed {showDetails.string}
               </p>
               <div
                 onClick={() => setShowDetails(false)}
@@ -266,24 +302,10 @@ function Dashboard() {
                 <span className="text-white">Back</span>
               </div>
             </div>
-            <table className="table-fixed rounded w-full">
-              <thead className="bg-[#C22B20] p-3 text-white">
-                <tr>
-                  <th className="p-2 text-left">Points</th>
-                  <th className="p-2 w-1/2 text-left">Students</th>
-                </tr>
-              </thead>
-              <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                {tceStudents?.data.map((student: any) => {
-                  return (
-                    <tr key={student.DWMS_ID}>
-                      <td className="p-3">{student.score}</td>
-                      <td className="p-3">{student.STU_NAME}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <Table
+              data={showDetails.studs}
+              headersOrder={showDetails.headers}
+            />
           </div>
         )}
       </div>

@@ -27,12 +27,12 @@ const Page = () => {
   const onLogin = (data: any) => {
     const get = toast.loading("Checking Credentials...");
     auth
-      .institutionLogin(data)
+      .tceLogin(data)
       .then((response) => {
         toast.dismiss(get);
         localStorage.AUTH_TOKEN = response.data.token;
         localStorage.setItem("dataObj", JSON.stringify(response.data.data));
-        router.push("/institution/instructions");
+        router.push("/tce/dashbboard");
       })
       .catch((error) => {
         console.log(error);

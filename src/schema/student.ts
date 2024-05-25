@@ -17,7 +17,7 @@ export interface StudentDetails {
   LCP_PART: boolean;
 
   SP_DWMS: boolean;
-  DWMT_T:string;
+  DWMT_T: string;
   INTERN_COMP: string;
   ATTN_PLCMNT_DRV: boolean;
   OFR_LTR: boolean;
@@ -28,29 +28,61 @@ export interface StudentDetails {
 }
 
 export interface instituteDetails {
-    EMAIL_ID: string
-    INST_NAME: string;
-    PLC_CORD_NAME: string;
-    TOT_STR: string;
+  EMAIL_ID: string;
+  INST_NAME: string;
+  PLC_CORD_NAME: string;
+  TOT_STR: string;
 
-    RRCMNT_DRV_COUNT: string;
-    PLC_DRV_JOB_OFR_COUNT: string;
-    INTRN_SHP_STD_COUNT: string;
-    PLCMNT_ACT: boolean;
+  RRCMNT_DRV_COUNT: string;
+  PLC_DRV_JOB_OFR_COUNT: string;
+  INTRN_SHP_STD_COUNT: string;
+  PLCMNT_ACT: boolean;
 }
 
 export interface adminDetails {
-    EMAIL_ID: string;
-    INST_NAME: string;
-    CA_NAME: string;
-    TOT_STR: string;
-    DWMS_ORT_SSN: boolean;
-    CUR_SRV_COMP: Array<string>;
-    PCT_STD_DWMS_PROF_COMP: string;
-    DWMS_HLP_DSK: boolean;
-    PCT_FY_STD_WEBNR: string;
-    PCT_STD_RSM_WRK_SHP: string;
-    KKEM_IIP: boolean;
-    PCT_STD_RCM_DRV: string;
-    PCT_STD_JOB_OFFR: string
+  EMAIL_ID: string;
+  INST_NAME: string;
+  CA_NAME: string;
+  TOT_STR: string;
+  DWMS_ORT_SSN: boolean;
+  CUR_SRV_COMP: Array<string>;
+  PCT_STD_DWMS_PROF_COMP: string;
+  DWMS_HLP_DSK: boolean;
+  PCT_FY_STD_WEBNR: string;
+  PCT_STD_RSM_WRK_SHP: string;
+  KKEM_IIP: boolean;
+  PCT_STD_RCM_DRV: string;
+  PCT_STD_JOB_OFFR: string;
 }
+
+export const CA_header_order = [
+  "Name",
+  "DWMS ID",
+  "Email ID",
+  "DWMS Profile Completion",
+  "Career Assessment",
+  "Career Counselling",
+  "Personality Development Training",
+  "English Score Test",
+  "Robotic Interview",
+  "Work Readiness Program",
+];
+export const ICA_header_order = [
+  "Name",
+  "DWMS ID",
+  "Email ID",
+  "Workshops",
+  "Industry Insight Programmes",
+  "Learning Circles",
+];
+export const PA_header_order = [
+  "Name",
+  "DWMS ID",
+  "Email ID",
+  "Skill Programmes",
+  "Internships",
+  "Recruitment Drives",
+  "Offer Letters",
+  "Shortlisted Jobs",
+  "Other Placement Activities",
+];
