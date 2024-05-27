@@ -2,6 +2,7 @@
 import Progressbar from "@/components/Progressbar";
 import { getTopColleges, getTopStudents } from "@/services/api/commonApi";
 import { form } from "@/services/api/form";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
 import { toast } from "react-toastify";
@@ -66,9 +67,11 @@ function Dashboard() {
             <img src="/kkem_logo.png" alt="" />
           </div>
           <div>
-            <div className="text-[#003B89CC] text-2xl font-semibold">
-              Student
-            </div>
+            <Link href={"/student/login"}>
+              <div className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2">
+                LogOut
+              </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -95,7 +98,7 @@ function Dashboard() {
             </div>
           </div>
           <div>
-            <div className=" main-score bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold">
+            <div className=" main-score bg-[#FFC24A] w-[150px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold">
               {studentDashboard.score}
             </div>
           </div>
