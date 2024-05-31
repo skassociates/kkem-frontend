@@ -170,7 +170,7 @@ function Dashboard() {
                           return (
                             <tr key={index}>
                               <td className="p-3">{performers.score}</td>
-                              <td className="p-3">{performers.STU_NAME}</td>
+                              <td className="p-3 capitalize">{performers.STU_NAME.toLowerCase()}</td>
                             </tr>
                           );
                         })}
