@@ -76,6 +76,7 @@ const Page = () => {
     form
       .upateAdminDetails(data)
       .then((response) => {
+        form.calculateCA();
         toast.update(get, {
           render: "Done",
           type: "success",

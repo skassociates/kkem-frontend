@@ -15,8 +15,12 @@ function Dashboard() {
 
   const { data: topStu } = useQuery("stuData", getTopStudents);
 
-  const percentage = Math.round((data?.data.data.CA_PRCNT / 4) * 100);
-  const IPApercentage = Math.round((data?.data.data.ICA_PRCNT / 5) * 100);
+  const percentage = isNaN(Math.round((data?.data.data.CA_PRCNT / 4) * 100))
+    ? 0
+    : Math.round((data?.data.data.CA_PRCNT / 4) * 100);
+  const IPApercentage = isNaN(Math.round((data?.data.data.ICA_PRCNT / 5) * 100))
+    ? 0
+    : Math.round((data?.data.data.ICA_PRCNT / 5) * 100);
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
       <div className="bg-white py-2">
@@ -51,8 +55,8 @@ function Dashboard() {
             </div>
           </div>
           <div>
-            <div className="bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold main-score">
-              02
+            <div className=" main-score bg-[#FFC24A] w-[150px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold">
+              {data?.data.data.score}
             </div>
           </div>
         </div>
@@ -106,7 +110,7 @@ function Dashboard() {
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
                         <td className="p-3">{performers.INST_NAME}</td>
-                        <td className="p-3">{performers.TOT_STR}</td>
+                        <td className="p-3">{performers.score}</td>
                       </tr>
                     );
                   })}
@@ -130,7 +134,9 @@ function Dashboard() {
                     return (
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
-                        <td className="p-3">{performers.STU_NAME}</td>
+                        <td className="p-3 capitalize">
+                          {performers.STU_NAME.toLowerCase()}
+                        </td>
                         <td className="p-3">{performers.score}</td>
                       </tr>
                     );

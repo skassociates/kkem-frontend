@@ -6,6 +6,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import LogoutButton from "@/components/logoutButton";
+// import LogoutButton from "@/components/logoutButton";
 
 function Dashboard() {
   const queryClient = new QueryClient();
@@ -27,6 +30,7 @@ function Dashboard() {
   const { data } = useQuery("collData", getTopColleges);
 
   const { data: topStu } = useQuery("stuData", getTopStudents);
+  // const { data: studentDash } = useQuery("stuDash", form.getStudentDashboard);
 
   const fetchdata = async () => {
     const get = toast.loading("Fetching Your Details....");
@@ -67,11 +71,12 @@ function Dashboard() {
             <img src="/kkem_logo.png" alt="" />
           </div>
           <div>
-            <Link href={"/student/login"}>
+            {/* <Link href={"/student/login"}>
               <div className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2">
                 LogOut
               </div>
-            </Link>
+            </Link> */}
+            <LogoutButton />
           </div>
         </div>
       </div>
@@ -155,7 +160,7 @@ function Dashboard() {
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
                         <td className="p-3">{performers.INST_NAME}</td>
-                        <td className="p-3">{performers.TOT_STR}</td>
+                        <td className="p-3">{performers.score}</td>
                       </tr>
                     );
                   })}
@@ -177,7 +182,9 @@ function Dashboard() {
                     return (
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
-                        <td className="p-3">{performers.STU_NAME}</td>
+                        <td className="p-3 capitalize">
+                          {performers.STU_NAME.toLowerCase()}
+                        </td>
                         <td className="p-3">{performers.score}</td>
                       </tr>
                     );

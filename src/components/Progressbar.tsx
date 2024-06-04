@@ -10,7 +10,7 @@ interface Props {
 function Progressbar({
   label = "65%",
   max = 6,
-  value = 3,
+  value = 0,
   color = "white",
 }: Props) {
   const createArray = (n: number) => {
