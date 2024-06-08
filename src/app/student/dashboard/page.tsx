@@ -6,6 +6,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+// import LogoutButton from "@/components/logoutButton";
 
 function Dashboard() {
   const queryClient = new QueryClient();
@@ -27,6 +29,7 @@ function Dashboard() {
   const { data } = useQuery("collData", getTopColleges);
 
   const { data: topStu } = useQuery("stuData", getTopStudents);
+  // const { data: studentDash } = useQuery("stuDash", form.getStudentDashboard);
 
   const fetchdata = async () => {
     const get = toast.loading("Fetching Your Details....");
@@ -55,9 +58,22 @@ function Dashboard() {
   useEffect(() => {
     fetchdata();
   }, []);
-  const percentage = Math.round((studentDashboard.CA_PRCNT / 7) * 100);
-  const IPApercentage = Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
-  const PApercentage = Math.round((studentDashboard.PA_PRCNT / 6) * 100);
+  // const percentage = Math.round((studentDashboard.CA_PRCNT / 7) * 100);
+  const percentage = isNaN(Math.round((studentDashboard.CA_PRCNT / 7) * 100))
+    ? 0
+    : Math.round((studentDashboard.CA_PRCNT / 7) * 100);
+
+  // const IPApercentage = Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
+  const IPApercentage = isNaN(
+    Math.round((studentDashboard.ICA_PRCNT / 3) * 100)
+  )
+    ? 0
+    : Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
+
+  // const PApercentage = Math.round((studentDashboard.PA_PRCNT / 6) * 100);
+  const PApercentage = isNaN(Math.round((studentDashboard.PA_PRCNT / 6) * 100))
+    ? 0
+    : Math.round((studentDashboard.PA_PRCNT / 6) * 100);
 
   return (
     <div className="min-h-screen bg-[#003B89]">
@@ -72,6 +88,7 @@ function Dashboard() {
                 Logout
               </div>
             </Link>
+            {/* <LogoutButton /> */}
           </div>
         </div>
       </div>
@@ -155,7 +172,7 @@ function Dashboard() {
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
                         <td className="p-3">{performers.INST_NAME}</td>
-                        <td className="p-3">{performers.TOT_STR}</td>
+                        <td className="p-3">{performers.score}</td>
                       </tr>
                     );
                   })}
@@ -177,7 +194,9 @@ function Dashboard() {
                     return (
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
-                        <td className="p-3 capitalize">{performers.STU_NAME.toLowerCase()}</td>
+                        <td className="p-3 capitalize">
+                          {performers.STU_NAME.toLowerCase()}
+                        </td>
                         <td className="p-3">{performers.score}</td>
                       </tr>
                     );

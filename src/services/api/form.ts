@@ -30,7 +30,7 @@ const getStudentDashboard = async () => {
   console.log("varToken", varToken);
 
   try {
-    const response = await axiosInstance.post("/students/dashboard", {
+    const response = await axiosInstance.get("/students/dashboard", {
       headers: { Authorization: varToken },
     });
     return response;
@@ -127,6 +127,19 @@ export const calculateStudents = async () => {
     throw error;
   }
 };
+//calc
+
+export const calculateCA = async () => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+  try {
+    const response = await axiosInstance.get("/career-ambassadors/calc", {
+      headers: { Authorization: varToken },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const form = {
   getStudentDetails,
@@ -138,4 +151,5 @@ export const form = {
   getStudentDashboard,
   getCAdash,
   calculateStudents,
+  calculateCA,
 };
