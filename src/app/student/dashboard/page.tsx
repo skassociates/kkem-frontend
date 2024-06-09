@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import LogoutButton from "@/components/logoutButton";
+import router from "next/router";
 // import LogoutButton from "@/components/logoutButton";
 
 function Dashboard() {
@@ -59,10 +59,25 @@ function Dashboard() {
   useEffect(() => {
     fetchdata();
   }, []);
-  const percentage = Math.round((studentDashboard.CA_PRCNT / 7) * 100);
-  const IPApercentage = Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
-  const PApercentage = Math.round((studentDashboard.PA_PRCNT / 6) * 100);
+  // const percentage = Math.round((studentDashboard.CA_PRCNT / 7) * 100);
+  const percentage = isNaN(Math.round((studentDashboard.CA_PRCNT / 7) * 100))
+    ? 0
+    : Math.round((studentDashboard.CA_PRCNT / 7) * 100);
 
+  // const IPApercentage = Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
+  const IPApercentage = isNaN(
+    Math.round((studentDashboard.ICA_PRCNT / 3) * 100)
+  )
+    ? 0
+    : Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
+
+  // const PApercentage = Math.round((studentDashboard.PA_PRCNT / 6) * 100);
+  const PApercentage = isNaN(Math.round((studentDashboard.PA_PRCNT / 6) * 100))
+    ? 0
+    : Math.round((studentDashboard.PA_PRCNT / 6) * 100);
+  const handleLogout = (e: any) => {
+    localStorage.clear();
+  };
   return (
     <div className="min-h-screen bg-[#003B89]">
       <div className="bg-white py-2">
@@ -70,13 +85,16 @@ function Dashboard() {
           <div>
             <img src="/kkem_logo.png" alt="" />
           </div>
-          <div>
-            {/* <Link href={"/student/login"}>
-              <div className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2">
-                LogOut
+          <div onClick={handleLogout}>
+            <Link href={"/student/login"}>
+              <div
+                className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2"
+                // onClick={handleLogout}
+              >
+                Logout
               </div>
-            </Link> */}
-            <LogoutButton />
+            </Link>
+            {/* <LogoutButton /> */}
           </div>
         </div>
       </div>

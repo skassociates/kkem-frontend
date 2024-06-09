@@ -15,6 +15,7 @@ import {
 } from "@/services/api/commonApi";
 import { getStudents, getTCEColleges } from "@/services/api/tce";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { QueryClient, useMutation, useQuery } from "react-query";
 
@@ -70,7 +71,9 @@ function Dashboard() {
     setShowDetails(data);
     refetch();
   };
-
+  const handleLogout = (e: any) => {
+    localStorage.clear();
+  };
   return (
     <div className="min-h-screen bg-[#C22B20]">
       <div className="bg-white py-2">
@@ -78,10 +81,15 @@ function Dashboard() {
           <div>
             <img src="/kkem_logo.png" alt="" />
           </div>
-          <div>
-            <div className="text-[#003B89CC] text-2xl font-semibold">
-              Student
-            </div>
+          <div onClick={handleLogout}>
+            <Link href={"/student/login"}>
+              <div
+                className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2"
+                // onClick={handleLogout}
+              >
+                Logout
+              </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -170,7 +178,9 @@ function Dashboard() {
                           return (
                             <tr key={index}>
                               <td className="p-3">{performers.score}</td>
-                              <td className="p-3">{performers.STU_NAME}</td>
+                              <td className="p-3 capitalize">
+                                {performers.STU_NAME.toLowerCase()}
+                              </td>
                             </tr>
                           );
                         })}

@@ -12,6 +12,7 @@ import {
 import { getgetstudIns } from "@/services/api/commonApi";
 import { getinstdash, gettopStuIns } from "@/services/api/form";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
 
@@ -36,7 +37,9 @@ function Dashboard() {
     setStudData(data);
     dialog.current && dialog.current.showModal();
   };
-
+  const handleLogout = (e: any) => {
+    localStorage.clear();
+  };
   return (
     <div className="min-h-screen bg-[#C8BD6D]">
       <div className="bg-white py-2">
@@ -44,10 +47,15 @@ function Dashboard() {
           <div>
             <img src="/kkem_logo.png" alt="" />
           </div>
-          <div>
-            <div className="text-[#003B89CC] text-2xl font-semibold">
-              Student
-            </div>
+          <div onClick={handleLogout}>
+            <Link href={"/student/login"}>
+              <div
+                className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2"
+                // onClick={handleLogout}
+              >
+                Logout
+              </div>
+            </Link>
           </div>
         </div>
       </div>
