@@ -22,9 +22,16 @@ function Dashboard() {
   const IPApercentage = isNaN(Math.round((data?.data.data.ICA_PRCNT / 5) * 100))
     ? 0
     : Math.round((data?.data.data.ICA_PRCNT / 5) * 100);
+  // localStorage.setItem("INST_TYPE", data?.data.data.INST_TYPE);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("INST_TYPE", data?.data.data.INST_TYPE);
+    }
+  }, [data]);
   const handleLogout = (e: any) => {
     localStorage.clear();
   };
+
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
       <div className="bg-white py-2">

@@ -44,6 +44,7 @@ function Dashboard() {
           autoClose: 1000,
         });
         setStudentDashboard(response.data.student);
+        localStorage.setItem("INST_TYPE", response.data.student.INST_TYPE);
       })
       .catch((error) => {
         console.log(error);

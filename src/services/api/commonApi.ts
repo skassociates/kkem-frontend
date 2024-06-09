@@ -1,21 +1,23 @@
 import { axiosInstance } from "../request/request";
 
-export const getTopColleges = async () => {
+export const getTopColleges = async (ins: any) => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
+  const INST_TYPE = localStorage.getItem("INST_TYPE");
 
   return axiosInstance
     .get("/cc/topfiveCollege", {
-      headers: { Authorization: varToken },
+      headers: { Authorization: varToken, INST_TYPE: INST_TYPE },
     })
     .then((res) => res.data);
 };
 
 export const getTopStudents = async () => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
+  const INST_TYPE = localStorage.getItem("INST_TYPE");
 
   return axiosInstance
     .get("/cc/topfiveStu", {
-      headers: { Authorization: varToken },
+      headers: { Authorization: varToken, INST_TYPE: INST_TYPE },
     })
     .then((res) => res.data);
 };
