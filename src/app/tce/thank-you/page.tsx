@@ -23,9 +23,13 @@ const Page = () => {
             Wishes!
           </div>
         </div>
-        <Link href={"/institution/login"}>
+        <Link href={"/tce/login"}>
           <div className="bg-[#613D97]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2">
-            <img src="/console/right.svg" alt="" className="w-[22px] h-[22px]" />
+            <img
+              src="/console/right.svg"
+              alt=""
+              className="w-[22px] h-[22px]"
+            />
             Home
           </div>
         </Link>

@@ -25,11 +25,9 @@ function Dashboard() {
     INST_NAME: "",
     INST_TYPE: "",
   });
+  const [instTypeLoaded, setInstTypeLoaded] = useState(false);
   // const [topColl, setTopColl] = useState([]);
 
-  const { data } = useQuery("collData", getTopColleges);
-
-  const { data: topStu } = useQuery("stuData", getTopStudents);
   // const { data: studentDash } = useQuery("stuDash", form.getStudentDashboard);
 
   const fetchdata = async () => {
@@ -45,6 +43,7 @@ function Dashboard() {
         });
         setStudentDashboard(response.data.student);
         localStorage.setItem("INST_TYPE", response.data.student.INST_TYPE);
+        setInstTypeLoaded(true);
       })
       .catch((error) => {
         console.log(error);
@@ -59,6 +58,7 @@ function Dashboard() {
 
   useEffect(() => {
     fetchdata();
+    // localStorage.setItem("INST_TYPE", studentDashboard.INST_TYPE);
   }, []);
   // const percentage = Math.round((studentDashboard.CA_PRCNT / 7) * 100);
   const percentage = isNaN(Math.round((studentDashboard.CA_PRCNT / 7) * 100))
@@ -79,6 +79,22 @@ function Dashboard() {
   const handleLogout = (e: any) => {
     localStorage.clear();
   };
+
+  // const { data } = useQuery("collData", getTopColleges);
+
+  const { data, isLoading: collLoading } = useQuery(
+    "collData",
+    getTopColleges,
+    { enabled: instTypeLoaded }
+  );
+
+  // const { data: topStu } = useQuery("stuData", getTopStudents);
+  const { data: topStu, isLoading: stuLoading } = useQuery(
+    "stuData",
+    getTopStudents,
+    { enabled: instTypeLoaded }
+  );
+
   return (
     <div className="min-h-screen bg-[#003B89]">
       <div className="bg-white py-2">

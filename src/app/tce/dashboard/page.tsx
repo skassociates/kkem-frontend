@@ -82,7 +82,7 @@ function Dashboard() {
             <img src="/kkem_logo.png" alt="" />
           </div>
           <div onClick={handleLogout}>
-            <Link href={"/student/login"}>
+            <Link href={"/tce/login"}>
               <div
                 className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2"
                 // onClick={handleLogout}

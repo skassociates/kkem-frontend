@@ -11,27 +11,39 @@ function Dashboard() {
   const queryClient = new QueryClient();
 
   const { data } = useQuery("caData", getCAdash);
+  const [instTypeLoaded, setInstTypeLoaded] = useState(false);
 
-  const { data: topCol } = useQuery("collData", getTopColleges);
+  // localStorage.setItem("INST_TYPE", data?.data.data.INST_TYPE);
 
-  const { data: topStu } = useQuery("stuData", getTopStudents);
+  useEffect(() => {
+    // Check if caData is available before setting INST_TYPE
+    if (data?.data?.data?.INST_TYPE) {
+      localStorage.setItem("INST_TYPE", data.data.data.INST_TYPE);
+      setInstTypeLoaded(true);
+    }
+  }, [data]);
+  const handleLogout = (e: any) => {
+    localStorage.clear();
+  };
+  // const { data: topCol } = useQuery("collData", getTopColleges);
+  const { data: topCol, isLoading: collLoading } = useQuery(
+    "collData",
+    getTopColleges,
+    { enabled: instTypeLoaded }
+  );
 
+  // const { data: topStu } = useQuery("stuData", getTopStudents);
+  const { data: topStu, isLoading: stuLoading } = useQuery(
+    "stuData",
+    getTopStudents,
+    { enabled: instTypeLoaded }
+  );
   const percentage = isNaN(Math.round((data?.data.data.CA_PRCNT / 4) * 100))
     ? 0
     : Math.round((data?.data.data.CA_PRCNT / 4) * 100);
   const IPApercentage = isNaN(Math.round((data?.data.data.ICA_PRCNT / 5) * 100))
     ? 0
     : Math.round((data?.data.data.ICA_PRCNT / 5) * 100);
-  // localStorage.setItem("INST_TYPE", data?.data.data.INST_TYPE);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("INST_TYPE", data?.data.data.INST_TYPE);
-    }
-  }, [data]);
-  const handleLogout = (e: any) => {
-    localStorage.clear();
-  };
-
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
       <div className="bg-white py-2">
@@ -40,7 +52,7 @@ function Dashboard() {
             <img src="/kkem_logo.png" alt="" />
           </div>
           <div onClick={handleLogout}>
-            <Link href={"/student/login"}>
+            <Link href={"/admin/login"}>
               <div
                 className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2"
                 // onClick={handleLogout}
