@@ -6,7 +6,7 @@ export const getTopColleges = async (ins: any) => {
 
   return axiosInstance
     .get("/cc/topfiveCollege", {
-      headers: { Authorization: varToken, INST_TYPE: INST_TYPE },
+      headers: { Authorization: varToken, INSTTYPE: INST_TYPE },
     })
     .then((res) => res.data);
 };
@@ -17,7 +17,7 @@ export const getTopStudents = async () => {
 
   return axiosInstance
     .get("/cc/topfiveStu", {
-      headers: { Authorization: varToken, INST_TYPE: INST_TYPE },
+      headers: { Authorization: varToken, INSTTYPE: INST_TYPE },
     })
     .then((res) => res.data);
 };
