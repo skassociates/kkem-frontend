@@ -82,7 +82,7 @@ function Dashboard() {
           </div>
           <div>
             <div className="bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold main-score">
-              {data?.data.data.iqScore}
+              {Math.round(data?.data.data.iqScore)}
             </div>
           </div>
         </div>
@@ -112,24 +112,26 @@ function Dashboard() {
                   </thead>
                   <tbody className="[&>*:nth-child(odd)]:bg-[rgb(198,198,198)] [&>*:nth-child(even)]:bg-white">
                     {topStu &&
-                      Object.keys(topStu?.data.data).map((key) => {
-                        return (
-                          <tr
-                            key={key}
-                            onClick={() =>
-                              showModal({
-                                mark: key,
-                                names: topStu?.data.data[key],
-                              })
-                            }
-                          >
-                            <td className="p-3">{key}</td>
-                            <td className="p-3">
-                              {topStu?.data.data[key].join(", ")}
-                            </td>
-                          </tr>
-                        );
-                      })}
+                      Object.keys(topStu?.data.data)
+                        .reverse()
+                        .map((key) => {
+                          return (
+                            <tr
+                              key={key}
+                              onClick={() =>
+                                showModal({
+                                  mark: key,
+                                  names: topStu?.data.data[key],
+                                })
+                              }
+                            >
+                              <td className="p-3">{key}</td>
+                              <td className="p-3">
+                                {topStu?.data.data[key].join(", ")}
+                              </td>
+                            </tr>
+                          );
+                        })}
                   </tbody>
                 </table>
               </div>
@@ -259,31 +261,7 @@ function Dashboard() {
                     Name
                   </th>
                   <th className="border border-slate-600 font-normal px-2 py-1">
-                    DWMS ID
-                  </th>
-                  <th className="border border-slate-600 font-normal px-2 py-1">
-                    Email ID
-                  </th>
-                  <th className="border border-slate-600 font-normal px-2 py-1">
-                    DWMS Profile Completion
-                  </th>
-                  <th className="border border-slate-600 font-normal px-2 py-1">
-                    Career Assessment
-                  </th>
-                  <th className="border border-slate-600 font-normal px-2 py-1">
-                    Career Counselling
-                  </th>
-                  <th className="border border-slate-600 font-normal px-2 py-1">
-                    Personality Development Training
-                  </th>
-                  <th className="border border-slate-600 font-normal px-2 py-1">
-                    English Score Test
-                  </th>
-                  <th className="border border-slate-600 font-normal px-2 py-1">
-                    Robotic Interview
-                  </th>
-                  <th className="border border-slate-600 font-normal px-2 py-1">
-                    Work Readiness Program
+                    Score
                   </th>
                 </tr>
               </thead>
