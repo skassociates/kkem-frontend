@@ -78,6 +78,7 @@ function Dashboard() {
     : Math.round((studentDashboard.PA_PRCNT / 6) * 100);
   const handleLogout = (e: any) => {
     localStorage.clear();
+    setInstTypeLoaded(false);
   };
 
   // const { data } = useQuery("collData", getTopColleges);

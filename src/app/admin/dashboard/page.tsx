@@ -24,6 +24,7 @@ function Dashboard() {
   }, [data]);
   const handleLogout = (e: any) => {
     localStorage.clear();
+    setInstTypeLoaded(false);
   };
   // const { data: topCol } = useQuery("collData", getTopColleges);
   const { data: topCol, isLoading: collLoading } = useQuery(

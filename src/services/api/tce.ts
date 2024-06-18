@@ -2,14 +2,18 @@ import { axiosInstance } from "../request/request";
 
 export const getTCEColleges = async (body: any) => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
+  const varInst = localStorage.getItem("InstList") || "";
 
   return axiosInstance
     .post("/tce", {
-      insts: {
-        ENG_CLG: ["ASAPCCC0207", "ASAPCCC0774"],
-        POLY: ["ASAPCCC0892", "ASAPCCC0171"],
-        ARTS: ["ASAPCCC0783"],
-      },
+      headers: { Authorization: varToken },
+
+      // insts: {
+      //   ENG_CLG: ["ASAPCCC0774", "ASAPCCC0334"],
+      //   POLY: ["ASAPCCC0171"],
+      //   ARTS: ["ASAPCCC0222", "ASAPCCC0878", "ASAPCCC0867"],
+      // },
+      insts: JSON.parse(varInst),
     })
     .then((res) => res.data);
 };

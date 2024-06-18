@@ -10,8 +10,10 @@ import {
 } from "@/schema/student";
 import {
   getTopColleges,
+  getTopCollegesTCE,
   getTopStudents,
   getgetstudIns,
+  getgetstudInstce,
 } from "@/services/api/commonApi";
 import { getStudents, getTCEColleges } from "@/services/api/tce";
 import Image from "next/image";
@@ -39,41 +41,72 @@ function Dashboard() {
     // dialog.current && dialog.current.showModal();
   };
 
-  const { mutate, data: colData } = useMutation("pecCom", getgetstudIns);
+  const { mutate, data: colData } = useMutation("pecCom", getgetstudInstce);
 
-  const { data, isLoading, isError, isSuccess } = useQuery(
-    "repoData",
-    getTCEColleges
-  );
+  const {
+    data: tceData,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useQuery("repoData", getTCEColleges);
   const { data: tceStudents, refetch } = useQuery("tceStudents", getStudents, {
     enabled: false,
   });
 
   const { data: topCol } = useQuery("collData", getTopColleges);
-
   const { data: topStu } = useQuery("stuData", getTopStudents);
+  //change to new api end Points add value is header
+  // const { data: topCol, refetch: refetchTopCol } = useQuery(
+  //   ["collData", type],
+  //   () => getTopCollegesTCE(type),
+  //   {
+  //     enabled: !!type,
+  //   }
+  // );
+
+  // const { data: topStu, refetch: refetchTopStu } = useQuery(
+  //   ["stuData", type],
+  //   () => getTopStudentsTCE(type),
+  //   {
+  //     enabled: !!type,
+  //   }
+  // );
+
   useEffect(() => {
-    if (data) {
+    if (tceData) {
       updateType(type);
     }
-  }, [data]);
+  }, [tceData]);
 
   const updateType = (value: string) => {
+    console.log("type", value);
+
+    //call the api to uppdate the inst
     setType(value);
     setSelectedInstitution(null);
-    const list = data[value];
+    const list = tceData[value];
     setTopPerformers(list);
+    // refetchTopCol();
   };
 
   const showDetailsPage = (data: any) => {
-    // console.log("sda", data);
-
     setShowDetails(data);
     refetch();
   };
   const handleLogout = (e: any) => {
     localStorage.clear();
   };
+  const getTypeName = (type: any) => {
+    switch (type) {
+      case "ARTS":
+        return "Arts & Science";
+      case "POLY":
+        return "Polytechnic";
+      default:
+        return "Engineering";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#C22B20]">
       <div className="bg-white py-2">
@@ -99,9 +132,11 @@ function Dashboard() {
             <div className="flex flex-row gap-16 mt-8 text-xs">
               <div>
                 <div className="text-[#EEB850] ">Cluster Number</div>
-                <div className="font-medium text-white">123456</div>
+                <div className="font-medium text-white">{"1"}</div>
                 <div className="text-[#EEB850]  mt-2">District</div>
-                <div className="font-medium text-white">student@gmail.com</div>
+                <div className="font-medium text-white">
+                  {"Thiruvananthapuram"}
+                </div>
               </div>
             </div>
           </div>
@@ -136,7 +171,7 @@ function Dashboard() {
               </div>
               <div className="p-6">
                 <h4 className="text-[#6F4F12] text-2xl border-b border-[#6F4F12] pb-3">
-                  Engineering
+                  {getTypeName(type)}
                 </h4>
                 <div className="mt-8 flex flex-row gap-8">
                   <div className="flex-1">
@@ -154,7 +189,9 @@ function Dashboard() {
                         {topCol?.data?.map((performers: any, index: any) => {
                           return (
                             <tr key={index}>
-                              <td className="p-3">{index + 1}</td>
+                              <td className="p-3">
+                                {Math.round(performers.iqScore)}
+                              </td>
                               <td className="p-3">{performers.INST_NAME}</td>
                             </tr>
                           );
@@ -201,20 +238,24 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                        {topPerformers?.map((performers: any, index: any) => {
-                          return (
-                            <tr
-                              key={index}
-                              onClick={() => {
-                                setSelectedInstitution(performers);
-                                mutate(performers.INST_ID);
-                              }}
-                            >
-                              <td className="p-3">{index + 1}</td>
-                              <td className="p-3">{performers.INST_NAME}</td>
-                            </tr>
-                          );
-                        })}
+                        {topPerformers
+                          ?.sort((a: any, b: any) => b.iqScore - a.iqScore) // Sort by iqScore in descending order
+                          .map((performers: any, index: any) => {
+                            return (
+                              <tr
+                                key={index}
+                                onClick={() => {
+                                  setSelectedInstitution(performers);
+                                  mutate(String(performers.INST_ID)); // Ensure the ID is a string
+                                }}
+                              >
+                                <td className="p-3">
+                                  {Math.round(performers.iqScore)}
+                                </td>
+                                <td className="p-3">{performers.INST_NAME}</td>
+                              </tr>
+                            );
+                          })}
                       </tbody>
                     </table>
                   </div>
@@ -236,7 +277,7 @@ function Dashboard() {
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
                           <h2 className=" text-4xl font-bold">
-                            {colData?.data.CA_COMP_P}%
+                            {colData?.data.CA_COMP_P || 0}%
                           </h2>
                           <p className="text-sm">
                             of students have completed Curation Activities
@@ -254,7 +295,7 @@ function Dashboard() {
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
                           <h2 className=" text-4xl font-bold">
-                            {colData?.data.ICA_COMP_P}%
+                            {colData?.data.ICA_COMP_P || 0}%
                           </h2>
                           <p className="text-sm">
                             of students have completed Industry Connect
@@ -273,7 +314,7 @@ function Dashboard() {
                           className="py-6 px-3 flex gap-6 border-2 border-white text-white bg-[#967D4E]"
                         >
                           <h2 className=" text-4xl font-bold">
-                            {colData?.data.PA_COMP_P}%
+                            {colData?.data.PA_COMP_P || 0}%
                           </h2>
                           <p className="text-sm">
                             of students have completed Placement Activities

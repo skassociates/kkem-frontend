@@ -29,8 +29,36 @@ export const getgetstudIns = async (body: any) => {
   return axiosInstance
     .post("/cc/getstudIns", {
       headers: { Authorization: varToken },
-      ...body,
     })
     .then((res) => res.data);
 };
+export const getgetstudInstce = async (insId: any) => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+  const body = { instid: insId };
+  return axiosInstance
+    .post("/tce/getInstDet", body, {
+      headers: { Authorization: varToken },
+    })
+    .then((res) => res.data);
+};
+
 //Check data response and set up data in tce and institutions
+export const getTopCollegesTCE = async (insId: any) => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+  const body = { instid: insId };
+  return axiosInstance
+    .post("/tce/getTopIns", body, {
+      headers: { Authorization: varToken },
+    })
+    .then((res) => res.data);
+};
+export const getTopStudentsTCE = async (insId: any) => {
+  const varToken = localStorage.getItem("AUTH_TOKEN");
+  console.log("body ", insId);
+  const body = { instid: insId };
+  return axiosInstance
+    .post("/tce/getTopStu", body, {
+      headers: { Authorization: varToken },
+    })
+    .then((res) => res.data);
+};

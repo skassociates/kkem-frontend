@@ -2,7 +2,7 @@
 "use client";
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
-import { instloginValidationSchema } from "@/schema/validation";
+import { loginValidationSchema } from "@/schema/validation";
 import { auth } from "@/services/api/login";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
@@ -19,9 +19,9 @@ const Page = () => {
   } = useForm({
     defaultValues: {
       email: "",
-      instid: "",
+      dwmsid: "",
     },
-    resolver: yupResolver(instloginValidationSchema),
+    resolver: yupResolver(loginValidationSchema),
   });
   const router = useRouter();
   const onLogin = (data: any) => {
@@ -32,7 +32,11 @@ const Page = () => {
         toast.dismiss(get);
         localStorage.AUTH_TOKEN = response.data.token;
         localStorage.setItem("dataObj", JSON.stringify(response.data.data));
-        router.push("/tce/dashbboard");
+        localStorage.setItem(
+          "InstList",
+          JSON.stringify(convertInstitutions(response.data.data))
+        );
+        router.push("/tce/dashboard");
       })
       .catch((error) => {
         console.log(error);
@@ -44,6 +48,17 @@ const Page = () => {
         });
       });
   };
+
+  function convertInstitutions(data: any) {
+    const { ENG_CLG, POLY_CLG, ARTS_CLG } = data;
+    return {
+      insts: {
+        ENG_CLG: ENG_CLG || [],
+        POLY: POLY_CLG || [],
+        ARTS: ARTS_CLG || [],
+      },
+    };
+  }
 
   return (
     <div className="h-screen w-full bg-white flex flex-col justify-center items-center">
@@ -61,14 +76,14 @@ const Page = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <div className="w-full flex justify-center">
                 <InputField
-                  label="INSTITUTION ID"
+                  label="DWMS ID"
                   required
-                  error={errors?.instid?.message}
+                  error={errors?.dwmsid?.message}
                   onChange={onChange}
                 />
               </div>
             )}
-            name="instid"
+            name="dwmsid"
           />
           <Controller
             control={control}
