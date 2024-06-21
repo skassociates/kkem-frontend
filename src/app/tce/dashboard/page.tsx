@@ -22,6 +22,12 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { QueryClient, useMutation, useQuery } from "react-query";
 
+export type Inst = {
+  ENG_CLG: string[];
+  POLY: string[];
+  ARTS: string[];
+};
+
 function Dashboard() {
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -29,11 +35,17 @@ function Dashboard() {
 
   const [showDetails, setShowDetails] = useState<any>();
   const [topPerformers, setTopPerformers] = useState([]);
+  const [allInstIds, setAllInstIds] = useState<Inst>({
+    ENG_CLG: [],
+    ARTS: [],
+    POLY: [],
+  });
+
   const [selectedInstitution, setSelectedInstitution] = useState<any>(null);
   const [selectedInsT, setSelectedInsT] = useState<any | null>(null);
   // const [showstu, setshowstu] = useState<any>(null);
 
-  const [type, setType] = useState("ENG_CLG");
+  const [type, setType] = useState<"ENG_CLG" | "ARTS" | "POLY">("ENG_CLG");
 
   const closeModal = () => {
     dialog.current && dialog.current.close();
@@ -59,37 +71,46 @@ function Dashboard() {
   // const { data: topStu } = useQuery("stuData", getTopStudents);
   //change to new api end Points add value is header
   const { data: topCol, refetch: refetchTopCol } = useQuery(
-    ["collData", type, selectedInsT],
-    () => getTopCollegesTCE(selectedInsT),
+    ["collData", allInstIds[type]],
+    () => getTopCollegesTCE(allInstIds[type]),
     { enabled: !!type }
   );
 
   const { data: topStu, refetch: refetchTopStu } = useQuery(
-    ["stuData", type, selectedInsT],
-    () => getTopStudentsTCE(selectedInsT),
-    {
-      enabled: !!type,
-    }
+    ["stuData", allInstIds[type]],
+    () => getTopStudentsTCE(allInstIds[type]),
+    { enabled: !!type }
   );
 
-  useEffect(() => {
-    if (tceData) {
-      updateType(type);
-    }
-  }, [tceData]);
+  // useEffect(() => {
+  //   if (tceData) {
+  //     updateType(type);
+  //   }
+  // }, [tceData]);
 
-  const updateType = (value: string) => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const insts = JSON.parse(localStorage.getItem("InstList") || "[]");
+      setAllInstIds(insts.insts);
+      console.log(insts.insts);
+      refetchTopCol();
+      refetchTopStu();
+    }
+  }, []);
+
+  const updateType = (value: "ENG_CLG" | "ARTS" | "POLY") => {
     console.log("type", value);
 
     //call the api to uppdate the inst
-    var instL = getTypeNameAndArray(type).typeArray;
-    console.log("instL", instL);
-    setSelectedInsT(instL);
+    // var instL = getTypeNameAndArray(type).typeArray;
+    // console.log("instL", instL);
+    // setSelectedInsT(instL);
     setType(value);
     setSelectedInstitution(null);
     const list = tceData[value];
     setTopPerformers(list);
     // refetchTopCol();
+    // refetchTopStu();
   };
 
   const showDetailsPage = (data: any) => {

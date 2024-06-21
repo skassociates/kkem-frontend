@@ -43,7 +43,7 @@ export const getgetstudInstce = async (insId: any) => {
 };
 
 //Check data response and set up data in tce and institutions
-export const getTopCollegesTCE = async (insId: any) => {
+export const getTopCollegesTCE = async (insId: string[]) => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
   const body = { instid: insId };
   return axiosInstance
