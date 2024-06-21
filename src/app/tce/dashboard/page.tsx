@@ -12,6 +12,7 @@ import {
   getTopColleges,
   getTopCollegesTCE,
   getTopStudents,
+  getTopStudentsTCE,
   getgetstudIns,
   getgetstudInstce,
 } from "@/services/api/commonApi";
@@ -29,6 +30,7 @@ function Dashboard() {
   const [showDetails, setShowDetails] = useState<any>();
   const [topPerformers, setTopPerformers] = useState([]);
   const [selectedInstitution, setSelectedInstitution] = useState<any>(null);
+  const [selectedInsT, setSelectedInsT] = useState<any | null>(null);
   // const [showstu, setshowstu] = useState<any>(null);
 
   const [type, setType] = useState("ENG_CLG");
@@ -53,24 +55,22 @@ function Dashboard() {
     enabled: false,
   });
 
-  const { data: topCol } = useQuery("collData", getTopColleges);
-  const { data: topStu } = useQuery("stuData", getTopStudents);
+  // const { data: topCol } = useQuery("collData", getTopColleges);
+  // const { data: topStu } = useQuery("stuData", getTopStudents);
   //change to new api end Points add value is header
-  // const { data: topCol, refetch: refetchTopCol } = useQuery(
-  //   ["collData", type],
-  //   () => getTopCollegesTCE(type),
-  //   {
-  //     enabled: !!type,
-  //   }
-  // );
+  const { data: topCol, refetch: refetchTopCol } = useQuery(
+    ["collData", type, selectedInsT],
+    () => getTopCollegesTCE(selectedInsT),
+    { enabled: !!type }
+  );
 
-  // const { data: topStu, refetch: refetchTopStu } = useQuery(
-  //   ["stuData", type],
-  //   () => getTopStudentsTCE(type),
-  //   {
-  //     enabled: !!type,
-  //   }
-  // );
+  const { data: topStu, refetch: refetchTopStu } = useQuery(
+    ["stuData", type, selectedInsT],
+    () => getTopStudentsTCE(selectedInsT),
+    {
+      enabled: !!type,
+    }
+  );
 
   useEffect(() => {
     if (tceData) {
@@ -82,6 +82,9 @@ function Dashboard() {
     console.log("type", value);
 
     //call the api to uppdate the inst
+    var instL = getTypeNameAndArray(type).typeArray;
+    console.log("instL", instL);
+    setSelectedInsT(instL);
     setType(value);
     setSelectedInstitution(null);
     const list = tceData[value];
@@ -96,15 +99,29 @@ function Dashboard() {
   const handleLogout = (e: any) => {
     localStorage.clear();
   };
-  const getTypeName = (type: any) => {
+  const getTypeNameAndArray = (type: any) => {
+    // Retrieve insts from localStorage
+    if (typeof window !== "undefined") {
+      var insts = JSON.parse(localStorage.getItem("InstList") || "[]");
+    }
+    let typeName;
+    let typeArray;
+    console.log(insts);
+
     switch (type) {
       case "ARTS":
-        return "Arts & Science";
+        typeName = "Arts & Science";
+        typeArray = insts.insts.ARTS;
+        break;
       case "POLY":
-        return "Polytechnic";
+        typeName = "Polytechnic";
+        typeArray = insts.insts.POLY;
+        break;
       default:
-        return "Engineering";
+        typeName = "Engineering";
+        typeArray = insts.insts.ENG_CLG;
     }
+    return { typeName, typeArray };
   };
 
   return (
@@ -171,7 +188,7 @@ function Dashboard() {
               </div>
               <div className="p-6">
                 <h4 className="text-[#6F4F12] text-2xl border-b border-[#6F4F12] pb-3">
-                  {getTypeName(type)}
+                  {getTypeNameAndArray(type).typeName}
                 </h4>
                 <div className="mt-8 flex flex-row gap-8">
                   <div className="flex-1">
@@ -211,7 +228,7 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody className="[&>*:nth-child(odd)]:bg-[#c6c6c6] [&>*:nth-child(even)]:bg-white">
-                        {topStu?.map((performers: any, index: any) => {
+                        {topStu?.data?.map((performers: any, index: any) => {
                           return (
                             <tr key={index}>
                               <td className="p-3">{performers.score}</td>

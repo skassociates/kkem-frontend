@@ -8,10 +8,9 @@ import { QueryClient, useQuery } from "react-query";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import router from "next/router";
-// import LogoutButton from "@/components/logoutButton";
-
 function Dashboard() {
   const queryClient = new QueryClient();
+  const router = useRouter();
 
   const [studentDashboard, setStudentDashboard] = useState({
     STU_NAME: "",
@@ -26,9 +25,6 @@ function Dashboard() {
     INST_TYPE: "",
   });
   const [instTypeLoaded, setInstTypeLoaded] = useState(false);
-  // const [topColl, setTopColl] = useState([]);
-
-  // const { data: studentDash } = useQuery("stuDash", form.getStudentDashboard);
 
   const fetchdata = async () => {
     const get = toast.loading("Fetching Your Details....");
@@ -58,38 +54,36 @@ function Dashboard() {
 
   useEffect(() => {
     fetchdata();
-    // localStorage.setItem("INST_TYPE", studentDashboard.INST_TYPE);
   }, []);
-  // const percentage = Math.round((studentDashboard.CA_PRCNT / 7) * 100);
+
   const percentage = isNaN(Math.round((studentDashboard.CA_PRCNT / 7) * 100))
     ? 0
     : Math.round((studentDashboard.CA_PRCNT / 7) * 100);
 
-  // const IPApercentage = Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
   const IPApercentage = isNaN(
     Math.round((studentDashboard.ICA_PRCNT / 3) * 100)
   )
     ? 0
     : Math.round((studentDashboard.ICA_PRCNT / 3) * 100);
 
-  // const PApercentage = Math.round((studentDashboard.PA_PRCNT / 6) * 100);
   const PApercentage = isNaN(Math.round((studentDashboard.PA_PRCNT / 6) * 100))
     ? 0
     : Math.round((studentDashboard.PA_PRCNT / 6) * 100);
+
   const handleLogout = (e: any) => {
+    queryClient.clear();
+    queryClient.removeQueries();
     localStorage.clear();
-    setInstTypeLoaded(false);
+    // setInstTypeLoaded(false);
+    router.replace("/student/login");
   };
 
-  // const { data } = useQuery("collData", getTopColleges);
-
-  const { data, isLoading: collLoading } = useQuery(
+  const { data: topColleges, isLoading: collLoading } = useQuery(
     "collData",
     getTopColleges,
     { enabled: instTypeLoaded }
   );
 
-  // const { data: topStu } = useQuery("stuData", getTopStudents);
   const { data: topStu, isLoading: stuLoading } = useQuery(
     "stuData",
     getTopStudents,
@@ -105,14 +99,10 @@ function Dashboard() {
           </div>
           <div onClick={handleLogout}>
             <Link href={"/student/login"}>
-              <div
-                className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2"
-                // onClick={handleLogout}
-              >
+              <div className="bg-[#3D3E98] text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2">
                 Logout
               </div>
             </Link>
-            {/* <LogoutButton /> */}
           </div>
         </div>
       </div>
@@ -120,7 +110,6 @@ function Dashboard() {
         <div className="container mx-auto flex flex-row justify-between items-center">
           <div>
             <div className="text-3xl text-white">
-              {" "}
               {studentDashboard.STU_NAME}
             </div>
             <div className="flex flex-row gap-16 mt-8 text-xs">
@@ -139,14 +128,14 @@ function Dashboard() {
             </div>
           </div>
           <div>
-            <div className=" main-score bg-[#FFC24A] w-[150px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold">
+            <div className="main-score bg-[#FFC24A] w-[150px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold">
               {studentDashboard.score}
             </div>
           </div>
         </div>
       </div>
       <div className="bg-[#7CBDD0] py-12 ">
-        <div className="container mx-auto max-w-[750px] ">
+        <div className="container mx-auto max-w-[750px]">
           <div className="flex flex-wrap">
             <div className="w-1/2">
               <div className="text-[#003B89]">Curation Activities :</div>
@@ -160,14 +149,13 @@ function Dashboard() {
             <div className="w-1/2">
               <div className="text-[#003B89]">
                 Industry Connect Activities :
-                <Progressbar
-                  // label="65%"
-                  label={`${IPApercentage}%`}
-                  max={3}
-                  value={studentDashboard.ICA_PRCNT}
-                  color="blue"
-                />
               </div>
+              <Progressbar
+                label={`${IPApercentage}%`}
+                max={3}
+                value={studentDashboard.ICA_PRCNT}
+                color="blue"
+              />
             </div>
             <div className="w-1/2 mt-5">
               <div className="text-[#003B89]">Placement Activities :</div>
@@ -191,15 +179,19 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#5072A04D] [&>*:nth-child(even)]:bg-white">
-                  {data?.data?.map((performers: any, index: any) => {
-                    return (
+                  {collLoading && (
+                    <tr>
+                      <td colSpan={3}> Loading...</td>{" "}
+                    </tr>
+                  )}
+                  {!collLoading &&
+                    topColleges?.data?.map((performers: any, index: any) => (
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
                         <td className="p-3">{performers.INST_NAME}</td>
                         <td className="p-3">{performers.score}</td>
                       </tr>
-                    );
-                  })}
+                    ))}
                 </tbody>
               </table>
             </div>
@@ -214,8 +206,13 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#5072A04D] [&>*:nth-child(even)]:bg-white">
-                  {topStu?.map((performers: any, index: any) => {
-                    return (
+                  {stuLoading && (
+                    <tr>
+                      <td colSpan={3}> Loading...</td>{" "}
+                    </tr>
+                  )}
+                  {!stuLoading &&
+                    topStu?.data?.map((performers: any, index: any) => (
                       <tr key={index}>
                         <td className="p-3">{index + 1}</td>
                         <td className="p-3 capitalize">
@@ -223,8 +220,7 @@ function Dashboard() {
                         </td>
                         <td className="p-3">{performers.score}</td>
                       </tr>
-                    );
-                  })}
+                    ))}
                 </tbody>
               </table>
             </div>
