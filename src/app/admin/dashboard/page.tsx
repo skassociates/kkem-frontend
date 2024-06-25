@@ -135,12 +135,12 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#c0d2e9ed] [&>*:nth-child(even)]:bg-white">
-                  {topCol && (
+                  {collLoading && (
                     <tr>
                       <td colSpan={3}> Loading...</td>{" "}
                     </tr>
                   )}
-                  {!topCol &&
+                  {!collLoading &&
                     topCol?.data?.map((performers: any, index: any) => {
                       return (
                         <tr key={index}>
@@ -166,12 +166,12 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#c0d2e9ed] [&>*:nth-child(even)]:bg-white">
-                  {topStu && (
+                  {stuLoading && (
                     <tr>
                       <td colSpan={3}> Loading...</td>{" "}
                     </tr>
                   )}
-                  {!topStu &&
+                  {!stuLoading &&
                     topStu?.map((performers: any, index: any) => {
                       return (
                         <tr key={index}>

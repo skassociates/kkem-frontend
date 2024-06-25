@@ -20,9 +20,15 @@ function Dashboard() {
   const queryClient = new QueryClient();
   const { data } = useQuery("insData", getinstdash);
   //gettopStuIns
-  const { data: topStu } = useQuery("topStu", gettopStuIns);
+  const { data: topStu, isLoading: stuLoading } = useQuery(
+    "topStu",
+    gettopStuIns
+  );
 
-  const { data: pecCom } = useQuery("pecCom", getgetstudIns);
+  const { data: pecCom, isLoading: colLoading } = useQuery(
+    "pecCom",
+    getgetstudIns
+  );
 
   const dialog = useRef<HTMLDialogElement>(null);
   const [studData, setStudData] = useState<any>(null);
@@ -111,7 +117,12 @@ function Dashboard() {
                     </tr>
                   </thead>
                   <tbody className="[&>*:nth-child(odd)]:bg-[rgb(198,198,198)] [&>*:nth-child(even)]:bg-white">
-                    {topStu &&
+                    {stuLoading && (
+                      <tr>
+                        <td colSpan={3}> Loading...</td>{" "}
+                      </tr>
+                    )}
+                    {!stuLoading &&
                       Object.keys(topStu?.data.data)
                         .reverse()
                         .map((key) => {
