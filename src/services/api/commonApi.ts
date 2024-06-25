@@ -27,7 +27,7 @@ export const getgetstudIns = async (body: any) => {
   const varToken = localStorage.getItem("AUTH_TOKEN");
 
   return axiosInstance
-    .post("/cc/getstudIns", {
+    .get("/cc/getstudIns", {
       headers: { Authorization: varToken },
     })
     .then((res) => res.data);
