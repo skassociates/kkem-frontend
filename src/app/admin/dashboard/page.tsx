@@ -172,7 +172,7 @@ function Dashboard() {
                     </tr>
                   )}
                   {!stuLoading &&
-                    topStu?.map((performers: any, index: any) => {
+                    topStu?.data.map((performers: any, index: any) => {
                       return (
                         <tr key={index}>
                           <td className="p-3">{index + 1}</td>
