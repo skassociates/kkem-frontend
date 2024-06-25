@@ -135,15 +135,21 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#c0d2e9ed] [&>*:nth-child(even)]:bg-white">
-                  {topCol?.data?.map((performers: any, index: any) => {
-                    return (
-                      <tr key={index}>
-                        <td className="p-3">{index + 1}</td>
-                        <td className="p-3">{performers.INST_NAME}</td>
-                        <td className="p-3">{performers.score}</td>
-                      </tr>
-                    );
-                  })}
+                  {topCol && (
+                    <tr>
+                      <td colSpan={3}> Loading...</td>{" "}
+                    </tr>
+                  )}
+                  {!topCol &&
+                    topCol?.data?.map((performers: any, index: any) => {
+                      return (
+                        <tr key={index}>
+                          <td className="p-3">{index + 1}</td>
+                          <td className="p-3">{performers.INST_NAME}</td>
+                          <td className="p-3">{performers.score}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
@@ -160,17 +166,23 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="[&>*:nth-child(odd)]:bg-[#c0d2e9ed] [&>*:nth-child(even)]:bg-white">
-                  {topStu?.map((performers: any, index: any) => {
-                    return (
-                      <tr key={index}>
-                        <td className="p-3">{index + 1}</td>
-                        <td className="p-3 capitalize">
-                          {performers.STU_NAME.toLowerCase()}
-                        </td>
-                        <td className="p-3">{performers.score}</td>
-                      </tr>
-                    );
-                  })}
+                  {topStu && (
+                    <tr>
+                      <td colSpan={3}> Loading...</td>{" "}
+                    </tr>
+                  )}
+                  {!topStu &&
+                    topStu?.map((performers: any, index: any) => {
+                      return (
+                        <tr key={index}>
+                          <td className="p-3">{index + 1}</td>
+                          <td className="p-3 capitalize">
+                            {performers.STU_NAME.toLowerCase()}
+                          </td>
+                          <td className="p-3">{performers.score}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>

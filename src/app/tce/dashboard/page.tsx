@@ -91,8 +91,8 @@ function Dashboard() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const insts = JSON.parse(localStorage.getItem("InstList") || "[]");
-      setAllInstIds(insts.insts);
-      console.log(insts.insts);
+      setAllInstIds(insts?.insts);
+      console.log(insts?.insts);
       refetchTopCol();
       refetchTopStu();
     }
@@ -132,15 +132,15 @@ function Dashboard() {
     switch (type) {
       case "ARTS":
         typeName = "Arts & Science";
-        typeArray = insts.insts.ARTS;
+        typeArray = insts?.insts?.ARTS;
         break;
       case "POLY":
         typeName = "Polytechnic";
-        typeArray = insts.insts.POLY;
+        typeArray = insts?.insts?.POLY;
         break;
       default:
         typeName = "Engineering";
-        typeArray = insts.insts.ENG_CLG;
+        typeArray = insts?.insts?.ENG_CLG;
     }
     return { typeName, typeArray };
   };
