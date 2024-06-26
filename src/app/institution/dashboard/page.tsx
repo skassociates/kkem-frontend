@@ -137,8 +137,10 @@ function Dashboard() {
                               }
                             >
                               <td className="p-3">{key}</td>
-                              <td className="p-3">
-                                {topStu?.data.data[key].join(", ")}
+                              <td className="p-3 capitalize">
+                                {topStu?.data.data[key]
+                                  .join(", ")
+                                  .toLowerCase()}
                               </td>
                             </tr>
                           );
@@ -280,8 +282,8 @@ function Dashboard() {
                 {studData.names.map((name: any) => {
                   return (
                     <tr key={studData.mark}>
-                      <td className="border border-slate-700 px-2 py-1">
-                        {name}
+                      <td className="border border-slate-700 px-2 py-1 capitalize">
+                        {name.toLowerCase()}
                       </td>
                       <td className="border border-slate-700 px-2 py-1">
                         {studData.mark}
