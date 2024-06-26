@@ -6,11 +6,10 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { QueryClient, useQuery } from "react-query";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import router from "next/router";
+
 function Dashboard() {
   const queryClient = new QueryClient();
-  const router = useRouter();
 
   const [studentDashboard, setStudentDashboard] = useState({
     STU_NAME: "",
@@ -24,32 +23,31 @@ function Dashboard() {
     INST_NAME: "",
     INST_TYPE: "",
   });
+
   const [instTypeLoaded, setInstTypeLoaded] = useState(false);
 
   const fetchdata = async () => {
     const get = toast.loading("Fetching Your Details....");
-    form
-      .getStudentDashboard()
-      .then((response) => {
-        toast.update(get, {
-          render: "Done",
-          type: "success",
-          isLoading: false,
-          autoClose: 1000,
-        });
-        setStudentDashboard(response.data.student);
-        localStorage.setItem("INST_TYPE", response.data.student.INST_TYPE);
-        setInstTypeLoaded(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.update(get, {
-          render: "Something went wrong",
-          type: "error",
-          isLoading: false,
-          autoClose: 1000,
-        });
+    try {
+      const response = await form.getStudentDashboard();
+      toast.update(get, {
+        render: "Done",
+        type: "success",
+        isLoading: false,
+        autoClose: 1000,
       });
+      setStudentDashboard(response.data.student);
+      localStorage.setItem("INST_TYPE", response.data.student.INST_TYPE);
+      setInstTypeLoaded(true);
+    } catch (error) {
+      console.error(error);
+      toast.update(get, {
+        render: "Something went wrong",
+        type: "error",
+        isLoading: false,
+        autoClose: 1000,
+      });
+    }
   };
 
   useEffect(() => {
@@ -70,11 +68,22 @@ function Dashboard() {
     ? 0
     : Math.round((studentDashboard.PA_PRCNT / 6) * 100);
 
-  const handleLogout = (e: any) => {
+  const handleLogout = () => {
+    setStudentDashboard({
+      STU_NAME: "",
+      CA_PRCNT: 0,
+      ICA_PRCNT: 0,
+      PA_PRCNT: 0,
+      score: 0,
+      instScore: "",
+      DWMS_ID: "",
+      EMAIL_ID: "",
+      INST_NAME: "",
+      INST_TYPE: "",
+    });
     queryClient.clear();
     queryClient.removeQueries();
     localStorage.clear();
-    // setInstTypeLoaded(false);
     router.replace("/student/login");
   };
 

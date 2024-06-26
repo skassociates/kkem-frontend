@@ -14,25 +14,38 @@ import { getinstdash, gettopStuIns } from "@/services/api/form";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { QueryClient, useQuery } from "react-query";
+import { QueryClient, useQuery, useQueryClient } from "react-query";
+import { AxiosResponse } from "axios";
+
+type TopStuData = AxiosResponse<any, any> | null;
+type PecComData = AxiosResponse<any, any> | null;
 
 function Dashboard() {
-  const queryClient = new QueryClient();
-  const { data } = useQuery("insData", getinstdash);
-  //gettopStuIns
-  const { data: topStu, isLoading: stuLoading } = useQuery(
-    "topStu",
-    gettopStuIns
-  );
-
-  const { data: pecCom, isLoading: colLoading } = useQuery(
-    "pecCom",
-    getgetstudIns
-  );
-
+  const queryClient = useQueryClient();
+  const [topStu, setTopStu] = useState<TopStuData>(null);
+  const [pecCom, setPecCom] = useState<PecComData>(null);
+  const [insData, setInsData] = useState<AxiosResponse<any, any> | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const [studData, setStudData] = useState<any>(null);
   const [showDetails, setShowDetails] = useState<any>(null);
+
+  const { data, refetch: refetchInsData } = useQuery("insData", getinstdash, {
+    onSuccess: (data) => setInsData(data),
+  });
+  const { data: topStuData, isLoading: stuLoading } = useQuery(
+    "topStu",
+    gettopStuIns,
+    {
+      onSuccess: (data) => setTopStu(data),
+    }
+  );
+  const { data: pecComData, isLoading: colLoading } = useQuery(
+    "pecCom",
+    getgetstudIns,
+    {
+      onSuccess: (data) => setPecCom(data),
+    }
+  );
 
   const closeModal = () => {
     setStudData(null);
@@ -43,22 +56,25 @@ function Dashboard() {
     setStudData(data);
     dialog.current && dialog.current.showModal();
   };
-  const handleLogout = (e: any) => {
+
+  const handleLogout = () => {
     localStorage.clear();
+    setTopStu(null);
+    setPecCom(null);
+    setInsData(null);
+    queryClient.resetQueries("insData");
   };
+
   return (
     <div className="min-h-screen bg-[#C8BD6D]">
       <div className="bg-white py-2">
         <div className="container mx-auto flex flex-row justify-between items-center">
           <div>
-            <img src="/kkem_logo.png" alt="" />
+            <img src="/kkem_logo.png" alt="KKEM Logo" />
           </div>
           <div onClick={handleLogout}>
-            <Link href={"/institution/login"}>
-              <div
-                className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2"
-                // onClick={handleLogout}
-              >
+            <Link href="/institution/login">
+              <div className="bg-[#3D3E98] text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2">
                 Logout
               </div>
             </Link>
@@ -69,39 +85,35 @@ function Dashboard() {
         <div className="container mx-auto flex flex-row justify-between items-center">
           <div>
             <div className="text-3xl text-white">
-              {data?.data.data.INST_NAME}
+              {data?.data?.data?.INST_NAME}
             </div>
             <div className="flex flex-row gap-16 mt-8 text-xs">
               <div>
-                <div className="text-slate-500 ">Inst ID</div>
-                <div className="font-medium">{data?.data.data.INST_ID}</div>
-                <div className="text-slate-500  mt-2">Email ID</div>
-                <div className="font-medium">{data?.data.data.EMAIL_ID}</div>
+                <div className="text-slate-500">Inst ID</div>
+                <div className="font-medium">{data?.data?.data?.INST_ID}</div>
+                <div className="text-slate-500 mt-2">Email ID</div>
+                <div className="font-medium">{data?.data?.data?.EMAIL_ID}</div>
               </div>
               <div>
-                {/* <div className="text-slate-500">Institution Name</div>
-                <div className="font-medium">Institution</div> */}
-                <div className="text-slate-500  mt-2">Institution Type</div>
-                <div className="font-medium">{data?.data.data.INST_TYPE}</div>
+                <div className="text-slate-500 mt-2">Institution Type</div>
+                <div className="font-medium">{data?.data?.data?.INST_TYPE}</div>
               </div>
             </div>
           </div>
           <div>
             <div className="bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold main-score">
-              {Math.round(data?.data.data.iqScore)}
+              {Math.round(data?.data?.data?.iqScore)}
             </div>
           </div>
         </div>
       </div>
-      <div className="bg-[#6E6350] py-12 ">
+      <div className="bg-[#6E6350] py-12">
         {!showDetails && (
-          <div className="container mx-auto max-w-[750px] ">
+          <div className="container mx-auto max-w-[750px]">
             <div className="flex flex-wrap">
-              {" "}
               <div className="w-1/2">
                 <div className="text-white">Progress of Activities :</div>
-                {/*  put PAC here inside the width */}
-                <ProgressIndicator width={data?.data.data.PAC} />
+                <ProgressIndicator width={data?.data?.data?.PAC} />
               </div>
             </div>
             <div className="mt-8 flex flex-row gap-8">
@@ -119,32 +131,29 @@ function Dashboard() {
                   <tbody className="[&>*:nth-child(odd)]:bg-[rgb(198,198,198)] [&>*:nth-child(even)]:bg-white">
                     {stuLoading && (
                       <tr>
-                        <td colSpan={3}> Loading...</td>{" "}
+                        <td colSpan={2}> Loading...</td>
                       </tr>
                     )}
                     {!stuLoading &&
-                      Object.keys(topStu?.data.data)
+                      topStu?.data?.data &&
+                      Object.keys(topStu.data.data)
                         .reverse()
-                        .map((key) => {
-                          return (
-                            <tr
-                              key={key}
-                              onClick={() =>
-                                showModal({
-                                  mark: key,
-                                  names: topStu?.data.data[key],
-                                })
-                              }
-                            >
-                              <td className="p-3">{key}</td>
-                              <td className="p-3 capitalize">
-                                {topStu?.data.data[key]
-                                  .join(", ")
-                                  .toLowerCase()}
-                              </td>
-                            </tr>
-                          );
-                        })}
+                        .map((key) => (
+                          <tr
+                            key={key}
+                            onClick={() =>
+                              showModal({
+                                mark: key,
+                                names: topStu.data.data[key],
+                              })
+                            }
+                          >
+                            <td className="p-3">{key}</td>
+                            <td className="p-3 capitalize">
+                              {topStu.data.data[key].join(", ").toLowerCase()}
+                            </td>
+                          </tr>
+                        ))}
                   </tbody>
                 </table>
               </div>
@@ -156,16 +165,16 @@ function Dashboard() {
                   <div
                     onClick={() =>
                       setShowDetails({
-                        PRCNT: pecCom?.data.CA_COMP_P,
-                        studs: pecCom?.data.CA_students,
+                        PRCNT: pecCom?.data?.CA_COMP_P,
+                        studs: pecCom?.data?.CA_students,
                         string: "Curation Activities",
                         headers: CA_header_order,
                       })
                     }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className=" text-4xl font-bold">
-                      {pecCom?.data.CA_COMP_P}%
+                    <h2 className="text-4xl font-bold">
+                      {pecCom?.data?.CA_COMP_P}%
                     </h2>
                     <p className="text-sm">
                       of students have completed Curation Activities
@@ -174,46 +183,46 @@ function Dashboard() {
                   <div
                     onClick={() =>
                       setShowDetails({
-                        PRCNT: pecCom?.data.ICA_COMP_P,
-                        studs: pecCom?.data.ICA_students,
+                        PRCNT: pecCom?.data?.ICA_COMP_P,
+                        studs: pecCom?.data?.ICA_students,
                         string: "Industry Connect Activities",
                         headers: ICA_header_order,
                       })
                     }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className=" text-4xl font-bold">
-                      {pecCom?.data.ICA_COMP_P}%
+                    <h2 className="text-4xl font-bold">
+                      {pecCom?.data?.ICA_COMP_P}%
                     </h2>
                     <p className="text-sm">
                       of students have completed Industry Connect Activities
                     </p>
-                  </div>{" "}
+                  </div>
                   <div
                     onClick={() =>
                       setShowDetails({
-                        PRCNT: pecCom?.data.PA_COMP_P,
-                        studs: pecCom?.data.PA_students,
+                        PRCNT: pecCom?.data?.PA_COMP_P,
+                        studs: pecCom?.data?.PA_students,
                         string: "Placement Activities",
                         headers: PA_header_order,
                       })
                     }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className=" text-4xl font-bold">
-                      {pecCom?.data.PA_COMP_P}%
+                    <h2 className="text-4xl font-bold">
+                      {pecCom?.data?.PA_COMP_P}%
                     </h2>
                     <p className="text-sm">
                       of students have completed Placement Activities
                     </p>
-                  </div>{" "}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         )}
         {showDetails && (
-          <div className="container mx-auto max-w-max ">
+          <div className="container mx-auto max-w-max">
             <div className="flex w-full justify-between items-center">
               <p className="text-lg text-white">
                 <span className="font-semibold">{showDetails.PRCNT}%</span> of
@@ -233,7 +242,6 @@ function Dashboard() {
                   <path d="M0 0h24v24H0z" fill="none" />
                   <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
                 </svg>
-
                 <span className="text-white">Back</span>
               </div>
             </div>
@@ -254,14 +262,13 @@ function Dashboard() {
           </a>
         </div>
       </div>
-
       {studData && (
         <dialog className="dialog bg-gray-100" ref={dialog}>
           <div className="p-6">
             <div className="flex justify-between mb-3">
-              <span>Students</span>{" "}
+              <span>Students</span>
               <Image
-                onClick={() => closeModal()}
+                onClick={closeModal}
                 src={require("../../../../public/close.svg")}
                 alt="close"
                 className="cursor-pointer"
@@ -279,18 +286,16 @@ function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {studData.names.map((name: any) => {
-                  return (
-                    <tr key={studData.mark}>
-                      <td className="border border-slate-700 px-2 py-1 capitalize">
-                        {name.toLowerCase()}
-                      </td>
-                      <td className="border border-slate-700 px-2 py-1">
-                        {studData.mark}
-                      </td>
-                    </tr>
-                  );
-                })}
+                {studData.names.map((name: any) => (
+                  <tr key={name}>
+                    <td className="border border-slate-700 px-2 py-1 capitalize">
+                      {name.toLowerCase()}
+                    </td>
+                    <td className="border border-slate-700 px-2 py-1">
+                      {studData.mark}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

@@ -5,15 +5,13 @@ import { getTopColleges, getTopStudents } from "@/services/api/commonApi";
 import { getCAdash } from "@/services/api/form";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { QueryClient, useQuery } from "react-query";
+import { QueryClient, useQuery, useQueryClient } from "react-query";
 
 function Dashboard() {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const { data } = useQuery("caData", getCAdash);
   const [instTypeLoaded, setInstTypeLoaded] = useState(false);
-
-  // localStorage.setItem("INST_TYPE", data?.data.data.INST_TYPE);
 
   useEffect(() => {
     // Check if caData is available before setting INST_TYPE
@@ -22,29 +20,34 @@ function Dashboard() {
       setInstTypeLoaded(true);
     }
   }, [data]);
+
   const handleLogout = (e: any) => {
     localStorage.clear();
     setInstTypeLoaded(false);
+    queryClient.resetQueries("caData");
+    queryClient.resetQueries("collData");
+    queryClient.resetQueries("stuData");
   };
-  // const { data: topCol } = useQuery("collData", getTopColleges);
+
   const { data: topCol, isLoading: collLoading } = useQuery(
     "collData",
     getTopColleges,
     { enabled: instTypeLoaded }
   );
 
-  // const { data: topStu } = useQuery("stuData", getTopStudents);
   const { data: topStu, isLoading: stuLoading } = useQuery(
     "stuData",
     getTopStudents,
     { enabled: instTypeLoaded }
   );
+
   const percentage = isNaN(Math.round((data?.data.data.CA_PRCNT / 4) * 100))
     ? 0
     : Math.round((data?.data.data.CA_PRCNT / 4) * 100);
   const IPApercentage = isNaN(Math.round((data?.data.data.ICA_PRCNT / 5) * 100))
     ? 0
     : Math.round((data?.data.data.ICA_PRCNT / 5) * 100);
+
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
       <div className="bg-white py-2">
@@ -54,14 +57,10 @@ function Dashboard() {
           </div>
           <div onClick={handleLogout}>
             <Link href={"/admin/login"}>
-              <div
-                className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2"
-                // onClick={handleLogout}
-              >
+              <div className="bg-[#3D3E98]  text-white rounded-[12px] w-[100px] h-[40px] p-2 mt-2 flex flex-row justify-around items-center gap-2">
                 Logout
               </div>
             </Link>
-            {/* <LogoutButton /> */}
           </div>
         </div>
       </div>
@@ -99,7 +98,6 @@ function Dashboard() {
                 Curation Activities <br />
                 (Based on Submitted Responses) :
               </div>
-              {/* <Progressbar label="65%" max={4} value={2} color={"white"} /> */}
               <Progressbar
                 label={`${percentage}%`}
                 max={4}
@@ -111,7 +109,6 @@ function Dashboard() {
               <div className="text-white">
                 Industry Connect & Placement Activities <br /> (Based on
                 Submitted Responses) :
-                {/* <Progressbar label="65%" max={5} value={3} color={"white"} /> */}
                 <Progressbar
                   label={`${IPApercentage}%`}
                   max={5}
