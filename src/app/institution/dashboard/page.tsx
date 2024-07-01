@@ -102,7 +102,7 @@ function Dashboard() {
           </div>
           <div>
             <div className="bg-[#FFC24A] w-[100px] h-[100px] rounded-xl shadow-2xl shadow-black flex justify-center items-center text-6xl font-semibold main-score">
-              {Math.round(data?.data?.data?.iqScore)}
+              {Math.round(data?.data?.data?.iqScore) || 0}
             </div>
           </div>
         </div>
