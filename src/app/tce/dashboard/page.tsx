@@ -394,6 +394,7 @@ function Dashboard() {
             <Table
               data={showDetails.studs}
               headersOrder={showDetails.headers}
+              fileName={showDetails.string}
             />
           </div>
         )}
