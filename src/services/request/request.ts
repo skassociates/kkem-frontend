@@ -8,8 +8,8 @@ try {
 } catch (error) {}
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-
+  // baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: "https://52.66.197.135/",
   headers: {
     // 'Content-Type': "application/json",
     Authorization: token,
