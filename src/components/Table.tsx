@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
 interface TableProps {
-  data: Array<{ [key: string]: string | number | boolean }>;
+  data: Array<{ [key: string]: any }>;
   headersOrder?: string[];
   itemsPerPage?: number;
   fileName?: string;

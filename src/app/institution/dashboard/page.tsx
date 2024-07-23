@@ -173,12 +173,21 @@ function Dashboard() {
                     }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className="text-4xl font-bold">
-                      {pecCom?.data?.CA_COMP_P}%
-                    </h2>
-                    <p className="text-sm">
-                      of students have completed Curation Activities
-                    </p>
+                    {pecCom?.data?.CA_COMP_P === 0 ? (
+                      <p className="text-sm">
+                        Not enough data to calculate result for Curation
+                        Activities
+                      </p>
+                    ) : (
+                      <>
+                        <h2 className="text-4xl font-bold">
+                          {pecCom?.data?.CA_COMP_P}%
+                        </h2>
+                        <p className="text-sm">
+                          of students have completed Curation Activities
+                        </p>
+                      </>
+                    )}
                   </div>
                   <div
                     onClick={() =>
@@ -191,12 +200,21 @@ function Dashboard() {
                     }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className="text-4xl font-bold">
-                      {pecCom?.data?.ICA_COMP_P}%
-                    </h2>
-                    <p className="text-sm">
-                      of students have completed Industry Connect Activities
-                    </p>
+                    {pecCom?.data?.ICA_COMP_P === 0 ? (
+                      <p className="text-sm">
+                        Not enough data to calculate result for Industry Connect
+                        Activities
+                      </p>
+                    ) : (
+                      <>
+                        <h2 className="text-4xl font-bold">
+                          {pecCom?.data?.ICA_COMP_P}%
+                        </h2>
+                        <p className="text-sm">
+                          of students have completed Industry Connect Activities
+                        </p>
+                      </>
+                    )}
                   </div>
                   <div
                     onClick={() =>
@@ -209,12 +227,21 @@ function Dashboard() {
                     }
                     className="py-6 px-3 flex gap-6 border-2 border-white text-white"
                   >
-                    <h2 className="text-4xl font-bold">
-                      {pecCom?.data?.PA_COMP_P}%
-                    </h2>
-                    <p className="text-sm">
-                      of students have completed Placement Activities
-                    </p>
+                    {pecCom?.data?.PA_COMP_P === 0 ? (
+                      <p className="text-sm">
+                        Not enough data to calculate result for Placement
+                        Activities
+                      </p>
+                    ) : (
+                      <>
+                        <h2 className="text-4xl font-bold">
+                          {pecCom?.data?.PA_COMP_P}%
+                        </h2>
+                        <p className="text-sm">
+                          of students have completed Placement Activities
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
