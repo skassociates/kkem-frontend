@@ -282,12 +282,12 @@ function Dashboard() {
       </div>
       <div className="bg-[#C8BD6D] py-12 max-w-[750px] mx-auto">
         <div className="container mx-auto text-right">
-          <a
+          <Link
             href="/institution/instructions"
             className="underline text-[#6E6350]"
           >
             Click this link to access Institution Form
-          </a>
+          </Link>
         </div>
       </div>
       {studData && (
