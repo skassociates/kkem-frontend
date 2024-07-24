@@ -189,9 +189,9 @@ function Dashboard() {
       <div className="bg-[#D3D1D2] py-12">
         <div className="container mx-auto max-w-[750px] text-right">
           <div className="flex flex-col gap-4 text-[#162B47]">
-            <a href="/admin/instructions" className="underline">
+            <Link href="/admin/instructions" className="underline">
               Click this link to access Entry Form
-            </a>
+            </Link>
           </div>
         </div>
       </div>
