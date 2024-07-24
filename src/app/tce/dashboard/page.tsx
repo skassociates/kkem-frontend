@@ -401,9 +401,9 @@ function Dashboard() {
       </div>
       <div className="bg-[#C22B20] py-12 max-w-[750px] mx-auto">
         <div className="container mx-auto text-right">
-          <a href="#" className="underline text-[#6E6350]">
+          <Link href="#" className="underline text-[#6E6350]">
             Click this link to access Institution Form
-          </a>
+          </Link>
         </div>
       </div>
 
