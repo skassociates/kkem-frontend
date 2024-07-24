@@ -238,9 +238,9 @@ function Dashboard() {
       </div>
       <div className="bg-[#003B89] py-12 max-w-[750px] mx-auto">
         <div className="container mx-auto text-right">
-          <a href="/student/instructions" className="underline text-white">
+          <Link href="/student/instructions" className="underline text-white">
             Click this link to access Student Form
-          </a>
+          </Link>
         </div>
       </div>
     </div>
