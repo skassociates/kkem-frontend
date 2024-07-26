@@ -70,7 +70,7 @@ function Dashboard() {
       <div className="bg-white py-2">
         <div className="container mx-auto flex flex-row justify-between items-center">
           <div>
-            <img src="/kkem_logo.png" alt="KKEM Logo" />
+            <img src="/console/kkem_logo.png" alt="KKEM Logo" />
           </div>
           <div onClick={handleLogout}>
             <Link href="/institution/login">
