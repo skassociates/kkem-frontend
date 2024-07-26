@@ -415,7 +415,8 @@ Create perfected resumes and land in your dream jobs!"
         <Button
           label="Cancel"
           onPress={() => {
-            route.push("/admin/login");
+            // route.push("/admin/login");
+            route.push("/admin/dashboard");
           }}
           customStyle=" bg-[#6B6B6B]"
         />

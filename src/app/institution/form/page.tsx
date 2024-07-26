@@ -355,7 +355,8 @@ const Page = () => {
         <Button
           label="Cancel"
           onPress={() => {
-            route.push("/institution/login");
+            // route.push("/institution/login");
+            route.push("/institution/dashboard");
           }}
           customStyle=" bg-[#6B6B6B]"
         />
